@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "curefit-b189d"
+  },
+  "targets": {
+    "curefit-b189d": {
+      "hosting": {
+        "PublicContainer": [
+          "container-public"
+        ],
+      }
+    }
+  }
+}
