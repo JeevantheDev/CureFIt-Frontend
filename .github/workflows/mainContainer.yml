@@ -27,5 +27,5 @@ jobs:
         entrypoint: MainContainer
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CUREFIT_B189D }}'
-        projectId: curefit-b189d
+        projectId: container-main
         channelId: live
