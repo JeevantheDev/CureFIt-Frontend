@@ -1,9 +1,10 @@
 {
   "projects": {
-    "default": "curefit-b189d"
+    "default": "curefit-b189d",
+    "prod": "container-main",
   },
   "targets": {
-    "curefit-b189d": {
+    "container-main": {
       "hosting": {
         "MainContainer": [
           "container-main"

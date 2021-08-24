@@ -12,17 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Creating & Initializing env variables for MainContainer Package
-      run: |
-        cd MainContainer
-        pwd
-        echo "REACT_APP_FIREBASE_API_KEY= ${{secrets.REACT_APP_FIREBASE_API_KEY}}
-        REACT_APP_FIREBASE_AUTH_DOMAIN= ${{secrets.REACT_APP_FIREBASE_AUTH_DOMAIN}}
-        REACT_APP_FIREBASE_PROJECT_ID= ${{secrets.REACT_APP_FIREBASE_PROJECT_ID}}
-        REACT_APP_FIREBASE_STORAGE_BUCKET= ${{secrets.REACT_APP_FIREBASE_STORAGE_BUCKET}}
-        REACT_APP_FIREBASE_MESSAGING_SENDER_ID= ${{secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID}}
-        REACT_APP_FIREBASE_APP_ID= ${{secrets.REACT_APP_FIREBASE_APP_ID}}" > .env
-
     - name: Build
       run: |
         cd MainContainer
@@ -33,11 +22,7 @@ jobs:
         PRIVATE_CONTAINER_DOMAIN: ${{ secrets.PRIVATE_CONTAINER_DOMAIN }}
         
     - name: Firebase Deploy
-      uses: FirebaseExtended/action-hosting-deploy@v0
-      with:
-        entrypoint: MainContainer
-        repoToken: '${{ secrets.FIREBASE_TOKEN }}'
-        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CUREFIT_B189D }}'
-        projectId: curefit-b189d
-        channelId: live
-     
+      run: |
+        cd MainContainer
+        sudo npm install -g firebase-tools
+        firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
