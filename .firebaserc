@@ -1,13 +1,18 @@
 {
   "projects": {
-    "default": "curefit-b189d",
-    "prod-container": "container-main",
+    "default": "curefit-b189d"
   },
   "targets": {
-    "container-main": {
+    "curefit-b189d": {
       "hosting": {
         "MainContainer": [
           "container-main"
+        ],
+        "PublicContainer": [
+          "container-public"
+        ],
+        "PrivateContainer": [
+          "container-private"
         ]
       }
     }
