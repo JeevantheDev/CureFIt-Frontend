@@ -6,9 +6,9 @@
   "author": "Jeevan Jyoti Dash <dashjeevanjyoti04@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build:main": "cd MainContainer && rm -rf dist && yarn build && cd ..",
-    "build:public": "cd PublicContainer && rm -rf dist && yarn build && cd ..",
-    "build:private": "cd PrivateContainer && rm -rf dist && yarn build && cd ..",
+    "build:main": "cd MainContainer && rm -rf dist && yarn && yarn build && cd ..",
+    "build:public": "cd PublicContainer && rm -rf dist && yarn && yarn build && cd ..",
+    "build:private": "cd PrivateContainer && rm -rf dist && yarn && yarn build && cd ..",
     "deploy": "yarn build:main && yarn build:public && yarn build:private && firebase deploy"
   }
 }
