@@ -1,7 +1,7 @@
 {
   "projects": {
     "default": "curefit-b189d",
-    "prod": "container-main",
+    "prod-container": "container-main",
   },
   "targets": {
     "container-main": {

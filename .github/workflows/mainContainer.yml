@@ -25,4 +25,4 @@ jobs:
       run: |
         cd MainContainer
         sudo npm install -g firebase-tools
-        firebase use prod && firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+        firebase use prod-container && firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
