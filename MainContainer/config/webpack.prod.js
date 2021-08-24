@@ -11,6 +11,8 @@ const packageJSON = require('../package.json');
 
 const { NAME, REMOTES } = MAIN_CONTAINER;
 
+console.log(REMOTES);
+
 const prodConfig = {
   mode: 'production',
   output: {
