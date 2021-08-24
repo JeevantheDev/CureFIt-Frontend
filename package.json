@@ -9,6 +9,6 @@
     "build:main": "cd MainContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:public": "cd PublicContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:private": "cd PrivateContainer && rm -rf dist && yarn && yarn build && cd ..",
-    "deploy": "yarn build:main && yarn build:public && yarn build:private && firebase deploy"
+    "deploy": "yarn build:main && yarn build:public && yarn build:private"
   }
 }
