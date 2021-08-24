@@ -7,6 +7,12 @@
       "hosting": {
         "MainContainer": [
           "container-main"
+        ],
+        "PublicContainer": [
+          "container-public"
+        ],
+        "PrivateContainer": [
+          "container-private"
         ]
       }
     }

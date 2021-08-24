@@ -1,15 +1,15 @@
-name: MainContainer-Deploy
+name: PublicContainer-Deploy
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'MainContainer/**'
+      - 'PublicContainer/**'
 
 defaults:
   run:
-    working-directory: MainContainer
+    working-directory: PublicContainer
 
 jobs:
   build:
@@ -23,9 +23,8 @@ jobs:
         npm install
         npm run build
       env: 
-        PUBLIC_CONTAINER_DOMAIN: ${{ secrets.PUBLIC_CONTAINER_DOMAIN }}
         PRIVATE_CONTAINER_DOMAIN: ${{ secrets.PRIVATE_CONTAINER_DOMAIN }}
-        
+
     - name: Firebase Deploy
       run: |
         sudo npm install -g firebase-tools

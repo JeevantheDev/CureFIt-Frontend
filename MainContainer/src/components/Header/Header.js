@@ -67,7 +67,7 @@ export const Header = ({ window }) => {
               color="primary"
               className={`${classes.title}`}
             >
-              CureFit-App
+              CureFit
             </Typography>
             <Hidden smDown>
               <AppbarMenu />
