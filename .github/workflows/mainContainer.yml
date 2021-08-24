@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-     - name: Creating & Initializing env variables for User Package
+    - name: Creating & Initializing env variables for MainContainer Package
         run: |
           cd MainContainer
           pwd
