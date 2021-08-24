@@ -18,26 +18,23 @@ export const ProfileLoading = () => {
   const classes = useStyles();
   return (
     <>
-      {[1, 2, 3].map((n) => (
-        <Paper
-          variant="outlined"
-          className={[classes.parent, GlobalStyles().mb1]}
-          key={n}
-        >
-          <Grid item md={5} xs={12}>
-            <div className={GlobalStyles().alignCenter}>
-              <Skeleton variant="circle" width={250} height={250} />
-            </div>
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <Skeleton height="20%" variant="text" />
-            <Skeleton height="20%" variant="text" />
-            <Skeleton height="20%" variant="text" />
-            <Skeleton height="20%" variant="text" />
-            <Skeleton height="20%" variant="text" />
-          </Grid>
-        </Paper>
-      ))}
+      <Paper
+        variant="outlined"
+        className={[classes.parent, GlobalStyles().mb1]}
+      >
+        <Grid item md={5} xs={12}>
+          <div className={GlobalStyles().alignCenter}>
+            <Skeleton variant="circle" width={250} height={250} />
+          </div>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <Skeleton height="20%" variant="text" />
+          <Skeleton height="20%" variant="text" />
+          <Skeleton height="20%" variant="text" />
+          <Skeleton height="20%" variant="text" />
+          <Skeleton height="20%" variant="text" />
+        </Grid>
+      </Paper>
     </>
   );
 };

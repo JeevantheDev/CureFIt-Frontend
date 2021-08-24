@@ -1,6 +1,7 @@
 import { Container, Grid } from '@material-ui/core';
 import { storiesOf } from '@storybook/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // Component
 import Profile from '../lib/Profile/Profile';
@@ -135,11 +136,32 @@ const profile = {
 const stories = storiesOf('Doctor-Profile', module);
 
 stories.add('App', () => {
+  const [loading, setLoading] = useState(true);
+  const [currProfile, setCurrProfile] = useState();
+
+  const BASE_API = 'http://localhost:5000/.netlify/functions/server/dev/api/v1';
+
+  useEffect(() => {
+    fetchData('6107c69a576dc70e28eda00e');
+  }, []);
+
+  const fetchData = async (id) => {
+    let res = await axios.get(`${BASE_API}/profile/${id}`);
+    setCurrProfile(res.data.data.docProfile);
+    setLoading(!loading);
+    return res.data;
+  };
+
+  // console.log(currProfile);
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Grid container spacing={3}>
         <Grid item xs={12} md={7}>
-          <Profile profile={profile} horizontal={true} isLoading={false} />
+          <Profile
+            profile={currProfile}
+            horizontal={true}
+            isLoading={loading}
+          />
         </Grid>
         <Grid item xs={12} md={4}>
           <Profile profile={profile} horizontal={false} isLoading={false} />

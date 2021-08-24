@@ -1,0 +1,38 @@
+{
+    "root": true,
+    "plugins": ["prettier", "eslint-plugin-import"],
+    "rules": {
+      "import/no-default-export": "error",
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ],
+      "no-console": "warn"
+    },
+    "extends": [
+      "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    ],
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "parser": "babel-eslint",
+    "overrides": [
+      {
+        "files": ["*.test.js"],
+        "rules": {
+          "no-use-before-define": "off",
+          "max-lines-per-function": "off",
+          "no-unused-expressions": "off",
+          "import/no-default-export": "off",
+          "strict": "off"
+        }
+      }
+    ]
+  }
+  

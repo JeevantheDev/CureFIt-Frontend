@@ -14,68 +14,72 @@ import { ProfileLoading } from '../components/Loading/ProfileLoading';
 
 const Profiles = (props) => {
   const { profileList, handleButtonClick, isLoading } = props;
+  const globalClasses = GlobalStyles();
 
   return (
     <Grid container spacing={3}>
-      {isLoading && <ProfileLoading />}
+      {isLoading && [1, 2, 3].map((n) => <ProfileLoading key={n} />)}
       {!isLoading &&
         profileList.length > 0 &&
         profileList.map((profile, idx) => (
           <Paper
             variant="outlined"
-            className={`${GlobalStyles().parent} ${GlobalStyles().mb1}`}
+            className={`${globalClasses.parent} ${globalClasses.mb1}`}
             key={idx}
           >
+            {/* Profile avatar part */}
             <Grid item md={3} xs={12}>
-              <div className={GlobalStyles().alignCenter}>
+              <div className={globalClasses.alignCenter}>
                 <Avatar
                   variant="circle"
-                  className={GlobalStyles().avatar}
+                  className={globalClasses.avatar}
                   src={profile.user.avatar}
                 />
               </div>
             </Grid>
-            <Grid item md={6} xs={12}>
+            {/* Profile info part */}
+            <Grid
+              className={globalClasses.flexColumnCenter}
+              item
+              md={6}
+              xs={12}
+            >
               <Typography
-                className={GlobalStyles().ml1}
+                className={globalClasses.ml1}
                 color="textPrimary"
-                variant="h5"
+                variant="h4"
                 gutterBottom
               >
                 {profile.user.user_name}
               </Typography>
               <Typography
                 color="textSecondary"
-                className={`${GlobalStyles().subText} ${
-                  GlobalStyles().textUpper
-                }`}
+                className={`${globalClasses.subText} ${globalClasses.textUpper} ${globalClasses.mb1}`}
                 gutterBottom
               >
                 {profile.specializations.join(',')}
               </Typography>
               <Typography
                 color="textSecondary"
-                className={`${GlobalStyles().subText} ${GlobalStyles().mb1}`}
+                className={`${globalClasses.subText} ${globalClasses.mb1}`}
                 gutterBottom
               >
-                {profile.total_experience} years experience overall.
+                {profile.total_experience || 0} years experience overall.
               </Typography>
               {profile.clinics.length > 0 && (
                 <>
                   <Typography
                     color="textSecondary"
-                    className={`${GlobalStyles().subText}
-                      ${GlobalStyles().mb1}
-                      ${GlobalStyles().fontBold}`}
+                    className={`${globalClasses.subText}
+                      ${globalClasses.mb1}
+                      ${globalClasses.fontBold}`}
                     gutterBottom
                   >
                     {profile.clinics[0].clinic_address}
                   </Typography>
                   <Typography
                     color="textSecondary"
-                    className={`${GlobalStyles().subText} ${
-                      GlobalStyles().mb1
-                    }`}
+                    className={`${globalClasses.subText} ${globalClasses.mb1}`}
                     gutterBottom
                   >
                     {profile.clinics[0].clinic_name}
@@ -84,9 +88,7 @@ const Profiles = (props) => {
                   </Typography>
                   <Typography
                     color="textSecondary"
-                    className={`${GlobalStyles().subText} ${
-                      GlobalStyles().mb1
-                    }`}
+                    className={`${globalClasses.subText} ${globalClasses.mb1}`}
                     gutterBottom
                   >
                     {`${profile.clinics[0].fees} Consultation fee at clinic.`}
@@ -96,56 +98,56 @@ const Profiles = (props) => {
               {profile.reviews.length > 0 && (
                 <Box display="flex" ml={2} alignItems="center">
                   <Chip
-                    className={GlobalStyles().greenBackground}
-                    label={profile.average_rating}
+                    className={globalClasses.greenBackground}
+                    label={profile.average_rating || '0.0'}
                     icon={<StarIcon style={{ color: '#fff' }} />}
                   />
                   <Typography
                     color="textPrimary"
-                    className={`${GlobalStyles().subText}
-                      ${GlobalStyles().fontBold}
-                      ${GlobalStyles().textUnderline}`}
+                    className={`${globalClasses.subText}
+                      ${globalClasses.fontBold}
+                      ${globalClasses.textUnderline}`}
                   >
                     {profile.reviews.length} Patient Comments.
                   </Typography>
                 </Box>
               )}
             </Grid>
+            {/* Profile button part */}
             <Grid item md={3} xs={12}>
               <Box
                 height={'100%'}
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
-                ml={1}
-                mr={1}
+                mx={3}
               >
                 <Button
-                  startIcon={<TodayIcon className={GlobalStyles().greenText} />}
-                  className={`${GlobalStyles().greenText}
-                    ${GlobalStyles().fontBold}
-                    ${GlobalStyles().mb1}`}
+                  startIcon={<TodayIcon className={globalClasses.greenText} />}
+                  className={`${globalClasses.greenText}
+                    ${globalClasses.fontBold}
+                    ${globalClasses.mb1}`}
                 >
                   Available Today
                 </Button>
                 <Button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleButtonClick(profile._id);
+                    handleButtonClick('Appointment', profile._id);
                   }}
-                  className={`${GlobalStyles().mb1} ${GlobalStyles().fontBold}`}
+                  className={`${globalClasses.mb1} ${globalClasses.fontBold}`}
                   variant="contained"
                   color="primary"
                 >
                   Book Appointment
                 </Button>
                 <Button
-                  className={`${GlobalStyles().fontBold} 
-                    ${GlobalStyles().hoverUnderline}`}
+                  className={`${globalClasses.fontBold} 
+                    ${globalClasses.hoverUnderline}`}
                   variant="outlined"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleButtonClick(profile._id);
+                    handleButtonClick('View Profile', profile._id);
                   }}
                 >
                   View Profile

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const GlobalStyles = makeStyles({
+export const GlobalStyles = makeStyles((theme) => ({
   parent: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -22,6 +22,16 @@ export const GlobalStyles = makeStyles({
     width: '100%',
     height: '100%',
   },
+  flexColumnCenter: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '1.5rem',
+      alignItems: 'center',
+    },
+  },
   mYAuto: {
     margin: 'auto 0',
   },
@@ -36,7 +46,7 @@ export const GlobalStyles = makeStyles({
   },
   subText: {
     fontWeight: '300',
-    fontSize: '20px',
+    fontSize: '18px',
     lineHeight: '23px',
     letterSpacing: '0.07em',
     marginLeft: '1rem',
@@ -62,4 +72,4 @@ export const GlobalStyles = makeStyles({
     color: '#0EAC27',
     letterSpacing: '0.07rem',
   },
-});
+}));
