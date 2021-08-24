@@ -8,7 +8,7 @@ const {
   MICRO_FRONTEND_PATH: { PRIVATE_CONTAINER },
 } = require('../../MicroFrontendPath');
 
-const { NAME, FILE_NAME, EXPOSES, REMOTES } = PRIVATE_CONTAINER;
+const { NAME, FILE_NAME, EXPOSES } = PRIVATE_CONTAINER;
 
 const prodConfig = {
   mode: 'production',
@@ -19,7 +19,6 @@ const prodConfig = {
     new ModuleFederationPlugin({
       name: NAME,
       filename: FILE_NAME,
-      remotes: REMOTES,
       exposes: EXPOSES,
       shared: {
         ...packageJSON.dependencies,
