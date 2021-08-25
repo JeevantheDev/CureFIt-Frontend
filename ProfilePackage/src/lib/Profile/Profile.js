@@ -4,22 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import StarIcon from '@material-ui/icons/Star';
 import { GlobalStyles } from '../components/GlobalStyles/GlobalStyles';
 import { ProfileLoading } from '../components/Loading/ProfileLoading';
-import theme from '../utils/theme';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   profileParent: {
     minWidth: '100%',
     flexWrap: 'wrap',
     padding: '1rem 0',
     backgroundColor: theme.palette.background.paper,
   },
-});
+}));
 
 const Profile = (props) => {
   const { profile, horizontal = true, isLoading } = props;
@@ -30,7 +28,7 @@ const Profile = (props) => {
     <>
       {isLoading && <ProfileLoading />}
       {!isLoading && profile && profile.slug && (
-        <Paper
+        <Box
           style={{
             display: horizontal ? 'flex' : '',
           }}
@@ -100,7 +98,7 @@ const Profile = (props) => {
               </Box>
             </Grid>
           </Grid>
-        </Paper>
+        </Box>
       )}
     </>
   );

@@ -4,6 +4,8 @@ import { Typography, Grid, Button, Box, Divider } from '@material-ui/core';
 import { ProfileContext } from '../../../screens/profileScreen/context/profile.context';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import moment from 'moment';
+import { useHistory, useParams } from 'react-router-dom';
+import { PRIVATE_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
 
 const useStyles = makeStyles((theme) => ({
   subText: {
@@ -27,12 +29,24 @@ const useStyles = makeStyles((theme) => ({
 
 export const ClinicInfo = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { slug } = useParams();
 
   const {
     clinicState: [clinics],
+    timeSlotState: [currentSlot, setCurrentSlot],
   } = useContext(ProfileContext);
 
   const [moreThanOne, setMoreThanOne] = useState(1);
+
+  const proceedAppointment = (clinicId) => {
+    setCurrentSlot({
+      id: clinicId,
+      date: '',
+      slot: '',
+    });
+    history.push(PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(':slug', slug));
+  };
 
   return (
     <>
@@ -77,7 +91,16 @@ export const ClinicInfo = () => {
                 <Typography className={`${classes.subText}  ${classes.boldText}`} display="block">
                   {`₹${clinic.fees}`}
                 </Typography>
-                <Button style={{ marginTop: '70px' }} size="small" color="primary" variant="contained">
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    proceedAppointment(clinic._id);
+                  }}
+                  style={{ marginTop: '70px' }}
+                  size="small"
+                  color="primary"
+                  variant="contained"
+                >
                   Book Appointment
                 </Button>
               </Grid>

@@ -41,10 +41,12 @@ export const Reviews = ({ isLoading }) => {
     <Box mt={2} className={`${classes.parent}`}>
       <Box px={1} width={'100%'} py={0.8} display="flex" justifyContent="space-between" alignItems="center">
         <Typography className={classes.reviewHeader} color="secondary" variant="h5" display="inline">
-          Patient Reviews for{' '}
-          <Typography className={classes.reviewHeader} color="primary" variant="h5" display="inline">
-            {!isLoading && currentProfile && currentProfile.user.user_name}
-          </Typography>
+          Patient Reviews{' '}
+          {currentProfile && currentProfile.user && (
+            <Typography className={classes.reviewHeader} color="primary" variant="h5" display="inline">
+              for {!isLoading && currentProfile.user.user_name}
+            </Typography>
+          )}
         </Typography>
         {!reviewForm && (
           <Button
@@ -66,7 +68,7 @@ export const Reviews = ({ isLoading }) => {
         </Box>
       )}
       <Box p={2}>
-        {(isLoading || !reviews ? Array.from(new Array(2)) : reviews).map((review, idx) => (
+        {(isLoading || !reviews ? Array.from(new Array(2)) : reviews || []).map((review, idx) => (
           <React.Fragment key={idx}>
             {review ? (
               <ReviewCard review={review} />

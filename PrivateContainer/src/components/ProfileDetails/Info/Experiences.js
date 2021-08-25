@@ -26,7 +26,7 @@ export const Experiences = () => {
     <>
       {currentProfile && (
         <ul className={classes.serviceList}>
-          {currentProfile.experience.length > 0 ? (
+          {currentProfile.experience && currentProfile.experience.length > 0 ? (
             currentProfile.experience.map((exp, idx) => (
               <li className={`${classes.boldText} ${classes.subText}`} key={idx}>
                 {exp.work_place}, {exp.position}, {exp.year}

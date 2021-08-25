@@ -20,10 +20,12 @@ const DoctorProfiles = () => {
     fetchProfiles();
   }, [filterQuery]);
 
-  const proceedViewProfile = (type, profileId) => {
-    if (type === SCREEN.VIEW_PROFILE) {
-      history.push(PUBLIC_APPLICATION_URL.PUBLIC_PROFILES_SLUG.replace(':slug', profileId));
-    }
+  const proceedProfileAction = (type, profileId) => {
+    const ROUTE_TYPE =
+      type === SCREEN.VIEW_PROFILE
+        ? PUBLIC_APPLICATION_URL.PUBLIC_PROFILES_SLUG
+        : PUBLIC_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT;
+    history.push(ROUTE_TYPE.replace(':slug', profileId));
   };
 
   return (
@@ -35,7 +37,7 @@ const DoctorProfiles = () => {
           subTitle="With predicted wait-time & verified details."
         />
       )}
-      <Profiles profileList={profiles} isLoading={pageLoading} handleButtonClick={proceedViewProfile} />
+      <Profiles profileList={profiles} isLoading={pageLoading} handleButtonClick={proceedProfileAction} />
     </>
   );
 };

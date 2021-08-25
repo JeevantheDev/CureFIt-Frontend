@@ -35,6 +35,9 @@ export const GlobalStyles = makeStyles((theme) => ({
   mYAuto: {
     margin: 'auto 0',
   },
+  mt1: {
+    marginTop: '1rem',
+  },
   mb1: {
     marginBottom: '1rem',
   },

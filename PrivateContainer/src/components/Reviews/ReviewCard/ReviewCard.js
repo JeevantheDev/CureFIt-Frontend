@@ -35,27 +35,36 @@ const useStyles = makeStyles((theme) => ({
 
 export const ReviewCard = ({ review }) => {
   const classes = useStyles();
+
   return (
     <Box mt={2} display="flex" justifyContent="start" alignItems="start">
-      <Box>
-        <Avatar>{review.user.user_name[0]}</Avatar>
-      </Box>
-      <Box ml={3}>
-        <Typography className={classes.userText} gutterBottom>
-          {review.user.user_name}
-        </Typography>
+      {review ? (
+        <>
+          <Box>
+            <Avatar>{review.user.user_name[0]}</Avatar>
+          </Box>
+          <Box ml={3}>
+            <Typography className={classes.userText} gutterBottom>
+              {review.user.user_name}
+            </Typography>
+            <Typography color="textPrimary" className={classes.reviewTitle} gutterBottom>
+              {review.review_title}
+            </Typography>
+            <Typography color="textSecondary" className={classes.reviewDesc} gutterBottom>
+              {review.review_desc}
+            </Typography>
+            <Chip
+              className={classes.greenChip}
+              label={review.rating || 0.0}
+              icon={<StarIcon style={{ color: '#fff' }} />}
+            />
+          </Box>
+        </>
+      ) : (
         <Typography color="textPrimary" className={classes.reviewTitle} gutterBottom>
-          {review.review_title}
+          No Reviews Found
         </Typography>
-        <Typography color="textSecondary" className={classes.reviewDesc} gutterBottom>
-          {review.review_desc}
-        </Typography>
-        <Chip
-          className={classes.greenChip}
-          label={review.rating || 0.0}
-          icon={<StarIcon style={{ color: '#fff' }} />}
-        />
-      </Box>
+      )}
     </Box>
   );
 };

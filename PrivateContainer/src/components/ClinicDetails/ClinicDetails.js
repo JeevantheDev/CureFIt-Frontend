@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
-import { TimeSlots } from './TimeSlots';
+import TimeSlots from './TimeSlots';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,11 +47,16 @@ const useStyles = makeStyles((theme) => ({
 
 export const ClinicDetails = ({ clinics, isLoading, inGroup = true }) => {
   const classes = useStyles();
+
+  const {
+    timeSlotState: [currentSlot],
+  } = useContext(ProfileContext);
+
   const [currentClinic, setCurrentClinic] = useState(null);
 
   useEffect(() => {
     if (isLoading || !clinics || clinics.length === 0) return;
-    setCurrentClinic(clinics[0]._id);
+    setCurrentClinic(currentSlot ? currentSlot.id : clinics[0]._id);
   }, [isLoading, clinics]);
 
   return (
@@ -110,7 +115,7 @@ export const ClinicDetails = ({ clinics, isLoading, inGroup = true }) => {
             </Grid>
             <Grid item xs={12}>
               {clinic && clinic.available_slots ? (
-                <TimeSlots slots={clinic.available_slots} />
+                <TimeSlots clinicId={clinic._id} slots={clinic.available_slots} />
               ) : (
                 <Skeleton variant="rect" height="40%" />
               )}

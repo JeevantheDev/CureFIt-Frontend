@@ -26,7 +26,7 @@ export const TrainingCertificates = () => {
     <>
       {currentProfile && (
         <ul className={classes.serviceList}>
-          {currentProfile.training_certificates.length > 0 ? (
+          {currentProfile.training_certificates && currentProfile.training_certificates.length > 0 ? (
             currentProfile.training_certificates.map((training, idx) => (
               <li className={`${classes.boldText} ${classes.subText}`} key={idx}>
                 {training.name}, {training.year}

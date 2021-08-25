@@ -25,7 +25,7 @@ export const Educations = () => {
     <>
       {currentProfile && (
         <ul className={classes.serviceList}>
-          {currentProfile.education.length > 0 ? (
+          {currentProfile.education && currentProfile.education.length > 0 ? (
             currentProfile.education.map((edu, idx) => (
               <li className={`${classes.boldText} ${classes.subText}`} key={idx}>
                 {edu.degree}, {edu.college}, {edu.year}
