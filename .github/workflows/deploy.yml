@@ -15,6 +15,7 @@ jobs:
       - run:  npm run deploy
         env:
           PUBLIC_CONTAINER_DOMAIN: ${{ secrets.PUBLIC_CONTAINER_DOMAIN }}
+          AUTH_CONTAINER_DOMAIN: ${{ secrets.AUTH_CONTAINER_DOMAIN }}
           PRIVATE_CONTAINER_DOMAIN: ${{ secrets.PRIVATE_CONTAINER_DOMAIN }}
           
       - uses: FirebaseExtended/action-hosting-deploy@v0
