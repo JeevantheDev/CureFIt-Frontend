@@ -6,7 +6,7 @@ import ProfileScreen from '../../screens/profileScreen/profileScreen';
 export const PublicRoutes = () => {
   return (
     <Switch>
-      <Route exact path={PRIVATE_APPLICATION_URL.PROFILE} component={ProfileScreen} />
+      {/* <Route exact path={PRIVATE_APPLICATION_URL.PROFILE} component={ProfileScreen} /> */}
       <Route path={PRIVATE_APPLICATION_URL.PROFILE} component={ProfileScreen} />
       {/* <Redirect to={PRIVATE_APPLICATION_URL.PROFILE} /> */}
     </Switch>

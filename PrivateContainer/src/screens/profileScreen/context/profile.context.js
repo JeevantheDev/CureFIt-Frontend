@@ -9,6 +9,7 @@ const ProfileProvider = ({ children }) => {
   const [pageLoading, setPageLoading] = useState(false);
   const [currentProfile, setCurrentProfile] = useState();
   const [clinics, setClinics] = useState();
+  const [currentSlot, setCurrentSlot] = useState(null);
   const [reviews, setReviews] = useState();
   const [limit, setLimit] = useState(DEFAULT.LIMIT);
   const [page, setPage] = useState(DEFAULT.PAGE);
@@ -28,6 +29,7 @@ const ProfileProvider = ({ children }) => {
         loaderState: [pageLoading],
         profileState: [currentProfile],
         clinicState: [clinics],
+        timeSlotState: [currentSlot, setCurrentSlot],
         reviewState: [reviews],
         limitState: [limit, setLimit],
         pageState: [page, setPage],
@@ -40,7 +42,6 @@ const ProfileProvider = ({ children }) => {
 };
 
 ProfileProvider.propTypes = {
-  value: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
 

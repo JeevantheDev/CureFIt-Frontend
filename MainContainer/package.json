@@ -13,7 +13,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.11.2",
-    "curefit": "^1.1.5",
+    "curefit": "^1.1.6",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

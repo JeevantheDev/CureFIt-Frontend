@@ -26,7 +26,7 @@ export const Specalizations = () => {
     <>
       {currentProfile && (
         <ul className={classes.serviceList}>
-          {currentProfile.specializations.length > 0 ? (
+          {currentProfile.specializations && currentProfile.specializations.length > 0 ? (
             currentProfile.specializations.map((specalist, idx) => (
               <li className={`${classes.boldText} ${classes.subText}`} key={idx}>
                 {specalist}

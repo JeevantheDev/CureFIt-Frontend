@@ -64,7 +64,7 @@ export const AppbarMenu = ({ column = false }) => {
         color="secondary"
         component={RouterLink}
         className={`${classes.link}`}
-        to={'/auth/signin'}
+        to={CONTAINER_ROUTES.AUTH_SIGNIN_CONTAINER}
         variant="outlined"
       >
         <Typography display="block" variant="caption" color="primary">

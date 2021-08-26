@@ -8,6 +8,9 @@ exports.MICRO_FRONTEND_PATH = {
       publicContainer: `publicContainer@${
         process.env.PUBLIC_CONTAINER_DOMAIN || `http://localhost:8081`
       }/remoteEntry.js`,
+      authContainer: `authContainer@${
+        process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`
+      }/remoteEntry.js`,
       privateContainer: `privateContainer@${
         process.env.PRIVATE_CONTAINER_DOMAIN || `http://localhost:8083`
       }/remoteEntry.js`,
@@ -30,6 +33,19 @@ exports.MICRO_FRONTEND_PATH = {
         process.env.PRIVATE_CONTAINER_DOMAIN || `http://localhost:8083`
       }/remoteEntry.js`,
     },
+  },
+  AUTH_CONTAINER: {
+    NAME: 'authContainer',
+    FILE_NAME: 'remoteEntry.js',
+    PORT: 8082,
+    PATH: `http://localhost:8082/`,
+    TEMPLATE: './public/index.html',
+    EXPOSES: {
+      './AuthContainerApp': './src/bootstrap',
+    },
+    WORKING_DOMAIN: `authContainer@${
+      process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`
+    }/remoteEntry.js`,
   },
   PRIVATE_CONTAINER: {
     NAME: 'privateContainer',

@@ -6,18 +6,20 @@ import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
 import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
 import { Reviews } from '../../../components/Reviews/Reviews';
 
-export const DoctorProfile = (props) => {
+const DoctorProfile = (props) => {
   const { slug: profileId } = props.match.params;
 
   const {
     loaderState: [pageLoading],
     profileState: [currentProfile],
     clinicState: [clinics],
+    timeSlotState: [currentSlot, setCurrentSlot],
     fetchProfileById,
   } = useContext(ProfileContext);
 
   useEffect(() => {
     fetchProfileById(profileId);
+    setCurrentSlot(null);
   }, []);
 
   return (
@@ -33,3 +35,6 @@ export const DoctorProfile = (props) => {
     </Grid>
   );
 };
+
+// eslint-disable-next-line import/no-default-export
+export default DoctorProfile;

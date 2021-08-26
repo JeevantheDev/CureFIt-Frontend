@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,6 +10,9 @@ import { Button } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import moment from 'moment';
 import { TabPanel, a11yProps } from '../shared/TabPanel/TabPanel';
+import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
+import { useHistory, useParams } from 'react-router-dom';
+import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,12 +33,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const TimeSlots = ({ slots }) => {
+const TimeSlots = ({ clinicId, slots }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const { slug } = useParams();
+
+  const {
+    timeSlotState: [currentSlot, setCurrentSlot],
+  } = useContext(ProfileContext);
+
   const [value, setValue] = React.useState(0);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleSelectSlot = (clinic_id, date, slot) => {
+    setCurrentSlot({
+      id: clinic_id,
+      date,
+      slot,
+    });
+    if (currentSlot) return;
+    let timer = setTimeout(() => {
+      history.push(PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(':slug', slug));
+    }, [1500]);
+    return () => clearTimeout(timer);
   };
 
   return (
@@ -70,10 +93,21 @@ export const TimeSlots = ({ slots }) => {
           <Box display="flex" justifyContent="space-evenly" alignItems="center" flexWrap="wrap">
             {slot.time_slots.map((time, i) => (
               <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelectSlot(clinicId, slot.date, time);
+                }}
                 style={{ marginBottom: '1rem' }}
                 endIcon={<CancelIcon color="secondary" />}
                 key={i}
-                variant="outlined"
+                variant={
+                  currentSlot &&
+                  currentSlot.id === clinicId &&
+                  currentSlot.date === slot.date &&
+                  currentSlot.slot === time
+                    ? 'contained'
+                    : 'outlined'
+                }
                 color="primary"
               >
                 {time}
@@ -87,5 +121,14 @@ export const TimeSlots = ({ slots }) => {
 };
 
 TimeSlots.propTypes = {
+  clinicId: PropTypes.string.isRequired,
   slots: PropTypes.array.isRequired,
 };
+
+// eslint-disable-next-line import/no-default-export
+export default React.memo(TimeSlots, (prevProps, nextProps) => {
+  if (prevProps.clinicId === nextProps.clinicId) {
+    return true;
+  }
+  return false;
+});

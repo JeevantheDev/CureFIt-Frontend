@@ -195,7 +195,7 @@ stories.add('App', () => {
   return (
     <Container maxWidth="lg">
       <Profiles
-        profileList={profiles}
+        profileList={profiles.slice(0)}
         handleButtonClick={handleButtonClick}
         isLoading={!true}
       />
