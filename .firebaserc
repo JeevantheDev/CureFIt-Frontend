@@ -11,6 +11,9 @@
         "PublicContainer": [
           "container-public"
         ],
+        "AuthContainer": [
+          "container-auth"
+        ],
         "PrivateContainer": [
           "container-private"
         ]
