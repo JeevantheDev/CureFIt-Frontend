@@ -6,6 +6,11 @@ const CONTAINER_ROUTES = {
 
   // Private Container - FE
   PRIVATE_CONTAINER: '/private',
+
+  // Auth Container - FE
+  AUTH_CONTAINER: '/auth',
+  AUTH_SIGNIN_CONTAINER: '/auth/signin',
+  AUTH_SIGNUP_CONTAINER: '/auth/signup',
 };
 
 export { CONTAINER_ROUTES };

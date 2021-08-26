@@ -8,7 +8,8 @@
   "scripts": {
     "build:main": "cd MainContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:public": "cd PublicContainer && rm -rf dist && yarn && yarn build && cd ..",
+    "build:auth": "cd AuthContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:private": "cd PrivateContainer && rm -rf dist && yarn && yarn build && cd ..",
-    "deploy": "yarn build:main && yarn build:public && yarn build:private"
+    "deploy": "yarn build:main && yarn build:public && yarn build:auth && yarn build:private"
   }
 }

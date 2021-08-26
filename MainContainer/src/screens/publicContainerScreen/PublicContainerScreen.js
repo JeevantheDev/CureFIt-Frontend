@@ -3,6 +3,7 @@ import { mount } from 'publicContainer/PublicContainerApp';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../app/app.context';
 import { CONTAINER_ROUTES } from '../../app/router/ApplicationRoutes';
+import { FilterHeader } from '../../components/FilterHeader/FilterHeader';
 
 const PublicContainerScreen = () => {
   const ref = useRef(null);
@@ -44,7 +45,12 @@ const PublicContainerScreen = () => {
     history.listen(onParentNavigate);
   };
 
-  return <div ref={ref} />;
+  return (
+    <>
+      <FilterHeader history={history} />
+      <div ref={ref} />
+    </>
+  );
 };
 
 // eslint-disable-next-line import/no-default-export

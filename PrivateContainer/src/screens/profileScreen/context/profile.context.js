@@ -42,7 +42,6 @@ const ProfileProvider = ({ children }) => {
 };
 
 ProfileProvider.propTypes = {
-  value: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
 
