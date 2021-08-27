@@ -1,14 +1,22 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { mount } from 'authContainer/AuthContainerApp';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from './context/auth.context';
 const AuthContainerScreen = () => {
   const ref = useRef(null);
+  const {
+    tokenState: [token, setToken],
+  } = useContext(AuthContext);
 
   const history = useHistory();
 
   useEffect(() => {
     mountPrivateContainer();
   }, []);
+
+  const onCompleteAuth = (res) => {
+    res.token && setToken(res.token);
+  };
 
   const mountPrivateContainer = () => {
     const { onParentNavigate } = mount(ref.current, {
@@ -18,6 +26,9 @@ const AuthContainerScreen = () => {
         if (pathname !== nextPathname) {
           history.push(nextPathname);
         }
+      },
+      onCompleteAuth: (res) => {
+        onCompleteAuth(res);
       },
     });
     history.listen(onParentNavigate);

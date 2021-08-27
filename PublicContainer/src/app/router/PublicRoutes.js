@@ -9,7 +9,7 @@ export const PublicRoutes = () => {
   return (
     <Switch>
       <Route path={PUBLIC_APPLICATION_URL.PUBLIC_PROFILES} component={ProfilesScreen} />
-      <Route path={PUBLIC_APPLICATION_URL.PUBLIC} component={LandingScreen} />
+      <Route exact path={PUBLIC_APPLICATION_URL.PUBLIC} component={LandingScreen} />
       {/* <Redirect to={PUBLIC_APPLICATION_URL.PUBLIC} /> */}
     </Switch>
   );

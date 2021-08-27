@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { CONTAINER_ROUTES } from '../../app/router/ApplicationRoutes';
+import { AuthContext } from '../../screens/authContainerScreen/context/auth.context';
+import { USER_TYPE } from '../../app/entity/constant';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   subTitle: {
@@ -34,6 +38,45 @@ const useStyles = makeStyles((theme) => ({
 
 export const AppbarMenu = ({ column = false }) => {
   const classes = useStyles();
+  const {
+    tokenState: [token],
+    userState: [loggedinUser],
+    signout,
+  } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  const [redirectPath, setRedirectPath] = useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const currentUserType = () => {
+    const userType = loggedinUser?.user_type;
+    return userType;
+  };
+
+  useEffect(() => {
+    setAnchorEl(null);
+    if (currentUserType() === USER_TYPE.ADMIN) {
+      setRedirectPath(CONTAINER_ROUTES.PRIVATE_ADMIN);
+    } else if (currentUserType() === USER_TYPE.DOCTOR) {
+      setRedirectPath(CONTAINER_ROUTES.PRIVATE_DOCTOR_DASHBOARD);
+    } else if (currentUserType() === USER_TYPE.SELLER) {
+      setRedirectPath(CONTAINER_ROUTES.PRIVATE_SELLER);
+    } else if (currentUserType() === USER_TYPE.USER) {
+      setRedirectPath(CONTAINER_ROUTES.PRIVATE_USER);
+    } else {
+      setRedirectPath(CONTAINER_ROUTES.AUTH_SIGNIN_CONTAINER);
+    }
+  }, [currentUserType()]);
+
   return (
     <>
       <Box display="flex" flexDirection={column ? 'column' : 'row'} justifyContent="center" ml={4} mr={8}>
@@ -62,15 +105,48 @@ export const AppbarMenu = ({ column = false }) => {
       </Box>
       <Button
         color="secondary"
-        component={RouterLink}
+        component={!token ? RouterLink : Button}
+        onClick={token && handleClick}
         className={`${classes.link}`}
-        to={CONTAINER_ROUTES.AUTH_SIGNIN_CONTAINER}
+        to={!token ? CONTAINER_ROUTES.AUTH_SIGNIN_CONTAINER : '*'}
         variant="outlined"
+        aria-controls="simple-menu"
+        aria-haspopup="true"
       >
         <Typography display="block" variant="caption" color="primary">
-          Login / Signup
+          {!token ? 'Login / Signup' : 'Account'}
         </Typography>
       </Button>
+      {token && anchorEl && (
+        <Menu
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem
+            style={{ backgroundColor: '#fff' }}
+            onClick={(event) => {
+              history.push(redirectPath);
+              handleClose(event);
+            }}
+          >
+            My account
+          </MenuItem>
+          <MenuItem style={{ backgroundColor: '#fff' }} onClick={() => signout()}>
+            Logout
+          </MenuItem>
+        </Menu>
+      )}
     </>
   );
 };

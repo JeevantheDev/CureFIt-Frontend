@@ -128,7 +128,6 @@ export const FilterHeader = ({ history }) => {
           size="small"
           variant="outlined"
           color="secondary"
-          id="input-with-icon-textfield"
           placeholder="search location"
           value={location}
           onChange={handleSearchLocation}
@@ -147,7 +146,6 @@ export const FilterHeader = ({ history }) => {
           size="small"
           variant="outlined"
           color="secondary"
-          id="input-with-icon-textfield"
           placeholder="search doctors"
           value={search}
           onChange={handleSearchField}
@@ -165,7 +163,6 @@ export const FilterHeader = ({ history }) => {
         <div className={classes.rightSideFilter}>
           <TextField
             className={`${classes.menu} ${classes.margin}`}
-            id="outlined-select-specalists"
             size="small"
             variant="outlined"
             color="secondary"
@@ -184,7 +181,6 @@ export const FilterHeader = ({ history }) => {
           </TextField>
           <TextField
             className={`${classes.menu} ${classes.margin}`}
-            id="outlined-select-experience"
             size="small"
             variant="outlined"
             color="secondary"
