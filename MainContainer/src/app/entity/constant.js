@@ -17,3 +17,10 @@ export const FILTER_SECTION = {
     { value: '20', name: 'Total Experience <= 20' },
   ],
 };
+
+export const USER_TYPE = {
+  ADMIN: '0',
+  DOCTOR: '1',
+  SELLER: '2',
+  USER: '3',
+};

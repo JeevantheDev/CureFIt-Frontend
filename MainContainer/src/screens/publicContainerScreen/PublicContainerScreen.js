@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useContext } from 'react';
 import { mount } from 'publicContainer/PublicContainerApp';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../app/app.context';
+import { AuthContext } from '../authContainerScreen/context/auth.context';
 import { CONTAINER_ROUTES } from '../../app/router/ApplicationRoutes';
 import { FilterHeader } from '../../components/FilterHeader/FilterHeader';
 
@@ -9,18 +10,18 @@ const PublicContainerScreen = () => {
   const ref = useRef(null);
 
   const {
+    userState: [loggedinUser],
+    tokenState: [token],
+  } = useContext(AuthContext);
+
+  const {
     routeState: [activeRoute, setActiveRoute],
     filterState: [publicFilterQuery],
   } = useContext(AppContext);
 
   const history = useHistory();
-
   useEffect(() => {
-    setActiveRoute(
-      history.location.pathname === CONTAINER_ROUTES.PUBLIC_CONTAINER_PROFILES
-        ? CONTAINER_ROUTES.PUBLIC_CONTAINER_PROFILES
-        : '/'
-    );
+    setActiveRoute(history.location.pathname);
     if (JSON.stringify(publicFilterQuery) !== '{}') {
       history.push({
         pathname: CONTAINER_ROUTES.PUBLIC_CONTAINER_PROFILES,
@@ -34,6 +35,7 @@ const PublicContainerScreen = () => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,
       queryParams: history.location.search,
+      isUserAuth: token && loggedinUser ? true : false,
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         setActiveRoute(pathname);
@@ -47,7 +49,7 @@ const PublicContainerScreen = () => {
 
   return (
     <>
-      <FilterHeader history={history} />
+      {!activeRoute.includes('/private') && <FilterHeader history={history} />}
       <div ref={ref} />
     </>
   );

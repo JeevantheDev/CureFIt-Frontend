@@ -4,18 +4,17 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import ProfileProvider from './screens/profileScreen/context/profile.context';
 import App from './app/App';
 
-const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
       initialEntries: [initialPath],
     });
-
   onNavigate && history.listen(onNavigate);
 
   ReactDOM.render(
     <ProfileProvider>
-      <App history={history} />
+      <App isUserAuth={isUserAuth} history={history} />
     </ProfileProvider>,
     el,
   );

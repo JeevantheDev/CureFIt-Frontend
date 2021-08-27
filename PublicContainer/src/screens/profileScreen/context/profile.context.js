@@ -5,10 +5,9 @@ import { DEFAULT } from '../../../app/entity/constant';
 
 export const ProfileContext = React.createContext();
 
-const ProfileProvider = ({ value: { filterQuery }, children }) => {
+const ProfileProvider = ({ value: { filterQuery, isUserAuth }, children }) => {
   const [pageLoading, setPageLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
-  const [profile, setProfile] = useState([]);
   const [limit, setLimit] = useState(DEFAULT.LIMIT);
   const [page, setPage] = useState(DEFAULT.PAGE);
 
@@ -23,9 +22,9 @@ const ProfileProvider = ({ value: { filterQuery }, children }) => {
     <ProfileContext.Provider
       value={{
         filterQuery,
+        isUserAuth,
         loaderState: [pageLoading],
         profilesState: [profiles],
-        profileState: [profile],
         limitState: [limit, setLimit],
         pageState: [page, setPage],
         fetchProfiles,

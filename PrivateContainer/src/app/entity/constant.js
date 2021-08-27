@@ -13,6 +13,13 @@ export const DEFAULT = {
   EXPERIENCE: 'all',
 };
 
+export const USER_TYPE = {
+  ADMIN: '0',
+  DOCTOR: '1',
+  SELLER: '2',
+  USER: '3',
+};
+
 export const APPOINTMENT_TYPE = [
   {
     type: '1',
