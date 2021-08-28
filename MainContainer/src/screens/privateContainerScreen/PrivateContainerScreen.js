@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useContext } from 'react';
 import { mount } from 'privateContainer/PrivateContainerApp';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../authContainerScreen/context/auth.context';
+import { MainLayout } from '../../components/shared/MainLayout/MainLayout';
 
 const PrivateContainerScreen = () => {
   const ref = useRef(null);
@@ -32,9 +33,9 @@ const PrivateContainerScreen = () => {
   };
 
   return (
-    <>
+    <MainLayout>
       <div ref={ref} />
-    </>
+    </MainLayout>
   );
 };
 

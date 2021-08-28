@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import React, { lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { CONTAINER_ROUTES } from './ApplicationRoutes';
@@ -7,14 +8,14 @@ const AuthContainerLazy = lazy(() => import('../../screens/authContainerScreen/A
 
 export const PublicRoutes = ({ isUserValid }) => {
   return (
-    <div>
+    <Container>
       <Switch>
         <Route path={CONTAINER_ROUTES.AUTH_CONTAINER}>
-          {isUserValid && <Redirect to="/" />}
+          {isUserValid && <Redirect to={CONTAINER_ROUTES.PUBLIC_CONTAINER} />}
           <AuthContainerLazy />
         </Route>
         <Route path={CONTAINER_ROUTES.PUBLIC_CONTAINER} component={PublicContainerLazy} />
       </Switch>
-    </div>
+    </Container>
   );
 };

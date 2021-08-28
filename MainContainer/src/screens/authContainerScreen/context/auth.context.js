@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { userRedirect } from '../../../app/api/auth.api';
+import { ROLES, SIDEBAR_PANELS } from '../../../app/entity/constant';
 
 export const AuthContext = React.createContext();
 
@@ -13,10 +14,12 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(
     localStorage.getItem('sessionToken') ? localStorage.getItem('sessionToken') : null
   );
+  const [sidebarPanel, setSidebarPanel] = useState([]);
 
   const userRedirectAction = async () => {
     const res = await userRedirect();
     res.data ? setLoggedinUser(res.data) : setAuthError(res.error);
+    setSidebarPanel(SIDEBAR_PANELS[ROLES[res.data.user_type]]);
     setIsAuthenticating(false);
   };
 
@@ -24,6 +27,7 @@ const AuthProvider = ({ children }) => {
     localStorage.clear();
     setToken(null);
     setLoggedinUser({});
+    setSidebarPanel([]);
     setIsAuthenticating(false);
   };
 
@@ -34,6 +38,7 @@ const AuthProvider = ({ children }) => {
         errorState: [authError, setAuthError],
         userState: [loggedinUser, setLoggedinUser],
         tokenState: [token, setToken],
+        sidebarState: [sidebarPanel],
         userRedirectAction,
         signout,
       }}

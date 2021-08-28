@@ -66,3 +66,29 @@ export async function postRequest(url, param, config) {
   }
   return responseBody;
 }
+
+//Put Request
+
+/**
+ * @async
+ * @param {string} url
+ * @param {Object} param
+ * @param {requestCallback} config
+ * @returns {Promise<any>}
+ */
+export async function putRequest(url, param, config) {
+  let responseBody = {};
+  try {
+    await axios
+      .put(BASE_API_URL + url, param.params, config)
+      .then((response) => {
+        responseBody = response.data;
+      })
+      .catch((err) => {
+        responseBody = err.response.data;
+      });
+  } catch (error) {
+    responseBody = error;
+  }
+  return responseBody;
+}
