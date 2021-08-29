@@ -11,8 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import { AuthContext } from '../../../screens/authContainerScreen/context/auth.context';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import { Box } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { CONTAINER_ROUTES } from '../../../app/router/ApplicationRoutes';
@@ -75,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
     margin: '1rem 0',
   },
   avatarLarge: {
-    width: theme.spacing(10),
-    height: theme.spacing(10),
+    width: theme.spacing(6),
+    height: theme.spacing(6),
   },
   avatarText: {
     '& > span': {
@@ -84,9 +82,12 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '20px',
       lineHeight: '18px',
       textAlign: 'center',
+    },
+    '& > span:hover': {
       textDecoration: 'underline',
     },
     marginTop: '0.5rem',
+    cursor: 'pointer',
   },
 }));
 
@@ -121,17 +122,14 @@ export const MainLayout = (props) => {
         <ListItemAvatar className={classes.avatarCenter}>
           <Avatar className={classes.avatarLarge} alt={loggedinUser.user_name} src={loggedinUser.avatar} />
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <ListItemText className={classes.avatarText} primary={loggedinUser.user_name} />
-            <IconButton
+            <ListItemText
               onClick={(e) => {
                 e.stopPropagation();
                 routeUpdate(loggedinUser._id);
               }}
-              size="small"
-              aria-label="Edit"
-            >
-              <EditIcon color="primary" fontSize="small" />
-            </IconButton>
+              className={classes.avatarText}
+              primary={loggedinUser.user_name}
+            />
           </Box>
         </ListItemAvatar>
         <Divider style={{ margin: '1rem' }} />

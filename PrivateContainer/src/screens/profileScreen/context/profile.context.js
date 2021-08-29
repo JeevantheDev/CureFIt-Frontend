@@ -27,7 +27,7 @@ const ProfileProvider = ({ children }) => {
     <ProfileContext.Provider
       value={{
         loaderState: [pageLoading],
-        profileState: [currentProfile],
+        profileState: [currentProfile, setCurrentProfile],
         clinicState: [clinics],
         timeSlotState: [currentSlot, setCurrentSlot],
         reviewState: [reviews],

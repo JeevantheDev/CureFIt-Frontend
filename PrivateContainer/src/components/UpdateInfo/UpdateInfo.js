@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Avatar, Button, Divider, Grid, TextField, Typography } from '@material-ui/core';
 import { ServiceHeader } from '../shared/ServiceHeader/ServiceHeader';
 import { AppContext } from '../../app/context/app.context';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   parent: {
@@ -39,17 +41,45 @@ const UpdateInfo = () => {
   const {
     loaderState: [submitLoader],
     userState: [currentAuthUser],
-    formState: [formError],
+    formState: [formError, setFormError],
+    updateUserInfoAction,
+    updateUserPasswordAction,
   } = useContext(AppContext);
+
   const classes = useStyles();
+
+  const userInfoButton = useRef(null);
+  const userpasswordButton = useRef(null);
 
   const [user_name, setUserName] = useState('');
   const [user_email, setUserEmail] = useState('');
 
+  const [current_password, setCurrentPassword] = useState('');
+  const [new_password, setNewPassword] = useState('');
+
   useEffect(() => {
+    setFormError('');
     setUserName(currentAuthUser.user_name);
     setUserEmail(currentAuthUser.user_email);
   }, [currentAuthUser]);
+
+  useEffect(() => {
+    if (formError) return;
+    setCurrentPassword('');
+    setNewPassword('');
+  }, [formError]);
+
+  const onSubmitUserInfo = (event) => {
+    event.preventDefault();
+    const userObj = { user_name, user_email };
+    updateUserInfoAction(userObj);
+  };
+
+  const onSubmitUserPassword = (event) => {
+    event.preventDefault();
+    const passwordObj = { current_password, new_password };
+    updateUserPasswordAction(passwordObj);
+  };
 
   return (
     <div>
@@ -73,12 +103,17 @@ const UpdateInfo = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>
+          {formError && (
+            <Alert style={{ marginBottom: '1rem' }} severity="error">
+              {formError}
+            </Alert>
+          )}
           <Box display="flex" flexDirection="column" className={classes.parent}>
             <Typography className={classes.commonPadding} color="textSecondary" gutterBottm>
               The information can be edited.
             </Typography>
             <Divider />
-            <form>
+            <form onSubmit={onSubmitUserInfo}>
               <Grid className={classes.formInfo} container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -105,8 +140,18 @@ const UpdateInfo = () => {
               </Grid>
               <Divider />
               <Box p={2} display="flex">
-                <Button variant="contained" className={`${classes.buttonStyle} ${classes.mrAuto}`} color="primary">
-                  Save Details
+                <Button
+                  ref={userInfoButton}
+                  type="submit"
+                  variant="contained"
+                  className={`${classes.buttonStyle} ${classes.mrAuto}`}
+                  color="primary"
+                >
+                  {userInfoButton.current === document.activeElement && submitLoader ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    'Save Details'
+                  )}
                 </Button>
               </Box>
             </form>
@@ -116,16 +161,17 @@ const UpdateInfo = () => {
               Config your password.
             </Typography>
             <Divider />
-            <form>
+            <form onSubmit={onSubmitUserPassword}>
               <Grid className={classes.formInfo} container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     type="password"
                     fullWidth
                     variant="outlined"
-                    name="password"
-                    value={''}
-                    placeholder="your new password"
+                    name="current_password"
+                    value={current_password}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    placeholder="your current password"
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -133,16 +179,27 @@ const UpdateInfo = () => {
                     type="password"
                     fullWidth
                     variant="outlined"
-                    name="user_email"
-                    value={''}
-                    placeholder="confirm your password"
+                    name="new_password"
+                    value={new_password}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="your new password"
                   />
                 </Grid>
               </Grid>
               <Divider />
               <Box p={2} display="flex">
-                <Button variant="contained" className={`${classes.buttonStyle} ${classes.mrAuto}`} color="primary">
-                  Save Details
+                <Button
+                  ref={userpasswordButton}
+                  type="submit"
+                  variant="contained"
+                  className={`${classes.buttonStyle} ${classes.mrAuto}`}
+                  color="primary"
+                >
+                  {userpasswordButton.current === document.activeElement && submitLoader ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    'Update Password'
+                  )}
                 </Button>
               </Box>
             </form>

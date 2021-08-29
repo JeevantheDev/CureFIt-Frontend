@@ -54,7 +54,7 @@ export async function postRequest(url, param, config) {
   let responseBody = {};
   try {
     await axios
-      .get(BASE_API_URL + url, param.params, config)
+      .post(BASE_API_URL + url, param.params, config)
       .then((response) => {
         responseBody = response.data;
       })
@@ -81,6 +81,31 @@ export async function putRequest(url, param, config) {
   try {
     await axios
       .put(BASE_API_URL + url, param.params, config)
+      .then((response) => {
+        responseBody = response.data;
+      })
+      .catch((err) => {
+        responseBody = err.response.data;
+      });
+  } catch (error) {
+    responseBody = error;
+  }
+  return responseBody;
+}
+//Patch Request
+
+/**
+ * @async
+ * @param {string} url
+ * @param {Object} param
+ * @param {requestCallback} config
+ * @returns {Promise<any>}
+ */
+export async function patchRequest(url, param, config) {
+  let responseBody = {};
+  try {
+    await axios
+      .patch(BASE_API_URL + url, param.params, config)
       .then((response) => {
         responseBody = response.data;
       })

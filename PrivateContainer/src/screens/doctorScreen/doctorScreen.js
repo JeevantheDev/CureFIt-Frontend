@@ -6,6 +6,7 @@ import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
 
 import Dashboard from './modules/Dashboard';
+import Profile from './modules/Profile';
 
 const DoctorScreen = () => {
   const { path } = useRouteMatch();
@@ -18,6 +19,7 @@ const DoctorScreen = () => {
         path={PRIVATE_APPLICATION_URL.PRIVATE_UPDATE_ACCOUNT.replace('/private', path)}
         component={UpdateInfo}
       />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PROFILE} component={Profile} />
       <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} />
     </Switch>
   );

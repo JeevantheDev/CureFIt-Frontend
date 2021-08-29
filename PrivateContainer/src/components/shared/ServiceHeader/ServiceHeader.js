@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ServiceHeader = ({ children, title }) => {
+export const ServiceHeader = ({ children, type = 'secondary', title }) => {
   const classes = useStyles();
   return (
     <Box display="flex" mb={2} justifyContent="space-between" alignItems="center" className={classes.parent}>
-      <Typography className={classes.serviceTitle} color="secondary">
+      <Typography className={classes.serviceTitle} color={type}>
         {title}
       </Typography>
       {children}
@@ -32,5 +32,6 @@ export const ServiceHeader = ({ children, title }) => {
 
 ServiceHeader.propTypes = {
   children: PropTypes.node,
+  type: PropTypes.string,
   title: PropTypes.string.isRequired,
 };

@@ -4,6 +4,17 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import ChatIcon from '@material-ui/icons/Chat';
 import { Box } from '@material-ui/core';
 
+import { ClinicInfo } from '../../components/ProfileDetails/Info/ClinicInfo';
+import { Educations } from '../../components/ProfileDetails/Info/Educations';
+import { Experiences } from '../../components/ProfileDetails/Info/Experiences';
+import { Specalizations } from '../../components/ProfileDetails/Info/Specalizations';
+import { TrainingCertificates } from '../../components/ProfileDetails/Info/TrainingCertificates';
+
+export const INFO_TABS = {
+  label: ['Info', 'Specalization', 'Education', 'Experience', 'Training & Certificates'],
+  panels: [ClinicInfo, Specalizations, Educations, Experiences, TrainingCertificates],
+};
+
 export const DEFAULT = {
   LIMIT: 0,
   PAGE: 0,

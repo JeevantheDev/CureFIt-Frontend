@@ -5,6 +5,7 @@ import { Grid } from '@material-ui/core';
 import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
 import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
 import { Reviews } from '../../../components/Reviews/Reviews';
+import { INFO_TABS } from '../../../app/entity/constant';
 
 const DoctorProfile = (props) => {
   const { slug: profileId } = props.match.params;
@@ -26,7 +27,12 @@ const DoctorProfile = (props) => {
     <Grid container spacing={2}>
       <Grid item xs={12} md={7}>
         <Profile profile={currentProfile} isLoading={pageLoading} />
-        <ProfileDetails isLoading={pageLoading} />
+        <ProfileDetails
+          isEdit={false}
+          infoTabLabel={INFO_TABS.label}
+          infoTabPanel={INFO_TABS.panels}
+          isLoading={pageLoading}
+        />
         <Reviews />
       </Grid>
       <Grid item xs={12} md={5}>
