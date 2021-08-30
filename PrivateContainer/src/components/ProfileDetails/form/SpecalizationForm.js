@@ -45,7 +45,7 @@ export const SpecalizationForm = ({ currentSpecalization, loader, setFormError, 
 };
 
 SpecalizationForm.propTypes = {
-  currentSpecalization: PropTypes.string.isRequired,
+  currentSpecalization: PropTypes.arrayOf(Object).isRequired,
   loader: PropTypes.bool.isRequired,
   formError: PropTypes.string.isRequired,
   setFormError: PropTypes.func.isRequired,

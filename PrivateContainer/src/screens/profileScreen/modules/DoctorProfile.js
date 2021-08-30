@@ -36,7 +36,7 @@ const DoctorProfile = (props) => {
         <Reviews />
       </Grid>
       <Grid item xs={12} md={5}>
-        <ClinicDetails inGroup={false} clinics={clinics} isLoading={pageLoading} />
+        <ClinicDetails isEdit={false} inGroup={false} clinics={clinics} isLoading={pageLoading} />
       </Grid>
     </Grid>
   );

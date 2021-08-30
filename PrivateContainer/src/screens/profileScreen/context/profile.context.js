@@ -28,7 +28,7 @@ const ProfileProvider = ({ children }) => {
       value={{
         loaderState: [pageLoading],
         profileState: [currentProfile, setCurrentProfile],
-        clinicState: [clinics],
+        clinicState: [clinics, setClinics],
         timeSlotState: [currentSlot, setCurrentSlot],
         reviewState: [reviews],
         limitState: [limit, setLimit],

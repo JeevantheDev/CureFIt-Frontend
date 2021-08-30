@@ -83,13 +83,17 @@ export const ClinicInfo = () => {
                   {moment(clinic.available_slots[clinic.available_slots.length - 1].date).format('dddd')}
                 </Typography>
                 <Typography className={`${classes.subTextTwo}`} gutterBottom>
-                  {moment(clinic.available_slots[0].date).format('LT')} -{' '}
-                  {moment(clinic.available_slots[clinic.available_slots.length - 1].date).format('LT')}
+                  {clinic.available_slots[0].time_slots.length > 0 ? clinic.available_slots[0].time_slots[0] : '-'} -{' '}
+                  {clinic.available_slots[clinic.available_slots.length - 1].time_slots.length > 0
+                    ? clinic.available_slots[clinic.available_slots.length - 1].time_slots[
+                        clinic.available_slots[clinic.available_slots.length - 1].time_slots.length - 1
+                      ]
+                    : '-'}
                 </Typography>
               </Grid>
               <Grid xs={12} item md={3}>
                 <Typography className={`${classes.subText}  ${classes.boldText}`} display="block">
-                  {`₹${clinic.fees}`}
+                  {`${clinic.fees}`}
                 </Typography>
                 <Button
                   onClick={(e) => {

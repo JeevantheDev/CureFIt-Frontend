@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { createProfile, updateProfile } from '../../../app/api/profile.api';
+import { createProfile, updateProfile, createClinic, updateClinic, deleteClinic } from '../../../app/api/profile.api';
 import { AppContext } from '../../../app/context/app.context';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
 
@@ -13,6 +13,7 @@ const DoctorProvider = ({ children }) => {
   } = useContext(AppContext);
   const {
     profileState: [currentProfile, setCurrentProfile],
+    clinicState: [clinics, setClinics],
   } = useContext(ProfileContext);
 
   const [isEditFlag, setIsEditFlag] = useState(false);
@@ -20,6 +21,7 @@ const DoctorProvider = ({ children }) => {
   const [selectedEducation, setSelectedEducation] = useState(null);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [selectedTrainingCertificate, setSelectedTrainingCertificate] = useState(null);
+  const [selectedClinic, setSelectedClinic] = useState(null);
 
   const createUpdateProfileAction = async (profileObj) => {
     setFormError('');
@@ -37,6 +39,44 @@ const DoctorProvider = ({ children }) => {
     setSubmitLoader(false);
   };
 
+  const createUpdateClinicAction = async (clinicObj) => {
+    setFormError('');
+    setSubmitLoader(true);
+    const res = isEditFlag ? await updateClinic(clinicObj) : await createClinic(clinicObj);
+    if (res.data) {
+      const index = clinics.findIndex((x) => x._id === res.data._id);
+      if (index !== -1) {
+        const clinicList = clinics;
+        clinicList[index] = res.data;
+        setClinics(clinicList);
+      } else {
+        setClinics((prevList) => [...prevList, res.data]);
+      }
+      setSelectedClinic(null);
+    } else {
+      setFormError(res.error || 'NETWORK ERROR');
+    }
+    setSubmitLoader(false);
+  };
+
+  const deleteClinicAction = async (clinicId) => {
+    setFormError('');
+    setSubmitLoader(true);
+    const res = await deleteClinic(clinicId);
+    if (res.data) {
+      const index = clinics.findIndex((x) => x._id === res.data.id);
+      if (index !== -1) {
+        const clinicList = clinics;
+        clinicList.splice(index, 1);
+        setClinics(clinicList);
+      }
+      setSelectedClinic(null);
+    } else {
+      setFormError(res.error || 'NETWORK ERROR');
+    }
+    setSubmitLoader(false);
+  };
+
   return (
     <DoctorContext.Provider
       value={{
@@ -44,8 +84,11 @@ const DoctorProvider = ({ children }) => {
         specalistState: [selectedSpecalization, setSelectedSpecalization],
         educataionState: [selectedEducation, setSelectedEducation],
         experienceState: [selectedExperience, setSelectedExperience],
-        trainAndCertiState: [selectedTrainingCertificate, setSelectedTrainingCertificate],
+        trainAndCertificateState: [selectedTrainingCertificate, setSelectedTrainingCertificate],
+        clinicState: [selectedClinic, setSelectedClinic],
         createUpdateProfileAction,
+        createUpdateClinicAction,
+        deleteClinicAction,
       }}
     >
       {children}

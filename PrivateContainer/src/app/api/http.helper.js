@@ -117,3 +117,28 @@ export async function patchRequest(url, param, config) {
   }
   return responseBody;
 }
+
+//Delete Request
+
+/**
+ * @async
+ * @param {string} url
+ * @param {requestCallback} config
+ * @returns {Promise<any>}
+ */
+export async function deleteRequest(url, config) {
+  let responseBody = {};
+  try {
+    await axios
+      .delete(BASE_API_URL + url, config)
+      .then((response) => {
+        responseBody = response.data;
+      })
+      .catch((err) => {
+        responseBody = err.response.data;
+      });
+  } catch (error) {
+    responseBody = error;
+  }
+  return responseBody;
+}

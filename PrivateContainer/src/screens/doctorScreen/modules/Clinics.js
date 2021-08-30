@@ -1,14 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
-import { Grid } from '@material-ui/core';
 import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
-import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
+import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
 import { AppContext } from '../../../app/context/app.context';
-import { INFO_TABS } from '../../../app/entity/constant';
 
-const Profile = () => {
+const Clinics = () => {
   const {
     loaderState: [pageLoading],
+    clinicState: [clinics],
     fetchProfileById,
   } = useContext(ProfileContext);
 
@@ -22,20 +21,11 @@ const Profile = () => {
 
   return (
     <div>
-      <ServiceHeader title="Your Profile Details" />
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <ProfileDetails
-            isEdit={true}
-            infoTabLabel={INFO_TABS.label.slice(1)}
-            infoTabPanel={INFO_TABS.panels.slice(1)}
-            isLoading={pageLoading}
-          />
-        </Grid>
-      </Grid>
+      <ServiceHeader title="Your Clinic Details" />
+      <ClinicDetails isEdit={true} clinics={clinics} isLoading={pageLoading} />
     </div>
   );
 };
 
 // eslint-disable-next-line import/no-default-export
-export default Profile;
+export default Clinics;

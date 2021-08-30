@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AppContext } from '../../../app/context/app.context';
-import { Box, IconButton } from '@material-ui/core';
+import { Box, IconButton, Typography } from '@material-ui/core';
 import { DoctorContext } from '../../../screens/doctorScreen/context/doctor.context';
 import ModalLayout from '../../shared/ModalLayout/ModalLayout';
 import { SpecalizationForm } from '../form/SpecalizationForm';
@@ -64,16 +64,17 @@ export const Specalizations = ({ isEdit }) => {
     setSelectedSpecalization({ value: specalist, index: index, type: 'Update' });
     setIsEditFlag(true);
   };
+
   const handleDeleteSpecalist = (index) => {
     setFormError('');
     setSelectedSpecalization({ index: index, type: 'Delete' });
     setIsEditFlag(true);
   };
 
-  const handleSubmitAction = (specalizeValue) => {
+  const handleSubmitAction = (formValue) => {
     let payloadObj;
     if (selectedSpecalization.type === 'Update') {
-      currentProfile.specializations[selectedSpecalization.index] = specalizeValue;
+      currentProfile.specializations[selectedSpecalization.index] = formValue;
       payloadObj = {
         specializations: currentProfile.specializations,
       };
@@ -84,7 +85,7 @@ export const Specalizations = ({ isEdit }) => {
         specializations: currentProfile.specializations,
       };
     } else {
-      payloadObj = { specializations: [...currentProfile.specializations, specalizeValue] };
+      payloadObj = { specializations: [...currentProfile.specializations, formValue] };
     }
     createUpdateProfileAction(isEditFlag ? { ...payloadObj, id: currentAuthUser.profile.id } : payloadObj);
   };
@@ -103,11 +104,13 @@ export const Specalizations = ({ isEdit }) => {
               e.stopPropagation();
               handleAddSpecalist();
             }}
-            variant="text"
+            variant="outlined"
             startIcon={<AddIcon />}
-            color="primary"
+            color="secondary"
           >
-            <span>Add Specalization</span>
+            <Typography variant="caption" color="primary">
+              Add Specalization
+            </Typography>
           </Button>
         </Box>
       )}

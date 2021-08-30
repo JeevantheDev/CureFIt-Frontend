@@ -6,4 +6,8 @@ export const API_ROUTES = {
   // Auth API Routes
   UPDATE_DETAILS: '/auth/updateDetails',
   UPDATE_PASSWORD: '/auth/updatepassword',
+
+  // Clinic Routes
+  CREATE_CLINIC: '/profile/id/clinic',
+  UPDATE_CLINIC: '/clinic/id',
 };

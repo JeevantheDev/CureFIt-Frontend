@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,6 +13,9 @@ import { TabPanel, a11yProps } from '../shared/TabPanel/TabPanel';
 import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
 import { useHistory, useParams } from 'react-router-dom';
 import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { DoctorContext } from '../../screens/doctorScreen/context/doctor.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TimeSlots = ({ clinicId, slots }) => {
+const TimeSlots = ({ clinicId, slots, isEdit }) => {
   const classes = useStyles();
   const history = useHistory();
   const { slug } = useParams();
@@ -41,11 +44,22 @@ const TimeSlots = ({ clinicId, slots }) => {
   const {
     timeSlotState: [currentSlot, setCurrentSlot],
   } = useContext(ProfileContext);
+  const {
+    editState: [isEditFlag, setIsEditFlag],
+  } = useContext(DoctorContext);
 
-  const [value, setValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
+  const [currTime, setCurrTime] = useState(new Date());
+  const [timeLists, setTimeLists] = useState([]);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+
+  useEffect(() => {
+    setTimeLists(slots[tabValue].time_slots.map((time) => time));
+  }, [slots, tabValue]);
 
   const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
+    setSelectedSlot(null);
   };
 
   const handleSelectSlot = (clinic_id, date, slot) => {
@@ -61,11 +75,36 @@ const TimeSlots = ({ clinicId, slots }) => {
     return () => clearTimeout(timer);
   };
 
+  const handleDeleteSlot = (index, slotId) => {
+    setIsEditFlag(true);
+    setSelectedSlot(slotId);
+    const newTimeList = timeLists.filter((time, idx) => idx !== index);
+    setTimeLists(newTimeList);
+  };
+
+  const AddTimeButton = forwardRef(({ value, onClick }, ref) => (
+    <Button
+      onClick={(e) => {
+        e.preventDefault();
+        setIsEditFlag(true);
+        setSelectedSlot(slots[tabValue]._id);
+        onClick(e);
+      }}
+      ref={ref}
+      color="secondary"
+      variant="outlined"
+    >
+      <Typography color="primary" variant="caption">
+        Add a Time Slot
+      </Typography>
+    </Button>
+  ));
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.borderAppbar} elevation={0} position="static" color="inherit">
         <Tabs
-          value={value}
+          value={tabValue}
           onChange={handleTabChange}
           indicatorColor="primary"
           textColor="secondary"
@@ -87,48 +126,72 @@ const TimeSlots = ({ clinicId, slots }) => {
           ))}
         </Tabs>
       </AppBar>
-
+      {isEdit && (
+        <Box mt={2} display="flex" justifyContent="center" alignItems="center">
+          <DatePicker
+            selected={currTime}
+            onChange={(date) => {
+              setCurrTime(date);
+              setTimeLists((prevList) => [...prevList, moment(date).format('LT')]);
+            }}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={15}
+            timeCaption="Time"
+            dateFormat="h:mm aa"
+            withPortal
+            customInput={<AddTimeButton />}
+          />
+        </Box>
+      )}
       {slots.map((slot, index) => (
-        <TabPanel key={index} value={value} index={index}>
-          <Box display="flex" justifyContent="space-evenly" alignItems="center" flexWrap="wrap">
-            {slot.time_slots.map((time, i) => (
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSelectSlot(clinicId, slot.date, time);
-                }}
-                style={{ marginBottom: '1rem' }}
-                endIcon={<CancelIcon color="secondary" />}
-                key={i}
-                variant={
-                  currentSlot &&
-                  currentSlot.id === clinicId &&
-                  currentSlot.date === slot.date &&
-                  currentSlot.slot === time
-                    ? 'contained'
-                    : 'outlined'
-                }
-                color="primary"
-              >
-                {time}
+        <>
+          <TabPanel key={index} value={tabValue} index={index}>
+            <Box display="flex" justifyContent="space-evenly" alignItems="center" flexWrap="wrap">
+              {timeLists.map((time, i) => (
+                <>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      !isEdit ? handleSelectSlot(clinicId, slot.date, time) : handleDeleteSlot(i, slot._id);
+                    }}
+                    style={{ marginBottom: '1rem' }}
+                    endIcon={isEdit && <CancelIcon color="secondary" />}
+                    key={i}
+                    variant={
+                      currentSlot &&
+                      currentSlot.id === clinicId &&
+                      currentSlot.date === slot.date &&
+                      currentSlot.slot === time
+                        ? 'contained'
+                        : 'outlined'
+                    }
+                    color="primary"
+                  >
+                    {time}
+                  </Button>
+                </>
+              ))}
+            </Box>
+          </TabPanel>
+          {isEditFlag && slot._id === selectedSlot && (
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Button color="primary" variant="contained" size="small">
+                <Typography variant="caption">Submit</Typography>
               </Button>
-            ))}
-          </Box>
-        </TabPanel>
+            </Box>
+          )}
+        </>
       ))}
     </div>
   );
 };
 
 TimeSlots.propTypes = {
+  isEdit: PropTypes.bool.isRequired,
   clinicId: PropTypes.string.isRequired,
   slots: PropTypes.array.isRequired,
 };
 
 // eslint-disable-next-line import/no-default-export
-export default React.memo(TimeSlots, (prevProps, nextProps) => {
-  if (prevProps.clinicId === nextProps.clinicId) {
-    return true;
-  }
-  return false;
-});
+export default TimeSlots;

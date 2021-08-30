@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   avatarText: {
     '& > span': {
       color: theme.palette.background.default,
-      fontSize: '20px',
+      fontSize: '16px',
       lineHeight: '18px',
       textAlign: 'center',
     },
