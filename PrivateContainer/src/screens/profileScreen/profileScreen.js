@@ -1,7 +1,7 @@
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import DoctorAppointment from './modules/DoctorAppointment';
 import DoctorProfile from './modules/DoctorProfile';
 

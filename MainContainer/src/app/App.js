@@ -6,10 +6,12 @@ import { Header } from '../components/Header/Header';
 import theme from './utils/theme';
 import { PublicRoutes } from './router/PublicRoutes';
 import '../index.css';
-import { Container, CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import { Progress } from '../components/shared/Progress';
 import { AuthContext } from '../screens/authContainerScreen/context/auth.context';
 import { PrivateRoutes } from './router/PrivateRoutes';
+import { CONTAINER_ROUTES } from './router/ApplicationRoutes';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'co',
@@ -17,6 +19,20 @@ const generateClassName = createGenerateClassName({
 });
 
 const history = createBrowserHistory();
+
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+  },
+}));
 
 const App = () => {
   const {
@@ -26,6 +42,8 @@ const App = () => {
     userRedirectAction,
     signout,
   } = useContext(AuthContext);
+
+  const classes = useStyles();
 
   const [isUserValid, setIsUserValid] = useState(false);
 
@@ -51,17 +69,16 @@ const App = () => {
           <CssBaseline />
           <Header />
           <Suspense fallback={<Progress />}>
-            <Container>
-              {isAuthenticating ? (
-                <h1>Please wait..</h1>
-              ) : (
-                <>
-                  <PublicRoutes isUserValid={isUserValid} />
-                  {!isUserValid && <Redirect to="/" />}
-                  <PrivateRoutes />
-                </>
-              )}
-            </Container>
+            {isAuthenticating ? (
+              <p>Please wait..</p>
+            ) : (
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <PublicRoutes isUserValid={isUserValid} />
+                {!isUserValid && <Redirect to={CONTAINER_ROUTES.PUBLIC_CONTAINER} />}
+                <PrivateRoutes />
+              </main>
+            )}
           </Suspense>
         </ThemeProvider>
       </StylesProvider>

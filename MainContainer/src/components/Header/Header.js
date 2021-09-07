@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     borderBottom: `2px solid ${theme.palette.divider}`,
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawerPaper: {
     width: 300,
@@ -48,18 +49,31 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = ({ window }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpenLeft, setMobileOpenLeft] = React.useState(false);
+  const [mobileOpenRight, setMobileOpenRight] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerToggleRight = () => {
+    setMobileOpenRight(!mobileOpenRight);
+  };
+
+  const handleDrawerToggleLeft = () => {
+    setMobileOpenLeft(!mobileOpen);
   };
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+      <AppBar position="fixed" color="default" elevation={0} className={classes.appBar}>
         <Container>
           <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggleLeft}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography
               component={RouterLink}
               to={CONTAINER_ROUTES.PUBLIC_CONTAINER}
@@ -76,7 +90,7 @@ export const Header = ({ window }) => {
               color="inherit"
               aria-label="open drawer"
               edge="start"
-              onClick={handleDrawerToggle}
+              onClick={handleDrawerToggleRight}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -90,8 +104,8 @@ export const Header = ({ window }) => {
             container={window !== undefined ? () => window().document.body : undefined}
             variant="temporary"
             anchor={'right'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
+            open={mobileOpenRight}
+            onClose={handleDrawerToggleRight}
             classes={{
               paper: classes.drawerPaper,
             }}

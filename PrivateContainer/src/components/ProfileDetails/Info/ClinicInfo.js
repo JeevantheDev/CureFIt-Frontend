@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import { Box, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, Button, Box, Divider } from '@material-ui/core';
-import { ProfileContext } from '../../../screens/profileScreen/context/profile.context';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import moment from 'moment';
+import React, { useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+
 import { PRIVATE_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
+import { ProfileContext } from '../../../screens/profileScreen/context/profile.context';
 
 const useStyles = makeStyles((theme) => ({
   subText: {
@@ -83,13 +84,17 @@ export const ClinicInfo = () => {
                   {moment(clinic.available_slots[clinic.available_slots.length - 1].date).format('dddd')}
                 </Typography>
                 <Typography className={`${classes.subTextTwo}`} gutterBottom>
-                  {moment(clinic.available_slots[0].date).format('LT')} -{' '}
-                  {moment(clinic.available_slots[clinic.available_slots.length - 1].date).format('LT')}
+                  {clinic.available_slots[0].time_slots.length > 0 ? clinic.available_slots[0].time_slots[0] : '-'} -{' '}
+                  {clinic.available_slots[clinic.available_slots.length - 1].time_slots.length > 0
+                    ? clinic.available_slots[clinic.available_slots.length - 1].time_slots[
+                        clinic.available_slots[clinic.available_slots.length - 1].time_slots.length - 1
+                      ]
+                    : '-'}
                 </Typography>
               </Grid>
               <Grid xs={12} item md={3}>
                 <Typography className={`${classes.subText}  ${classes.boldText}`} display="block">
-                  {`₹${clinic.fees}`}
+                  {`${clinic.fees}`}
                 </Typography>
                 <Button
                   onClick={(e) => {

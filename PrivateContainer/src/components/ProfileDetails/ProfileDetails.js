@@ -1,18 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { TabPanel, a11yProps } from '../shared/TabPanel/TabPanel';
-import { ClinicInfo } from './Info/ClinicInfo';
-import { Educations } from './Info/Educations';
-import { Experiences } from './Info/Experiences';
-import { Specalizations } from './Info/Specalizations';
-import { TrainingCertificates } from './Info/TrainingCertificates';
+import { makeStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import { a11yProps, TabPanel } from '../shared/TabPanel/TabPanel';
 
 const useStyles = makeStyles((theme) => ({
   parent: {
@@ -37,12 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const INFO_TABS = {
-  label: ['Info', 'Specalization', 'Education', 'Experience', 'Training & Certificates'],
-  panels: [ClinicInfo, Specalizations, Educations, Experiences, TrainingCertificates],
-};
-
-export const ProfileDetails = ({ isLoading }) => {
+export const ProfileDetails = ({ isLoading, isEdit, infoTabLabel, infoTabPanel }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -61,7 +52,7 @@ export const ProfileDetails = ({ isLoading }) => {
           variant="scrollable"
           scrollButtons="auto"
         >
-          {(isLoading ? Array.from(new Array(4)) : INFO_TABS.label).map((service, idx) => (
+          {(isLoading ? Array.from(new Array(4)) : infoTabLabel).map((service, idx) => (
             <Tab
               className={`${classes.tablabelWidth} ${
                 value === idx ? classes.activeTabBackground : classes.notActiveTabBackground
@@ -86,7 +77,7 @@ export const ProfileDetails = ({ isLoading }) => {
           ))}
         </Tabs>
       </AppBar>
-      {(isLoading ? Array.from(new Array(4)) : INFO_TABS.panels).map((Panel, idx) => (
+      {(isLoading ? Array.from(new Array(4)) : infoTabPanel).map((Panel, idx) => (
         <TabPanel
           className={`${classes.tabPanelWidth} ${
             value === idx ? classes.activeTabBackground : classes.notActiveTabBackground
@@ -94,7 +85,7 @@ export const ProfileDetails = ({ isLoading }) => {
           value={value}
           index={idx}
         >
-          {Panel ? <Panel /> : <Skeleton variant="rect" width="50%" />}
+          {Panel ? <Panel isEdit={isEdit} /> : <Skeleton variant="rect" width="50%" />}
         </TabPanel>
       ))}
     </Box>
@@ -102,5 +93,8 @@ export const ProfileDetails = ({ isLoading }) => {
 };
 
 ProfileDetails.propTypes = {
+  isEdit: PropTypes.bool.isRequired,
+  infoTabLabel: PropTypes.array.isRequired,
+  infoTabPanel: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };

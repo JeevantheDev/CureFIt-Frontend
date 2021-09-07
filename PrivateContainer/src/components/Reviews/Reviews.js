@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Divider, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import { Divider, Typography, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Skeleton from '@material-ui/lab/Skeleton';
+import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+
 import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
 import { ReviewCard } from './ReviewCard/ReviewCard';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { ReviewForm } from './ReviewForm/ReviewForm';
 
 const useStyles = makeStyles((theme) => ({
