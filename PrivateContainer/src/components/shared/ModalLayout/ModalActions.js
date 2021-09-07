@@ -1,5 +1,5 @@
-import { withStyles } from '@material-ui/core/styles';
 import MuiDialogActions from '@material-ui/core/DialogActions';
+import { withStyles } from '@material-ui/core/styles';
 
 const ModalActions = withStyles((theme) => ({
   root: {

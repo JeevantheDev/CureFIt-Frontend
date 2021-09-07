@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { updateUserDetails, updateUserPassword } from '../api/shared.api';
+import { FormContext } from './form.context';
 
 export const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [submitLoader, setSubmitLoader] = useState(false);
-  const [formError, setFormError] = useState('');
+  const {
+    loaderState: [submitLoader, setSubmitLoader],
+    formState: [formError, setFormError],
+  } = useContext(FormContext);
   const [currentAuthUser, setCurrentAuthUser] = useState(
     localStorage.getItem('loggedInUser') ? JSON.parse(localStorage.getItem('loggedInUser') || '{}') : {},
   );
@@ -32,10 +35,8 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        loaderState: [submitLoader, setSubmitLoader],
         userState: [currentAuthUser],
         tokenState: [currentToken],
-        formState: [formError, setFormError],
         updateUserInfoAction,
         updateUserPasswordAction,
       }}

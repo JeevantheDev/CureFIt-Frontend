@@ -1,27 +1,29 @@
-import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { createProfile, updateProfile, createClinic, updateClinic, deleteClinic } from '../../../app/api/profile.api';
-import { AppContext } from '../../../app/context/app.context';
+import React, { useContext, useState } from 'react';
+
+import { createClinic, createProfile, deleteClinic, updateClinic, updateProfile } from '../../../app/api/profile.api';
+import { FormContext } from '../../../app/context/form.context';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
 
 export const DoctorContext = React.createContext();
 
 const DoctorProvider = ({ children }) => {
   const {
+    editState: [isEditFlag, setIsEditFlag],
     loaderState: [submitLoader, setSubmitLoader],
     formState: [formError, setFormError],
-  } = useContext(AppContext);
+    specalistState: [selectedSpecalization, setSelectedSpecalization],
+    educataionState: [selectedEducation, setSelectedEducation],
+    experienceState: [selectedExperience, setSelectedExperience],
+    trainAndCertificateState: [selectedTrainingCertificate, setSelectedTrainingCertificate],
+    clinicState: [selectedClinic, setSelectedClinic],
+  } = useContext(FormContext);
+
   const {
+    loaderState: [pageLoading, setPageLoading],
     profileState: [currentProfile, setCurrentProfile],
     clinicState: [clinics, setClinics],
   } = useContext(ProfileContext);
-
-  const [isEditFlag, setIsEditFlag] = useState(false);
-  const [selectedSpecalization, setSelectedSpecalization] = useState(null);
-  const [selectedEducation, setSelectedEducation] = useState(null);
-  const [selectedExperience, setSelectedExperience] = useState(null);
-  const [selectedTrainingCertificate, setSelectedTrainingCertificate] = useState(null);
-  const [selectedClinic, setSelectedClinic] = useState(null);
 
   const createUpdateProfileAction = async (profileObj) => {
     setFormError('');
@@ -42,13 +44,14 @@ const DoctorProvider = ({ children }) => {
   const createUpdateClinicAction = async (clinicObj) => {
     setFormError('');
     setSubmitLoader(true);
-    const res = isEditFlag ? await updateClinic(clinicObj) : await createClinic(clinicObj);
+    const res = clinicObj.isEditFlag ? await updateClinic(clinicObj) : await createClinic(clinicObj);
     if (res.data) {
       const index = clinics.findIndex((x) => x._id === res.data._id);
       if (index !== -1) {
         const clinicList = clinics;
         clinicList[index] = res.data;
         setClinics(clinicList);
+        setIsEditFlag(false);
       } else {
         setClinics((prevList) => [...prevList, res.data]);
       }
@@ -80,12 +83,6 @@ const DoctorProvider = ({ children }) => {
   return (
     <DoctorContext.Provider
       value={{
-        editState: [isEditFlag, setIsEditFlag],
-        specalistState: [selectedSpecalization, setSelectedSpecalization],
-        educataionState: [selectedEducation, setSelectedEducation],
-        experienceState: [selectedExperience, setSelectedExperience],
-        trainAndCertificateState: [selectedTrainingCertificate, setSelectedTrainingCertificate],
-        clinicState: [selectedClinic, setSelectedClinic],
         createUpdateProfileAction,
         createUpdateClinicAction,
         deleteClinicAction,

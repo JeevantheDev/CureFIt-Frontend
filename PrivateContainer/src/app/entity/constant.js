@@ -31,9 +31,15 @@ export const USER_TYPE = {
   USER: '3',
 };
 
+export const ROLES = Object.keys(USER_TYPE).reduce((obj, key) => {
+  obj[USER_TYPE[key]] = key;
+  return obj;
+}, {});
+
 export const APPOINTMENT_TYPE = [
   {
     type: '1',
+    value: 'person',
     label: () => (
       <Box display="flex">
         <PersonIcon />
@@ -43,6 +49,7 @@ export const APPOINTMENT_TYPE = [
   },
   {
     type: '2',
+    value: 'video',
     label: () => (
       <Box display="flex">
         <VideoCallIcon />
@@ -52,6 +59,7 @@ export const APPOINTMENT_TYPE = [
   },
   {
     type: '3',
+    value: 'chat',
     label: () => (
       <Box display="flex">
         <ChatIcon />
@@ -61,6 +69,7 @@ export const APPOINTMENT_TYPE = [
   },
   {
     type: '1,2',
+    value: 'person&video',
     label: () => (
       <Box display="flex">
         Both <PersonIcon />
@@ -72,6 +81,7 @@ export const APPOINTMENT_TYPE = [
   },
   {
     type: '2,3',
+    value: 'video&chat',
     label: () => (
       <Box display="flex">
         Both
@@ -83,3 +93,76 @@ export const APPOINTMENT_TYPE = [
     ),
   },
 ];
+
+export const APPOINTMENT_FORMAT = {
+  1: (
+    <Box display="flex">
+      <PersonIcon />
+      (Person)
+    </Box>
+  ),
+  2: (
+    <Box display="flex">
+      <VideoCallIcon />
+      (VideoCall)
+    </Box>
+  ),
+  3: (
+    <Box display="flex">
+      <ChatIcon />
+      (Chat)
+    </Box>
+  ),
+  '1,2': (
+    <Box display="flex">
+      Both <PersonIcon />
+      (Person)
+      <VideoCallIcon />
+      (VideoCall)
+    </Box>
+  ),
+  '2,3': (
+    <Box display="flex">
+      Both
+      <VideoCallIcon />
+      (VideoCall)
+      <ChatIcon />
+      (Chat)
+    </Box>
+  ),
+};
+
+export const PATIENT_MODAL = [
+  { key: 1, label: 'patientName', value: 'PATIENT NAME' },
+  { key: 2, label: 'patientAge', value: 'PATIENT AGE' },
+  { key: 3, label: 'parentName', value: "PARENT'S NAME" },
+  { key: 4, label: 'clinic', value: 'CLINIC' },
+  { key: 5, label: 'appointmentType', value: 'APPOINTMENT TYPE' },
+  { key: 6, label: 'appointmentDate', value: 'APPOINTMENT DATE' },
+  { key: 7, label: 'appointmentSlot', value: 'APPOINTMENT SLOT' },
+  { key: 8, label: 'patientId', value: 'PATIENT ID' },
+];
+
+export const TABLE_ROWS = {
+  PATIENT_LIST: [
+    'User Name',
+    'Patient Name',
+    'Patient Age',
+    'Appointment Date',
+    'Appointment Slot',
+    'Appointment Type',
+    '',
+  ],
+  APPOINTMENT_LIST: [
+    '',
+    'Doctor Name',
+    'Patient Name',
+    'Patient Age',
+    'Appointment Date',
+    'Appointment Slot',
+    'Appointment Type',
+    '',
+    '',
+    '',
+  ],
+};

@@ -1,9 +1,11 @@
+import { createBrowserHistory, createMemoryHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createBrowserHistory, createMemoryHistory } from 'history';
-import ProfileProvider from './screens/profileScreen/context/profile.context';
+
 import App from './app/App';
 import AppProvider from './app/context/app.context';
+import FormProvider from './app/context/form.context';
+import ProfileProvider from './screens/profileScreen/context/profile.context';
 
 const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth }) => {
   const history =
@@ -14,11 +16,13 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth }) => {
   onNavigate && history.listen(onNavigate);
 
   ReactDOM.render(
-    <AppProvider>
-      <ProfileProvider>
-        <App isUserAuth={isUserAuth} history={history} />
-      </ProfileProvider>
-    </AppProvider>,
+    <FormProvider>
+      <AppProvider>
+        <ProfileProvider>
+          <App isUserAuth={isUserAuth} history={history} />
+        </ProfileProvider>
+      </AppProvider>
+    </FormProvider>,
     el,
   );
 

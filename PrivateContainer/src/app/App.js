@@ -7,6 +7,8 @@ import themePrivate from './utils/themePrivate';
 import { CssBaseline } from '@material-ui/core';
 import { AppContext } from './context/app.context';
 import DoctorProvider from '../screens/doctorScreen/context/doctor.context';
+import './index.css';
+import UserProvider from '../screens/userScreen/context/user.context';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'pr',
@@ -23,17 +25,19 @@ const App = ({ history, isUserAuth }) => {
   }, [currentToken]);
 
   return (
-    <DoctorProvider>
-      <StylesProvider generateClassName={generateClassName}>
-        <ThemeProvider theme={themePrivate}>
-          <CssBaseline />
-          <Router history={history}>
-            <PublicRoutes />
-            {isUserAuth && <PrivateRoutes />}
-          </Router>
-        </ThemeProvider>
-      </StylesProvider>
-    </DoctorProvider>
+    <UserProvider>
+      <DoctorProvider>
+        <StylesProvider generateClassName={generateClassName}>
+          <ThemeProvider theme={themePrivate}>
+            <CssBaseline />
+            <Router history={history}>
+              <PublicRoutes />
+              {isUserAuth && <PrivateRoutes />}
+            </Router>
+          </ThemeProvider>
+        </StylesProvider>
+      </DoctorProvider>
+    </UserProvider>
   );
 };
 

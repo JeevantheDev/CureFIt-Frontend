@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
+import { Box, Button, IconButton, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Typography, IconButton } from '@material-ui/core';
-import TimeSlots from './TimeSlots';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
-import { AppContext } from '../../app/context/app.context';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import Skeleton from '@material-ui/lab/Skeleton';
+import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+
+import { AppContext } from '../../app/context/app.context';
+import { FormContext } from '../../app/context/form.context';
 import { DoctorContext } from '../../screens/doctorScreen/context/doctor.context';
+import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
 import ModalLayout from '../shared/ModalLayout/ModalLayout';
 import { ClinicForm } from './form/ClinicForm';
+import TimeSlots from './TimeSlots';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,16 +63,16 @@ export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) =>
 
   const {
     tokenState: [currentToken],
-    formState: [formError, setFormError],
     userState: [currentAuthUser],
   } = useContext(AppContext);
 
   const {
+    formState: [formError, setFormError],
     editState: [isEditFlag, setIsEditFlag],
     clinicState: [selectedClinic, setSelectedClinic],
-    createUpdateClinicAction,
-    deleteClinicAction,
-  } = useContext(DoctorContext);
+  } = useContext(FormContext);
+
+  const { createUpdateClinicAction, deleteClinicAction } = useContext(DoctorContext);
 
   const [currentClinic, setCurrentClinic] = useState(null);
   const [openModal] = useState(true);
@@ -98,10 +100,10 @@ export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) =>
 
   const handleSubmitAction = (formObj) => {
     setFormError('');
-    if (formObj.clinic_name && formObj.clinic_address) {
+    if (formObj) {
       const payloadObj = {
         ...formObj,
-        isEditFlag,
+        isEditFlag: formObj.isEditFlag,
         profileId: currentAuthUser.profile._id,
       };
       createUpdateClinicAction(payloadObj);
@@ -224,7 +226,12 @@ export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) =>
               </Grid>
               <Grid item xs={12}>
                 {clinic && clinic.available_slots ? (
-                  <TimeSlots isEdit={isEdit} clinicId={clinic._id} slots={clinic.available_slots} />
+                  <TimeSlots
+                    onSubmit={handleSubmitAction}
+                    isEdit={isEdit}
+                    clinicId={clinic._id}
+                    slots={clinic.available_slots}
+                  />
                 ) : (
                   <Skeleton variant="rect" height="40%" />
                 )}

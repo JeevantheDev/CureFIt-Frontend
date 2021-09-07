@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import { Box, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, Button, Box, Divider } from '@material-ui/core';
-import { ProfileContext } from '../../../screens/profileScreen/context/profile.context';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import moment from 'moment';
+import React, { useContext, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+
 import { PRIVATE_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
+import { ProfileContext } from '../../../screens/profileScreen/context/profile.context';
 
 const useStyles = makeStyles((theme) => ({
   subText: {

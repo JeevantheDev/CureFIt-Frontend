@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import { ProfileContext } from '../../profileScreen/context/profile.context';
 import { Grid } from '@material-ui/core';
-import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
-import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
+import React, { useContext, useEffect } from 'react';
+
 import { AppContext } from '../../../app/context/app.context';
 import { INFO_TABS } from '../../../app/entity/constant';
+import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
+import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
+import { ProfileContext } from '../../profileScreen/context/profile.context';
 
 const Profile = () => {
   const {
@@ -17,7 +18,7 @@ const Profile = () => {
   } = useContext(AppContext);
 
   useEffect(() => {
-    fetchProfileById(currentAuthUser.profile.id);
+    currentAuthUser.profile && fetchProfileById(currentAuthUser.profile.id);
   }, []);
 
   return (

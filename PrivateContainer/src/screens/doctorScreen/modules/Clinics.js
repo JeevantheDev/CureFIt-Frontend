@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { ProfileContext } from '../../profileScreen/context/profile.context';
-import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
-import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
+
 import { AppContext } from '../../../app/context/app.context';
+import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
+import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
+import { ProfileContext } from '../../profileScreen/context/profile.context';
 
 const Clinics = () => {
   const {
@@ -16,13 +17,13 @@ const Clinics = () => {
   } = useContext(AppContext);
 
   useEffect(() => {
-    fetchProfileById(currentAuthUser.profile.id);
+    currentAuthUser.profile && fetchProfileById(currentAuthUser.profile.id);
   }, []);
 
   return (
     <div>
       <ServiceHeader title="Your Clinic Details" />
-      <ClinicDetails isEdit={true} clinics={clinics} isLoading={pageLoading} />
+      <ClinicDetails isEdit={true} clinics={clinics || []} isLoading={pageLoading} />
     </div>
   );
 };

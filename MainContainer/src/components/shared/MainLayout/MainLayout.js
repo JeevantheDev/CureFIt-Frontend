@@ -107,7 +107,7 @@ export const MainLayout = (props) => {
     setSelectedLink(linkIndex);
   };
 
-  const routeUpdate = (userId) => {
+  const routeProfile = (userId) => {
     setSelectedLink(null);
     const userPath = `/private/${ROLES[loggedinUser.user_type].toLowerCase()}`;
     const updatePathByUser = CONTAINER_ROUTES.PRIVATE_UPDATE_ACCOUNT.replace('/private', userPath);
@@ -125,7 +125,7 @@ export const MainLayout = (props) => {
             <ListItemText
               onClick={(e) => {
                 e.stopPropagation();
-                routeUpdate(loggedinUser._id);
+                routeProfile(loggedinUser._id);
               }}
               className={classes.avatarText}
               primary={loggedinUser.user_name}

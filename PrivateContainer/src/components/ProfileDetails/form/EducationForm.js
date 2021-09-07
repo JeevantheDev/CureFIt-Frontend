@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { TextField, Button, Grid } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 export const EducationForm = ({ currentEducation, loader, setFormError, formError, onSubmit }) => {
   const [degree, setDegree] = useState('');

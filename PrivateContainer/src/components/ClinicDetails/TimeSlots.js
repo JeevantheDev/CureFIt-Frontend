@@ -1,21 +1,25 @@
-import React, { useContext, useState, forwardRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import { Button } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import CancelIcon from '@material-ui/icons/Cancel';
 import moment from 'moment';
-import { TabPanel, a11yProps } from '../shared/TabPanel/TabPanel';
-import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
-import { useHistory, useParams } from 'react-router-dom';
-import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import PropTypes from 'prop-types';
+import React, { forwardRef, useCallback, useContext, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { DoctorContext } from '../../screens/doctorScreen/context/doctor.context';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { FormContext } from '../../app/context/form.context';
+import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
+import { a11yProps, TabPanel } from '../shared/TabPanel/TabPanel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TimeSlots = ({ clinicId, slots, isEdit }) => {
+const TimeSlots = ({ clinicId, slots, isEdit, onSubmit }) => {
   const classes = useStyles();
   const history = useHistory();
   const { slug } = useParams();
@@ -46,15 +50,17 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
   } = useContext(ProfileContext);
   const {
     editState: [isEditFlag, setIsEditFlag],
-  } = useContext(DoctorContext);
+  } = useContext(FormContext);
 
   const [tabValue, setTabValue] = useState(0);
   const [currTime, setCurrTime] = useState(new Date());
   const [timeLists, setTimeLists] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [isDocAvailable, setIsDocAvailable] = useState(false);
 
   useEffect(() => {
-    setTimeLists(slots[tabValue].time_slots.map((time) => time));
+    slots[tabValue] && setTimeLists(slots[tabValue].time_slots.map((time) => time));
+    slots[tabValue] && setIsDocAvailable(slots[tabValue].is_doc_available);
   }, [slots, tabValue]);
 
   const handleTabChange = (event, newValue) => {
@@ -80,6 +86,22 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
     setSelectedSlot(slotId);
     const newTimeList = timeLists.filter((time, idx) => idx !== index);
     setTimeLists(newTimeList);
+  };
+
+  const handleAddSlot = (availableCheck) => {
+    const slotObj = {
+      id: clinicId,
+      isEditFlag: availableCheck !== undefined ? true : isEditFlag,
+      available_slots: [
+        {
+          ...slots[tabValue],
+          is_doc_available: availableCheck !== undefined ? availableCheck : isDocAvailable,
+          time_slots: timeLists.sort((a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)),
+        },
+        ...slots.filter((slot, idx) => idx !== tabValue),
+      ].sort((a, b) => new Date(a.date) - new Date(b.date)),
+    };
+    onSubmit(slotObj);
   };
 
   const AddTimeButton = forwardRef(({ value, onClick }, ref) => (
@@ -127,7 +149,7 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
         </Tabs>
       </AppBar>
       {isEdit && (
-        <Box mt={2} display="flex" justifyContent="center" alignItems="center">
+        <Box mt={2} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
           <DatePicker
             selected={currTime}
             onChange={(date) => {
@@ -142,6 +164,23 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
             withPortal
             customInput={<AddTimeButton />}
           />
+          {slots[tabValue] && (
+            <FormControlLabel
+              value="end"
+              control={
+                <Checkbox
+                  onChange={(e) => {
+                    setIsDocAvailable(e.target.checked);
+                    handleAddSlot(e.target.checked);
+                  }}
+                  checked={isDocAvailable}
+                  color="primary"
+                />
+              }
+              label="I am available."
+              labelPlacement="end"
+            />
+          )}
         </Box>
       )}
       {slots.map((slot, index) => (
@@ -176,7 +215,15 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
           </TabPanel>
           {isEditFlag && slot._id === selectedSlot && (
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Button color="primary" variant="contained" size="small">
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddSlot();
+                }}
+                color="primary"
+                variant="contained"
+                size="small"
+              >
                 <Typography variant="caption">Submit</Typography>
               </Button>
             </Box>
@@ -188,7 +235,7 @@ const TimeSlots = ({ clinicId, slots, isEdit }) => {
 };
 
 TimeSlots.propTypes = {
-  isEdit: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool,
   clinicId: PropTypes.string.isRequired,
   slots: PropTypes.array.isRequired,
 };

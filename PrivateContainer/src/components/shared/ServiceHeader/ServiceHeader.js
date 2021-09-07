@@ -1,14 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   parent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1),
     minWidth: '100%',
+  },
+  flexContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
   serviceTitle: {
     fontWeight: 500,
@@ -21,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export const ServiceHeader = ({ children, type = 'secondary', title }) => {
   const classes = useStyles();
   return (
-    <Box display="flex" mb={2} justifyContent="space-between" alignItems="center" className={classes.parent}>
+    <Box mb={2} className={`${classes.parent} ${classes.flexContainer}`}>
       <Typography className={classes.serviceTitle} color={type}>
         {title}
       </Typography>

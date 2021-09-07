@@ -1,13 +1,15 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+
 import { USER_TYPE } from '../../app/entity/constant';
 import { withUserType } from '../../app/hoc/withUserType';
 import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
-
-import Dashboard from './modules/Dashboard';
-import Profile from './modules/Profile';
+import Appointments from './modules/Appointments';
 import Clinics from './modules/Clinics';
+import Dashboard from './modules/Dashboard';
+import Patients from './modules/Patients';
+import Profile from './modules/Profile';
 
 const DoctorScreen = () => {
   const { path } = useRouteMatch();
@@ -22,6 +24,8 @@ const DoctorScreen = () => {
       />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PROFILE} component={Profile} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_CLINICS} component={Clinics} />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS} component={Appointments} />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PATIENTS} component={Patients} />
       <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} />
     </Switch>
   );

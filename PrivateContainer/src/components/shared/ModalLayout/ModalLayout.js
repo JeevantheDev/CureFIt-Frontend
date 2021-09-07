@@ -1,8 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
-import ModalTitle from './ModalTitle';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import ModalContent from './ModalContent';
+import ModalTitle from './ModalTitle';
+
 // import ModalActions from './ModalActions';
 
 const ModalLayout = ({ children, title, open, handleClose }) => {

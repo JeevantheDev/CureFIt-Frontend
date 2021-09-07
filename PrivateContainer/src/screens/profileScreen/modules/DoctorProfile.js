@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { ProfileContext } from '../context/profile.context';
-import { Profile } from 'curefit';
 import { Grid } from '@material-ui/core';
+import { Profile } from 'curefit';
+import React, { useContext, useEffect } from 'react';
+
+import { INFO_TABS } from '../../../app/entity/constant';
 import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
 import { ProfileDetails } from '../../../components/ProfileDetails/ProfileDetails';
 import { Reviews } from '../../../components/Reviews/Reviews';
-import { INFO_TABS } from '../../../app/entity/constant';
+import { ProfileContext } from '../context/profile.context';
 
 const DoctorProfile = (props) => {
   const { slug: profileId } = props.match.params;

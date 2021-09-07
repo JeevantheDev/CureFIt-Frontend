@@ -1,11 +1,11 @@
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+
 import { USER_TYPE } from '../../app/entity/constant';
 import { withUserType } from '../../app/hoc/withUserType';
 import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
-
-import Dashboard from './modules/Dashboard';
 import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
+import Dashboard from './modules/Dashboard';
 
 const SellerScreen = () => {
   const { path } = useRouteMatch();

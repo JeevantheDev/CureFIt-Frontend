@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { TextField, Button, Grid } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 export const ExperienceForm = ({ currentExperience, loader, setFormError, formError, onSubmit }) => {
+  const [total_experience, setTotalExperience] = useState('');
   const [work_place, setWorkPlace] = useState('');
   const [position, setPosition] = useState('');
   const [year, setYear] = useState('');
 
   useEffect(() => {
+    setTotalExperience(currentExperience.total_experience);
     setWorkPlace(currentExperience.work_place);
     setPosition(currentExperience.position);
     setYear(currentExperience.year);
@@ -16,7 +18,9 @@ export const ExperienceForm = ({ currentExperience, loader, setFormError, formEr
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    work_place && position && year ? onSubmit({ work_place, position, year }) : setFormError('FILL ALL THE DATA');
+    work_place && position && year && total_experience
+      ? onSubmit({ total_experience, work_place, position, year })
+      : setFormError('FILL ALL THE DATA');
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -60,6 +64,19 @@ export const ExperienceForm = ({ currentExperience, loader, setFormError, formEr
             variant="outlined"
             value={year}
             onChange={(e) => setYear(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="number"
+            size="small"
+            fullWidth
+            name="total_experience"
+            label="Update your total experience"
+            placeholder="enter your total experience"
+            variant="outlined"
+            value={total_experience}
+            onChange={(e) => setTotalExperience(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>

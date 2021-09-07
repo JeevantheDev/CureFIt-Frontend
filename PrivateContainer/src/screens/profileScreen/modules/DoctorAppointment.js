@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { ProfileContext } from '../context/profile.context';
-import { Profile } from 'curefit';
 import { Grid } from '@material-ui/core';
+import { Profile } from 'curefit';
+import React, { useContext, useEffect } from 'react';
+
+import AppointmentForm from '../../../components/AppointmentForm/AppointmentForm';
 import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
-import { AppointmentForm } from '../../../components/AppointmentForm/AppointmentForm';
+import { ProfileContext } from '../context/profile.context';
 
 const DoctorAppointment = (props) => {
   const { slug: profileId } = props.match.params;
@@ -22,7 +23,7 @@ const DoctorAppointment = (props) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={4}>
-        <AppointmentForm />
+        <AppointmentForm profile_id={profileId} />
       </Grid>
       <Grid item xs={12} md={4}>
         <ClinicDetails inGroup={false} clinics={clinics} isLoading={pageLoading} />

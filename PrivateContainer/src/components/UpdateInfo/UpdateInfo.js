@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import { Avatar, Button, Divider, Grid, TextField, Typography } from '@material-ui/core';
-import { ServiceHeader } from '../shared/ServiceHeader/ServiceHeader';
-import { AppContext } from '../../app/context/app.context';
+import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+
+import { AppContext } from '../../app/context/app.context';
+import { FormContext } from '../../app/context/form.context';
+import { ServiceHeader } from '../shared/ServiceHeader/ServiceHeader';
 
 const useStyles = makeStyles((theme) => ({
   parent: {
@@ -39,12 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 const UpdateInfo = () => {
   const {
-    loaderState: [submitLoader],
     userState: [currentAuthUser],
-    formState: [formError, setFormError],
     updateUserInfoAction,
     updateUserPasswordAction,
   } = useContext(AppContext);
+
+  const {
+    loaderState: [submitLoader],
+    formState: [formError, setFormError],
+  } = useContext(FormContext);
 
   const classes = useStyles();
 
@@ -117,6 +122,7 @@ const UpdateInfo = () => {
               <Grid className={classes.formInfo} container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    label="Your full name"
                     type="text"
                     fullWidth
                     variant="outlined"
@@ -128,6 +134,7 @@ const UpdateInfo = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    label="Your email id"
                     type="email"
                     fullWidth
                     variant="outlined"
@@ -165,24 +172,26 @@ const UpdateInfo = () => {
               <Grid className={classes.formInfo} container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    label="Your current password"
                     type="password"
                     fullWidth
                     variant="outlined"
                     name="current_password"
                     value={current_password}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="your current password"
+                    placeholder="enter your current password"
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    label="Your new password"
                     type="password"
                     fullWidth
                     variant="outlined"
                     name="new_password"
                     value={new_password}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="your new password"
+                    placeholder="enter your new password"
                   />
                 </Grid>
               </Grid>

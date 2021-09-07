@@ -1,0 +1,28 @@
+main {
+  overflow: hidden !important;
+}
+
+.panel-transition {
+  display: inline-block;
+  position: relative;
+  min-height: 100%;
+  transition: all 0.5s ease-in-out;
+}
+
+.panel-width-auto {
+  min-width: 7%;
+}
+.panel-width-min {
+  min-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .panel-width-auto {
+    min-width: 18%;
+  }
+}
+/* @media (max-height: 768px) {
+  .panel-width-auto {
+    min-width: 18%;
+  }
+} */

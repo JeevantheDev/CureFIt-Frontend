@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+
 import { getProfileById } from '../../../app/api/profile.api';
 import { DEFAULT } from '../../../app/entity/constant';
 
@@ -26,7 +27,7 @@ const ProfileProvider = ({ children }) => {
   return (
     <ProfileContext.Provider
       value={{
-        loaderState: [pageLoading],
+        loaderState: [pageLoading, setPageLoading],
         profileState: [currentProfile, setCurrentProfile],
         clinicState: [clinics, setClinics],
         timeSlotState: [currentSlot, setCurrentSlot],

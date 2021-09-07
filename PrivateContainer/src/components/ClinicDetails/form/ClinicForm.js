@@ -1,24 +1,23 @@
-import React, { useContext, useState, forwardRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { AppContext } from '../../../app/context/app.context';
-import { DoctorContext } from '../../../screens/doctorScreen/context/doctor.context';
-import Chip from '@material-ui/core/Chip';
-import moment from 'moment';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Box, IconButton, Typography, TextField, Grid, Button } from '@material-ui/core';
+
+import { Box, Button, Grid, IconButton, TextField, Typography } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '@material-ui/lab/Alert';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { forwardRef, useContext, useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+
+import { FormContext } from '../../../app/context/form.context';
 
 export const ClinicForm = ({ onSubmit }) => {
   const {
     loaderState: [submitLoader],
     formState: [formError],
-  } = useContext(AppContext);
-  const {
     editState: [isEditFlag],
     clinicState: [selectedClinic],
-  } = useContext(DoctorContext);
+  } = useContext(FormContext);
 
   const [currDate, setCurrDate] = useState(new Date());
   const [selectedDateSlot, setSelectedDateSlot] = useState([]);
@@ -52,7 +51,8 @@ export const ClinicForm = ({ onSubmit }) => {
       contact_no,
       waiting_time,
       fees,
-      available_slots: selectedDateSlot,
+      available_slots: selectedDateSlot.sort((a, b) => new Date(a.date) - new Date(b.date)),
+      isEditFlag,
     });
   };
 
