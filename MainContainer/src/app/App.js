@@ -39,10 +39,10 @@ const App = () => {
     isAuthState: [isAuthenticating],
     userState: [loggedinUser],
     tokenState: [token],
+    urlState: [returnUrl],
     userRedirectAction,
     signout,
   } = useContext(AuthContext);
-
   const classes = useStyles();
 
   const [isUserValid, setIsUserValid] = useState(false);

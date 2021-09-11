@@ -2,6 +2,9 @@ const CONTAINER_ROUTES = {
   // Public Container - FE
   PUBLIC_CONTAINER: '/',
   PUBLIC_CONTAINER_PROFILES: '/profiles/all',
+  PUBLIC_CONTAINER_PROFILES_SLUG: '/profiles/:slug',
+  PUBLIC_CONTAINER_PROFILES_SLUG_APPOINTMENT: '/profiles/:slug/appointment',
+
   PUBLIC_CONTAINER_PRODUCTS: '/products',
 
   // Private Container - FE

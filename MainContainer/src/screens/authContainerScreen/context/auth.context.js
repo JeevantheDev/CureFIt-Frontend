@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { userRedirect } from '../../../app/api/auth.api';
 import { ROLES, SIDEBAR_PANELS } from '../../../app/entity/constant';
+import { CONTAINER_ROUTES } from '../../../app/router/ApplicationRoutes';
 
 export const AuthContext = React.createContext();
 
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }) => {
     localStorage.getItem('sessionToken') ? localStorage.getItem('sessionToken') : null
   );
   const [sidebarPanel, setSidebarPanel] = useState([]);
+  const [returnUrl, setReturnUrl] = useState(CONTAINER_ROUTES.PUBLIC_CONTAINER);
 
   const userRedirectAction = async () => {
     const res = await userRedirect();
@@ -39,6 +41,7 @@ const AuthProvider = ({ children }) => {
         userState: [loggedinUser, setLoggedinUser],
         tokenState: [token, setToken],
         sidebarState: [sidebarPanel],
+        urlState: [returnUrl, setReturnUrl],
         userRedirectAction,
         signout,
       }}
