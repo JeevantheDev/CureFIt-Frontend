@@ -7,7 +7,7 @@ import AppProvider from './app/context/app.context';
 import FormProvider from './app/context/form.context';
 import ProfileProvider from './screens/profileScreen/context/profile.context';
 
-const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth, returnUrl, setReturnUrl }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -17,7 +17,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth }) => {
 
   ReactDOM.render(
     <FormProvider>
-      <AppProvider>
+      <AppProvider value={{ returnUrl, setReturnUrl }}>
         <ProfileProvider>
           <App isUserAuth={isUserAuth} history={history} />
         </ProfileProvider>

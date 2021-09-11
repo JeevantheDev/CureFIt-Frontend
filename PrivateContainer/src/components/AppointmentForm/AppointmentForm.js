@@ -190,4 +190,4 @@ const AppointmentForm = ({ profile_id }) => {
 };
 
 // eslint-disable-next-line import/no-default-export
-export default React.memo(AppointmentForm);
+export default AppointmentForm;

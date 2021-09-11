@@ -1,11 +1,11 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { PRIVATE_APPLICATION_URL } from './ApplicationRoutes';
+import { Route, Switch } from 'react-router-dom';
 
 import AdminScreen from '../../screens/adminScreen/adminScreen';
 import DoctorScreen from '../../screens/doctorScreen/doctorScreen';
 import SellerScreen from '../../screens/sellerScreen/sellerScreen';
 import UserScreen from '../../screens/userScreen/userScreen';
+import { PRIVATE_APPLICATION_URL } from './ApplicationRoutes';
 
 export const PrivateRoutes = () => {
   return (

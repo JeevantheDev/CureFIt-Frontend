@@ -1,6 +1,7 @@
 import { Grid } from '@material-ui/core';
 import { Profile } from 'curefit';
 import React, { useContext, useEffect } from 'react';
+import { FormContext } from '../../../app/context/form.context';
 
 import AppointmentForm from '../../../components/AppointmentForm/AppointmentForm';
 import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
@@ -15,6 +16,9 @@ const DoctorAppointment = (props) => {
     clinicState: [clinics],
     fetchProfileById,
   } = useContext(ProfileContext);
+  const {
+    patientState: [selectedPatient],
+  } = useContext(FormContext);
 
   useEffect(() => {
     fetchProfileById(profileId);

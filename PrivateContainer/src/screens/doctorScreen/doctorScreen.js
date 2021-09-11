@@ -8,6 +8,7 @@ import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
 import Appointments from './modules/Appointments';
 import Clinics from './modules/Clinics';
 import Dashboard from './modules/Dashboard';
+import MyAppointments from './modules/MyAppointments';
 import Patients from './modules/Patients';
 import Profile from './modules/Profile';
 
@@ -26,6 +27,7 @@ const DoctorScreen = () => {
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_CLINICS} component={Clinics} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS} component={Appointments} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PATIENTS} component={Patients} />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS_ME} component={MyAppointments} />
       <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} />
     </Switch>
   );

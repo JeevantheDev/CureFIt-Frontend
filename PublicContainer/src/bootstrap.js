@@ -4,7 +4,7 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import ProfileProvider from './screens/profileScreen/context/profile.context';
 import App from './app/App';
 
-const mount = (el, { onNavigate, defaultHistory, initialPath, queryParams, isUserAuth }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, queryParams, isUserAuth, setReturnUrl, returnUrl }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -14,7 +14,14 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, queryParams, isUse
   onNavigate && history.listen(onNavigate);
 
   ReactDOM.render(
-    <ProfileProvider value={{ filterQuery: getFilterParams(queryParams) || {}, isUserAuth: isUserAuth }}>
+    <ProfileProvider
+      value={{
+        filterQuery: getFilterParams(queryParams) || {},
+        isUserAuth: isUserAuth,
+        returnUrl,
+        setReturnUrl,
+      }}
+    >
       <App history={history} />
     </ProfileProvider>,
     el,

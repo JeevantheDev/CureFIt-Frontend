@@ -32,7 +32,6 @@ const PatientInfo = ({ infoFor }) => {
   const {
     patientState: [selectedPatient],
   } = useContext(FormContext);
-
   return (
     <Box minWidth={'35vw'}>
       <Box display="flex" alignItems="center" my={2}>
@@ -130,4 +129,4 @@ PatientInfo.propTypes = {
 };
 
 // eslint-disable-next-line import/no-default-export
-export default React.memo(PatientInfo);
+export default PatientInfo;

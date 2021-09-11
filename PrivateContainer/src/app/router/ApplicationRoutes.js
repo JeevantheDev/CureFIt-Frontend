@@ -43,8 +43,10 @@ const PRIVATE_APPLICATION_URL = {
   PRIVATE_USER_APPOINTMENTS: '/private/user/appointments',
   PRIVATE_USER_DOCTORS: '/private/user/doctors',
 
-  // Auth Routes
+  // Auth routes - FE
+  AUTH_CONTAINER: '/auth',
   AUTH_SIGNIN_CONTAINER: '/auth/signin',
+  AUTH_SIGNUP_CONTAINER: '/auth/signup',
 };
 
 export { PRIVATE_APPLICATION_URL };

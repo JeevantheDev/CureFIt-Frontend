@@ -10,7 +10,7 @@ export const PublicRoutes = () => {
   return (
     <Switch>
       <Redirect exact from={AUTH_APPLICATION_URL.AUTH} to={AUTH_APPLICATION_URL.AUTH_SIGNIN} />
-      <Route path={AUTH_APPLICATION_URL.AUTH_SIGNIN} component={SigninScreen} />
+      <Route exact path={AUTH_APPLICATION_URL.AUTH_SIGNIN} component={SigninScreen} />
       <Route path={AUTH_APPLICATION_URL.AUTH_SIGNUP} component={SignupScreen} />
       <Route path={AUTH_APPLICATION_URL.AUTH_RESET_PASSWORD} component={PasswordResetScreen} />
       {/* <Redirect to={'/'} /> */}

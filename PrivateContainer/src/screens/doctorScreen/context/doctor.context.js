@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 
-import { createClinic, createProfile, deleteClinic, updateClinic, updateProfile } from '../../../app/api/profile.api';
+import {
+  createProfile,
+  getClinicsByDoctor,
+  createClinic,
+  deleteClinic,
+  updateClinic,
+  updateProfile,
+} from '../../../app/api/profile.api';
 import { FormContext } from '../../../app/context/form.context';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
 
@@ -39,6 +46,13 @@ const DoctorProvider = ({ children }) => {
       setFormError(res.error || 'NETWORK ERROR');
     }
     setSubmitLoader(false);
+  };
+
+  const getClinicsByDoctorAction = async (filterObj) => {
+    setPageLoading(true);
+    const res = await getClinicsByDoctor(filterObj);
+    setClinics(res.data ? res.data : []);
+    setPageLoading(false);
   };
 
   const createUpdateClinicAction = async (clinicObj) => {
@@ -84,6 +98,7 @@ const DoctorProvider = ({ children }) => {
     <DoctorContext.Provider
       value={{
         createUpdateProfileAction,
+        getClinicsByDoctorAction,
         createUpdateClinicAction,
         deleteClinicAction,
       }}

@@ -75,7 +75,8 @@ export const AppointmentsList = ({ currDate, onChangeDate }) => {
     isCollapse && resetAppointmentState();
   };
 
-  const DelayedRender = ({ delay, children }) => useDelayedRender(delay)(() => children);
+  // console.log(isCollapse);
+  const DelayedRender = ({ delay, children }) => useDelayedRender(delay)(() => isCollapse && children);
 
   return (
     <Box display="flex" className={classes.root}>
@@ -104,7 +105,9 @@ export const AppointmentsList = ({ currDate, onChangeDate }) => {
             }}
           >
             <div className={classes.cardContainer}>
-              <DelayedRender delay={400}>{isCollapse && selectedPanel == index && <AppointmentCards />}</DelayedRender>
+              <DelayedRender delay={400}>
+                {selectedPanel == index && <AppointmentCards isCollapse={!isCollapse} />}
+              </DelayedRender>
             </div>
           </div>
         </Box>

@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { FormContext } from '../../../app/context/form.context';
 
 import { APPOINTMENT_FORMAT } from '../../../app/entity/constant';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppointmentCards = () => {
+const AppointmentCards = ({ isCollapse }) => {
   const classes = useStyles();
 
   const {
@@ -46,6 +46,10 @@ const AppointmentCards = () => {
   const handleCloseModal = () => {
     setSelectedPatient(null);
   };
+
+  const isModalMount = useCallback(() => {
+    return selectedPatient ? true : false;
+  }, [selectedPatient]);
 
   return (
     <>
@@ -95,7 +99,7 @@ const AppointmentCards = () => {
           </Box>
         </Box>
       ))}
-      {selectedPatient && (
+      {isModalMount() && (
         <ModalLayout title="Patient Details" open={true} handleClose={handleCloseModal}>
           <PatientInfo infoFor="user" />
         </ModalLayout>
@@ -105,9 +109,12 @@ const AppointmentCards = () => {
 };
 
 AppointmentCards.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  appointmentList: PropTypes.arrayOf(Object).isRequired,
+  isCollapse: PropTypes.bool.isRequired,
 };
 
+function propsAreEqual(prevProps, nextProps) {
+  return prevProps.isCollapse === nextProps.isCollapse ? true : false;
+}
+
 // eslint-disable-next-line import/no-default-export
-export default React.memo(AppointmentCards);
+export default React.memo(AppointmentCards, propsAreEqual);

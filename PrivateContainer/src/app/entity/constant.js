@@ -10,6 +10,12 @@ import { Experiences } from '../../components/ProfileDetails/Info/Experiences';
 import { Specalizations } from '../../components/ProfileDetails/Info/Specalizations';
 import { TrainingCertificates } from '../../components/ProfileDetails/Info/TrainingCertificates';
 
+export const REVIEW_MODEL = {
+  PROFILE: 'DocProfile',
+  CLINIC: 'Clinic',
+  PRODUCT: 'Product',
+};
+
 export const INFO_TABS = {
   label: ['Info', 'Specalization', 'Education', 'Experience', 'Training & Certificates'],
   panels: [ClinicInfo, Specalizations, Educations, Experiences, TrainingCertificates],

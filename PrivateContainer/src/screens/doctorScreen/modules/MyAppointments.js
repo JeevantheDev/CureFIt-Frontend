@@ -1,43 +1,32 @@
-import InputAdornment from '@material-ui/core/InputAdornment';
+import React, { useContext, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
-import React, { useContext, useEffect, useState } from 'react';
-
+import { CustomTableLists } from '../../../components/CustomTableLists/CustomTableLists';
+import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
 import { AppContext } from '../../../app/context/app.context';
 import { TABLE_ROWS } from '../../../app/entity/constant';
-import { CustomTableLists } from '../../../components/CustomTableLists/CustomTableLists';
-import { PatientsList } from '../../../components/CustomTableLists/PatientsList/PatientsList';
-import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
+import { AppointmentsList } from '../../../components/CustomTableLists/AppointmentsList/AppointmentsList';
 import { UserContext } from '../../userScreen/context/user.context';
 
-const Patients = () => {
+const MyAppointments = () => {
   const {
     userState: [currentAuthUser],
   } = useContext(AppContext);
   const { getAppointmentsAction } = useContext(UserContext);
 
-  const [patient_name, setPatientName] = useState('');
-
   useEffect(() => {
-    getAppointmentsAction({ by_doctor: currentAuthUser._id, patient_name });
-  }, [patient_name]);
-
-  const handleKeyEnter = (event) => {
-    event.preventDefault();
-    if (event.key !== 'Enter') return;
-    setPatientName(event.target.value);
-  };
+    getAppointmentsAction({ by_user: `${currentAuthUser._id}` });
+  }, []);
 
   return (
     <div>
-      <ServiceHeader title="Your Patients">
+      <ServiceHeader title="My Appointments">
         <TextField
-          name="patient_name"
           size="small"
           variant="outlined"
           color="secondary"
           placeholder="search name"
-          onKeyUp={handleKeyEnter}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -47,12 +36,12 @@ const Patients = () => {
           }}
         />
       </ServiceHeader>
-      <CustomTableLists tableRows={TABLE_ROWS.PATIENT_LIST}>
-        <PatientsList />
+      <CustomTableLists tableRows={TABLE_ROWS.APPOINTMENT_LIST}>
+        <AppointmentsList />
       </CustomTableLists>
     </div>
   );
 };
 
 // eslint-disable-next-line import/no-default-export
-export default Patients;
+export default MyAppointments;

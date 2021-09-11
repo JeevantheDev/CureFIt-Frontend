@@ -4,6 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppContext } from '../../app/context/app.context';
+import { FormContext } from '../../app/context/form.context';
+import { REVIEW_MODEL } from '../../app/entity/constant';
 
 import { ProfileContext } from '../../screens/profileScreen/context/profile.context';
 import { ReviewCard } from './ReviewCard/ReviewCard';
@@ -35,8 +39,28 @@ export const Reviews = ({ isLoading }) => {
     profileState: [currentProfile],
     reviewState: [reviews],
   } = useContext(ProfileContext);
+  const {
+    userState: [currentAuthUser],
+  } = useContext(AppContext);
 
-  const [reviewForm, setReviewForm] = useState(false);
+  const {
+    editState: [isEditFlag, setIsEditFlag],
+    formState: [formError, setFormError],
+    reviewState: [selectedReview, setSelectedReview],
+  } = useContext(FormContext);
+
+  const { slug } = useParams();
+
+  const handleOpenForm = () => {
+    setIsEditFlag(false);
+    setFormError('');
+    setSelectedReview({
+      review_title: '',
+      review_desc: '',
+      review_for: REVIEW_MODEL.PROFILE,
+      rating: 0,
+    });
+  };
 
   return (
     <Box mt={2} className={`${classes.parent}`}>
@@ -49,11 +73,11 @@ export const Reviews = ({ isLoading }) => {
             </Typography>
           )}
         </Typography>
-        {!reviewForm && (
+        {((currentAuthUser.profile && currentAuthUser.profile._id !== slug) || !currentAuthUser.profile) && (
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              setReviewForm(true);
+              handleOpenForm();
             }}
             className={classes.buttonReview}
             color="primary"
@@ -63,9 +87,9 @@ export const Reviews = ({ isLoading }) => {
         )}
       </Box>
       <Divider />
-      {reviewForm && (
+      {selectedReview && (
         <Box p={2}>
-          <ReviewForm cancelForm={setReviewForm} />
+          <ReviewForm cancelForm={() => setSelectedReview(null)} />
         </Box>
       )}
       <Box p={2}>

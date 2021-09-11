@@ -13,6 +13,7 @@ const FormProvider = ({ children }) => {
   const [selectedTrainingCertificate, setSelectedTrainingCertificate] = useState(null);
   const [selectedClinic, setSelectedClinic] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedReview, setSelectedReview] = useState(null);
 
   return (
     <FormContext.Provider
@@ -26,6 +27,7 @@ const FormProvider = ({ children }) => {
         trainAndCertificateState: [selectedTrainingCertificate, setSelectedTrainingCertificate],
         clinicState: [selectedClinic, setSelectedClinic],
         patientState: [selectedPatient, setSelectedPatient],
+        reviewState: [selectedReview, setSelectedReview],
       }}
     >
       {children}

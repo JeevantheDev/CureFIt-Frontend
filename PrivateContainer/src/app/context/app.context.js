@@ -5,7 +5,7 @@ import { FormContext } from './form.context';
 
 export const AppContext = React.createContext();
 
-const AppProvider = ({ children }) => {
+const AppProvider = ({ children, value: { returnUrl, setReturnUrl } }) => {
   const {
     loaderState: [submitLoader, setSubmitLoader],
     formState: [formError, setFormError],
@@ -39,6 +39,8 @@ const AppProvider = ({ children }) => {
         tokenState: [currentToken],
         updateUserInfoAction,
         updateUserPasswordAction,
+        returnUrl,
+        setReturnUrl,
       }}
     >
       {children}
@@ -47,6 +49,7 @@ const AppProvider = ({ children }) => {
 };
 
 AppProvider.propTypes = {
+  value: PropTypes.any,
   children: PropTypes.node.isRequired,
 };
 
