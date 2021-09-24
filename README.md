@@ -1,3 +1,3 @@
 ## CureFit
 
-> Frontend
+> Frontend (Currently on development)
