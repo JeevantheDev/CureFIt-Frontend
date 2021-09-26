@@ -39,9 +39,13 @@ export const AppointmentsList = () => {
     });
     setIsEditFlag(true);
     setSelectedPatient(appointment);
-    history.push(
-      PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(':slug', appointment.clinic.doc_profile_id),
-    );
+    history.push({
+      pathname: PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(
+        ':slug',
+        appointment.clinic.doc_profile_id,
+      ),
+      state: JSON.stringify({ state: 'Jeevan' }),
+    });
   };
 
   const handleDeleteAppointment = (appointmentId) => {

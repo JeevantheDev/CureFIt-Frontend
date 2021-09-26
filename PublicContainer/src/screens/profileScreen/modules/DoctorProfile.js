@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ProfileContext } from '../context/profile.context';
 const DoctorProfile = () => {
   const ref = useRef(null);
-  const { isUserAuth } = useContext(ProfileContext);
-
+  const { isUserAuth, returnUrl, setReturnUrl } = useContext(ProfileContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -16,6 +15,8 @@ const DoctorProfile = () => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,
       isUserAuth: isUserAuth,
+      returnUrl,
+      setReturnUrl,
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         if (pathname !== nextPathname) {

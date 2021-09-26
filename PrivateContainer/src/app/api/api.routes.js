@@ -9,10 +9,15 @@ export const API_ROUTES = {
 
   // Clinic Routes
   CREATE_CLINIC: '/profile/id/clinic',
+  GET_CLINICS_BY_DOCTOR: '/clinic',
   UPDATE_CLINIC: '/clinic/id',
 
   // Appointment Routes
   GET_APPOINTMENTS: '/appointment',
   CREATE_APPOINTMENT: '/profile/id/appointment',
   UPDATE_DELETE_APPOINTMENT: '/appointment/id',
+
+  // Review routes
+  CREATE_REVIEW: '/review/reviewFor/id',
+  UPDATE_DELETE_REVIEW: '/review/id',
 };

@@ -36,6 +36,24 @@ export const updateProfile = async (profileObj) => {
 
 /**
  * @async
+ * @param {Object} filterObj
+ * @returns {Promise<any>}
+ */
+export const getClinicsByDoctor = async (filterObj, limit, page) => {
+  /* prettier-ignore */
+  const PAGINATION = `?limit=${limit || 6}&page=${page || 1}`;
+  /* prettier-ignore */
+  const BY_DOCTOR = filterObj.user_id ? `&user_id=${filterObj.user_id}` : '';
+  /* prettier-ignore */
+  const BY_NAME = filterObj.clinic_name ? `&clinic_name=${filterObj.clinic_name}` : '';
+
+  const API_PATH = API_ROUTES.GET_CLINICS_BY_DOCTOR + PAGINATION + BY_DOCTOR + BY_NAME;
+
+  return await getRequest(API_PATH, getConfig());
+};
+
+/**
+ * @async
  * @param {Object} clinicObj
  * @returns {Promise<any>}
  */

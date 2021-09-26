@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
     lineHeight: '67px',
     letterSpacing: '0.01em',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '35px',
+      lineHeight: '60px',
+    },
   },
   subTitle: {
     fontFamily: 'Roboto-Regular',
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ServiceTitle = ({ title, subTitle }) => {
+export const ServiceTitle = ({ title, subTitle, children }) => {
   const classes = useStyles();
   return (
     <Box className={classes.margin}>
@@ -41,6 +45,7 @@ export const ServiceTitle = ({ title, subTitle }) => {
 };
 
 ServiceTitle.propTypes = {
+  children: PropTypes.node,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
 };

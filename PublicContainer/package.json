@@ -17,6 +17,7 @@
     "curefit": "^1.1.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-breadcrumbs-hoc": "^4.0.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {

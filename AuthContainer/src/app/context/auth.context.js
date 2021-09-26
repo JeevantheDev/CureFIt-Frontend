@@ -5,7 +5,7 @@ import { RESPONSE } from '../entity/constant';
 
 export const AuthContext = React.createContext();
 
-const AuthProvider = ({ children, value: { onCompleteAuth } }) => {
+const AuthProvider = ({ children, value: { onCompleteAuth, returnUrl } }) => {
   const [submitLoader, setSubmitLoader] = useState(false);
   const [currentUserType, setCurrentUserType] = useState(null);
   const [formError, setFormError] = useState('');
@@ -43,6 +43,7 @@ const AuthProvider = ({ children, value: { onCompleteAuth } }) => {
         loaderState: [submitLoader, setSubmitLoader],
         userTypeState: [currentUserType, setCurrentUserType],
         authResponseState: [formError, setFormError],
+        returnUrl,
         userLoginAction,
         userSignupAction,
         resetPasswordAction,

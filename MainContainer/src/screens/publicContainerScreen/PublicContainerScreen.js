@@ -5,6 +5,7 @@ import { AppContext } from '../../app/app.context';
 import { AuthContext } from '../authContainerScreen/context/auth.context';
 import { CONTAINER_ROUTES } from '../../app/router/ApplicationRoutes';
 import { FilterHeader } from '../../components/FilterHeader/FilterHeader';
+import BreadCrumbHeader from '../../components/shared/BreadCrumbHeader/BreadCrumbHeader';
 
 const PublicContainerScreen = () => {
   const ref = useRef(null);
@@ -12,15 +13,17 @@ const PublicContainerScreen = () => {
   const {
     userState: [loggedinUser],
     tokenState: [token],
+    urlState: [returnUrl, setReturnUrl],
   } = useContext(AuthContext);
 
   const {
     routeState: [activeRoute, setActiveRoute],
-    filterState: [publicFilterQuery],
+    filterState: [publicFilterQuery, setPublicFilterQuery],
   } = useContext(AppContext);
 
   const history = useHistory();
   useEffect(() => {
+    console.log(publicFilterQuery);
     setActiveRoute(history.location.pathname);
     if (JSON.stringify(publicFilterQuery) !== '{}') {
       history.push({
@@ -34,8 +37,11 @@ const PublicContainerScreen = () => {
   const mountPublicContainer = () => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,
-      queryParams: history.location.search,
       isUserAuth: token && loggedinUser ? true : false,
+      queryParams: history.location.search,
+      setPublicFilterQuery,
+      returnUrl,
+      setReturnUrl,
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         setActiveRoute(pathname);
@@ -50,6 +56,7 @@ const PublicContainerScreen = () => {
   return (
     <>
       {!activeRoute.includes('/private') && <FilterHeader history={history} />}
+      {/* <BreadCrumbHeader /> */}
       <div ref={ref} />
     </>
   );

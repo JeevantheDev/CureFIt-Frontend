@@ -31,7 +31,7 @@ const ProfileProvider = ({ children }) => {
         profileState: [currentProfile, setCurrentProfile],
         clinicState: [clinics, setClinics],
         timeSlotState: [currentSlot, setCurrentSlot],
-        reviewState: [reviews],
+        reviewState: [reviews, setReviews],
         limitState: [limit, setLimit],
         pageState: [page, setPage],
         fetchProfileById,

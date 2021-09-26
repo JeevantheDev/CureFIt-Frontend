@@ -1,9 +1,14 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography, IconButton } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Chip from '@material-ui/core/Chip';
 import StarIcon from '@material-ui/icons/Star';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../../app/context/app.context';
+import { UserContext } from '../../../screens/userScreen/context/user.context';
+import { FormContext } from '../../../app/context/form.context';
 
 const useStyles = makeStyles((theme) => ({
   userText: {
@@ -35,6 +40,25 @@ const useStyles = makeStyles((theme) => ({
 
 export const ReviewCard = ({ review }) => {
   const classes = useStyles();
+  const {
+    userState: [currentAuthUser],
+  } = useContext(AppContext);
+  const {
+    editState: [isEditFlag, setIsEditFlag],
+    formState: [formError, setFormError],
+    reviewState: [selectedReview, setSelectedReview],
+  } = useContext(FormContext);
+  const { deleteReviewAction } = useContext(UserContext);
+
+  const handleUpdateReview = (reviewObj) => {
+    setIsEditFlag(true);
+    setFormError('');
+    setSelectedReview(reviewObj);
+  };
+
+  const handleDeleteReview = (reviewId) => {
+    confirm('Are you sure ?') && deleteReviewAction(reviewId);
+  };
 
   return (
     <Box mt={2} display="flex" justifyContent="start" alignItems="start">
@@ -59,6 +83,28 @@ export const ReviewCard = ({ review }) => {
               icon={<StarIcon style={{ color: '#fff' }} />}
             />
           </Box>
+          {currentAuthUser._id === review.user_id && (
+            <div style={{ marginLeft: 'auto' }}>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleUpdateReview(review);
+                }}
+                color="primary"
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteReview(review._id);
+                }}
+                color="secondary"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          )}
         </>
       ) : (
         <Typography color="textPrimary" className={classes.reviewTitle} gutterBottom>

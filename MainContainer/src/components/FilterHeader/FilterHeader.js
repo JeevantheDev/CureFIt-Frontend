@@ -6,7 +6,7 @@ import Search from '@material-ui/icons/Search';
 import AddLocation from '@material-ui/icons/AddLocation';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FILTER_SECTION } from '../../app/entity/constant';
-import { Box } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import { AppContext } from '../../app/app.context';
 import { CONTAINER_ROUTES } from '../../app/router/ApplicationRoutes';
 
@@ -120,82 +120,84 @@ export const FilterHeader = ({ history }) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" flexWrap="wrap" my={2}>
-      <Box display="flex" mr={'auto'} justifyContent="center" alignItems="center" flexWrap="wrap">
-        <TextField
-          inputRef={inputLocation}
-          className={classes.margin}
-          size="small"
-          variant="outlined"
-          color="secondary"
-          placeholder="search location"
-          value={location}
-          onChange={handleSearchLocation}
-          onKeyUp={handleKeyEnter}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AddLocation color="secondary" />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          inputRef={inputSearch}
-          className={classes.margin}
-          size="small"
-          variant="outlined"
-          color="secondary"
-          placeholder="search doctors"
-          value={search}
-          onChange={handleSearchField}
-          onKeyUp={handleKeyEnter}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search color="secondary" />
-              </InputAdornment>
-            ),
-          }}
-        />
+    <Container>
+      <Box display="flex" justifyContent="center" alignItems="center" flexWrap="wrap" my={2}>
+        <Box display="flex" mr={'auto'} justifyContent="center" alignItems="center" flexWrap="wrap">
+          <TextField
+            inputRef={inputLocation}
+            className={classes.margin}
+            size="small"
+            variant="outlined"
+            color="secondary"
+            placeholder="search location"
+            value={location}
+            onChange={handleSearchLocation}
+            onKeyUp={handleKeyEnter}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AddLocation color="secondary" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            inputRef={inputSearch}
+            className={classes.margin}
+            size="small"
+            variant="outlined"
+            color="secondary"
+            placeholder="search doctors"
+            value={search}
+            onChange={handleSearchField}
+            onKeyUp={handleKeyEnter}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search color="secondary" />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+        {activeRoute === CONTAINER_ROUTES.PUBLIC_CONTAINER_PROFILES && (
+          <div className={classes.rightSideFilter}>
+            <TextField
+              className={`${classes.menu} ${classes.margin}`}
+              size="small"
+              variant="outlined"
+              color="secondary"
+              select
+              value={specalists}
+              onChange={handleChangeSpecalists}
+            >
+              <MenuItem style={{ backgroundColor: '#fff' }} value={'all'}>
+                By Specalists
+              </MenuItem>
+              {FILTER_SECTION.SPECALISTS.map((specalists) => (
+                <MenuItem style={{ backgroundColor: '#fff' }} key={specalists} value={specalists}>
+                  {specalists}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              className={`${classes.menu} ${classes.margin}`}
+              size="small"
+              variant="outlined"
+              color="secondary"
+              select
+              value={experience}
+              onChange={handleChangeExperience}
+            >
+              {FILTER_SECTION.EXPERIENCE.map((experience) => (
+                <MenuItem style={{ backgroundColor: '#fff' }} key={experience.value} value={experience.value}>
+                  {experience.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+        )}
       </Box>
-      {activeRoute === CONTAINER_ROUTES.PUBLIC_CONTAINER_PROFILES && (
-        <div className={classes.rightSideFilter}>
-          <TextField
-            className={`${classes.menu} ${classes.margin}`}
-            size="small"
-            variant="outlined"
-            color="secondary"
-            select
-            value={specalists}
-            onChange={handleChangeSpecalists}
-          >
-            <MenuItem style={{ backgroundColor: '#fff' }} value={'all'}>
-              By Specalists
-            </MenuItem>
-            {FILTER_SECTION.SPECALISTS.map((specalists) => (
-              <MenuItem style={{ backgroundColor: '#fff' }} key={specalists} value={specalists}>
-                {specalists}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            className={`${classes.menu} ${classes.margin}`}
-            size="small"
-            variant="outlined"
-            color="secondary"
-            select
-            value={experience}
-            onChange={handleChangeExperience}
-          >
-            {FILTER_SECTION.EXPERIENCE.map((experience) => (
-              <MenuItem style={{ backgroundColor: '#fff' }} key={experience.value} value={experience.value}>
-                {experience.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </div>
-      )}
-    </Box>
+    </Container>
   );
 };

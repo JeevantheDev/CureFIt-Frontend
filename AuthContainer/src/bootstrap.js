@@ -4,22 +4,19 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import AuthProvider from './app/context/auth.context';
 import App from './app/App';
 
-const mount = (el, { onCompleteAuth, onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onCompleteAuth, onNavigate, defaultHistory, initialPath, returnUrl }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
       initialEntries: [initialPath],
     });
-
   onNavigate && history.listen(onNavigate);
-
   ReactDOM.render(
-    <AuthProvider value={{ onCompleteAuth }}>
+    <AuthProvider value={{ onCompleteAuth, returnUrl }}>
       <App history={history} />
     </AuthProvider>,
     el,
   );
-
   return {
     onParentNavigate({ pathname: nextPathname }) {
       const { pathname } = history.location;
@@ -37,6 +34,7 @@ if (process.env.NODE_ENV === 'development') {
   if (devRoot) {
     mount(devRoot, {
       defaultHistory: createBrowserHistory(),
+      returnUrl: createBrowserHistory().location.search,
     });
   }
 }

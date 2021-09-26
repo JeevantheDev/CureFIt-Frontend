@@ -12,6 +12,7 @@ const PrivateContainerScreen = () => {
   const {
     userState: [loggedinUser],
     tokenState: [token],
+    urlState: [returnUrl, setReturnUrl],
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const PrivateContainerScreen = () => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,
       isUserAuth: token && loggedinUser ? true : false,
+      setReturnUrl,
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         if (pathname !== nextPathname) {

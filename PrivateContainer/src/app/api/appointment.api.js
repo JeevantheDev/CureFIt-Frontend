@@ -14,10 +14,12 @@ export const getAppontments = async (obj, limit, page) => {
   /* prettier-ignore */
   const BY_USER = obj.by_user ? `&user_id=${obj.by_user}` : '';
   /* prettier-ignore */
+  const BY_PATIENT_NAME = obj.patient_name ? `&patient_name=${obj.patient_name}` : '';
+  /* prettier-ignore */
   const PAGINATION = `?limit=${limit || 6}&page=${page || 1}`;
   /* prettier-ignore */
   const API_PATH =
-    API_ROUTES.GET_APPOINTMENTS + PAGINATION + BY_DATE + BY_DOCTOR + BY_USER;
+    API_ROUTES.GET_APPOINTMENTS + PAGINATION + BY_DATE + BY_DOCTOR + BY_USER + BY_PATIENT_NAME;
   return await getRequest(API_PATH, getConfig());
 };
 
