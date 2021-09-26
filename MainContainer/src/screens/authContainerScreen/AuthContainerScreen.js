@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useContext } from 'react';
 import { mount } from 'authContainer/AuthContainerApp';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from './context/auth.context';
+import { Container } from '@material-ui/core';
 const AuthContainerScreen = () => {
   const ref = useRef(null);
   const {
@@ -36,7 +37,11 @@ const AuthContainerScreen = () => {
     history.listen(onParentNavigate);
   };
 
-  return <div ref={ref} />;
+  return (
+    <Container>
+      <div ref={ref} />
+    </Container>
+  );
 };
 
 // eslint-disable-next-line import/no-default-export

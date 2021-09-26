@@ -5,7 +5,10 @@ import { DEFAULT } from '../../../app/entity/constant';
 
 export const ProfileContext = React.createContext();
 
-const ProfileProvider = ({ value: { filterQuery, isUserAuth, returnUrl, setReturnUrl }, children }) => {
+const ProfileProvider = ({
+  value: { filterQuery, setPublicFilterQuery, isUserAuth, returnUrl, setReturnUrl },
+  children,
+}) => {
   const [currentToken] = useState(localStorage.getItem('sessionToken') ? localStorage.getItem('sessionToken') : null);
   const [pageLoading, setPageLoading] = useState(false);
   const [profiles, setProfiles] = useState([]);
@@ -22,6 +25,7 @@ const ProfileProvider = ({ value: { filterQuery, isUserAuth, returnUrl, setRetur
     <ProfileContext.Provider
       value={{
         filterQuery,
+        setPublicFilterQuery,
         isUserAuth,
         tokenState: [currentToken],
         loaderState: [pageLoading],
