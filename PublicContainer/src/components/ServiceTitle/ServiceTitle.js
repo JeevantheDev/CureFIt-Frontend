@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ServiceTitle = ({ title, subTitle, children }) => {
+export const ServiceTitle = ({ title, subTitle, children, margin = true }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.margin}>
+    <Box className={margin ? classes.margin : ''}>
       <Typography className={classes.title} align="left" variant="h4" color="textPrimary">
         {title}
       </Typography>
@@ -47,5 +47,6 @@ export const ServiceTitle = ({ title, subTitle, children }) => {
 ServiceTitle.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
+  subTitle: PropTypes.string,
+  margin: PropTypes.bool,
 };

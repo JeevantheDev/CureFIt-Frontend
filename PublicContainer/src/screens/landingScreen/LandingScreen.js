@@ -1,8 +1,9 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
+
 import { SERVICES } from '../../app/entity/constant';
 import { MiddleService } from '../../components/LandingPage/MiddleService/MiddleService';
-
+import { Testimonials } from '../../components/LandingPage/Testimonials/Testimonials';
 import { TopBanner } from '../../components/LandingPage/TopBanner/TopBanner';
 
 const LandingScreen = () => {
@@ -12,6 +13,7 @@ const LandingScreen = () => {
       <Container>
         <MiddleService services={SERVICES.LANDING.CONSULT} />
       </Container>
+      <Testimonials />
     </div>
   );
 };

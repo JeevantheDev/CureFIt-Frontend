@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     [theme.breakpoints.down('xs')]: {
       top: '65%',
+      left: '10px',
     },
   },
   rightArrowBtn: {
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     [theme.breakpoints.down('xs')]: {
       top: '65%',
+      right: '10px',
     },
   },
   arrow: {

@@ -35,3 +35,21 @@ export const SERVICES = {
     ],
   },
 };
+
+export const REVIEWS = [
+  {
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus consectetur arcu quis dui, nec in faucibus. Consequat in sapien sit massa at ultrices.',
+    avatar: require('../../assets/media/marry.png'),
+    name: 'Marry Doe',
+  },
+  {
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus consectetur arcu quis dui, nec in faucibus. Consequat in sapien sit massa at ultrices.',
+    avatar: require('../../assets/media/leeza.png'),
+    name: 'Leeza Doe',
+  },
+  {
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus consectetur arcu quis dui, nec in faucibus. Consequat in sapien sit massa at ultrices.',
+    avatar: require('../../assets/media/john.png'),
+    name: 'John Doe',
+  },
+];
