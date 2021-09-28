@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#000',
     marginLeft: '1rem',
   },
+
+  dots: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+  },
 }));
 
 export const Review = ({ review }) => {
