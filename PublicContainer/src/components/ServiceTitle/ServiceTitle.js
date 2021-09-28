@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       fontSize: '35px',
       lineHeight: '60px',
+      textAlign: 'center',
     },
   },
   subTitle: {
