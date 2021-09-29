@@ -7,7 +7,7 @@ import AppointmentForm from '../../../components/AppointmentForm/AppointmentForm
 import { ClinicDetails } from '../../../components/ClinicDetails/ClinicDetails';
 import { ProfileContext } from '../context/profile.context';
 
-const DoctorAppointment = (props) => {
+const DoctorAppointment = React.memo((props) => {
   const { slug: profileId } = props.match.params;
 
   const {
@@ -16,9 +16,6 @@ const DoctorAppointment = (props) => {
     clinicState: [clinics],
     fetchProfileById,
   } = useContext(ProfileContext);
-  const {
-    patientState: [selectedPatient],
-  } = useContext(FormContext);
 
   useEffect(() => {
     fetchProfileById(profileId);
@@ -37,7 +34,7 @@ const DoctorAppointment = (props) => {
       </Grid>
     </Grid>
   );
-};
+});
 
 // eslint-disable-next-line import/no-default-export
 export default DoctorAppointment;

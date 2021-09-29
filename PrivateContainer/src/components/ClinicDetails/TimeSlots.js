@@ -74,7 +74,7 @@ const TimeSlots = ({ clinicId, slots, isEdit, onSubmit }) => {
       date,
       slot,
     });
-    if (currentSlot) return;
+    if (currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'))) return;
     let timer = setTimeout(() => {
       history.push(PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(':slug', slug));
     }, [1500]);
@@ -198,10 +198,10 @@ const TimeSlots = ({ clinicId, slots, isEdit, onSubmit }) => {
                     endIcon={isEdit && <CancelIcon color="secondary" />}
                     key={i}
                     variant={
-                      currentSlot &&
-                      currentSlot.id === clinicId &&
-                      currentSlot.date === slot.date &&
-                      currentSlot.slot === time
+                      (currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'))) &&
+                      (currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'))).id === clinicId &&
+                      (currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'))).date === slot.date &&
+                      (currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'))).slot === time
                         ? 'contained'
                         : 'outlined'
                     }

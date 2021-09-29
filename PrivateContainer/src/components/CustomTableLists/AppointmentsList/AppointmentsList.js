@@ -3,7 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Skeleton from '@material-ui/lab/Skeleton';
 import moment from 'moment';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { FormContext } from '../../../app/context/form.context';
@@ -32,20 +32,18 @@ export const AppointmentsList = () => {
   } = useContext(FormContext);
 
   const handleUpdateAppointment = (appointment) => {
-    setCurrentSlot({
-      id: appointment.clinic._id,
-      date: appointment.appointment_date,
-      slot: appointment.appointment_time,
-    });
-    setIsEditFlag(true);
-    setSelectedPatient(appointment);
-    history.push({
-      pathname: PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(
-        ':slug',
-        appointment.clinic.doc_profile_id,
-      ),
-      state: JSON.stringify({ state: 'Jeevan' }),
-    });
+    sessionStorage.setItem(
+      'currentSlot',
+      JSON.stringify({
+        id: appointment.clinic._id,
+        date: appointment.appointment_date,
+        slot: appointment.appointment_time,
+      }),
+    );
+    sessionStorage.setItem('selectedPatient', JSON.stringify(appointment));
+    history.push(
+      PRIVATE_APPLICATION_URL.PUBLIC_PROFILES_SLUG_APPOINTMENT.replace(':slug', appointment.clinic.doc_profile_id),
+    );
   };
 
   const handleDeleteAppointment = (appointmentId) => {
