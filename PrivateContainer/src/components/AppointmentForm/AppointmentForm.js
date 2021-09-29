@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppointmentForm = ({ profile_id }) => {
+const AppointmentForm = React.memo(({ profile_id }) => {
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -42,7 +42,6 @@ const AppointmentForm = ({ profile_id }) => {
     editState: [isEditFlag],
     loaderState: [submitLoader],
     formState: [formError],
-    patientState: [selectedPatient],
   } = useContext(FormContext);
   const {
     timeSlotState: [currentSlot],
@@ -60,18 +59,60 @@ const AppointmentForm = ({ profile_id }) => {
   const [redirectPath, setRedirectPath] = useState('');
 
   useEffect(() => {
-    setPatientName(selectedPatient ? selectedPatient.patient_name : '');
-    setParentName(selectedPatient ? selectedPatient.parent_name : '');
-    setPatientAge(selectedPatient ? selectedPatient.patient_age : '');
-    setAppointmentType(selectedPatient ? selectedPatient.appointment_type : '');
-    setHealthDesc(selectedPatient ? selectedPatient.health_desc : '');
-  }, [selectedPatient]);
+    setPatientName(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).patient_name
+        : '',
+    );
+    setParentName(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).parent_name
+        : '',
+    );
+    setPatientAge(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).patient_age
+        : '',
+    );
+    setAppointmentType(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).appointment_type
+        : '',
+    );
+    setHealthDesc(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).health_desc
+        : '',
+    );
+  }, []);
 
   useEffect(() => {
-    setAppointmentTime(selectedPatient ? selectedPatient.appointment_time : currentSlot ? currentSlot.slot : '');
-    setAppointmentDate(selectedPatient ? selectedPatient.appointment_date : currentSlot ? currentSlot.date : '');
-    setCinicInfo(selectedPatient ? selectedPatient.clinic_info : currentSlot ? currentSlot.id : '');
-  }, [selectedPatient, currentSlot]);
+    setAppointmentTime(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).appointment_time
+        : JSON.parse(sessionStorage.getItem('currentSlot'))
+        ? JSON.parse(sessionStorage.getItem('currentSlot')).slot
+        : '',
+    );
+    setAppointmentDate(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).appointment_date
+        : JSON.parse(sessionStorage.getItem('currentSlot'))
+        ? JSON.parse(sessionStorage.getItem('currentSlot')).date
+        : '',
+    );
+    setCinicInfo(
+      JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).clinic_info
+        : JSON.parse(sessionStorage.getItem('currentSlot'))
+        ? JSON.parse(sessionStorage.getItem('currentSlot')).id
+        : '',
+    );
+
+    return () => {
+      sessionStorage.removeItem('selectedPatient');
+    };
+  }, []);
 
   useEffect(() => {
     if (currentAuthUser.user_type === USER_TYPE.ADMIN) {
@@ -88,6 +129,9 @@ const AppointmentForm = ({ profile_id }) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const payloadObj = {
+      appointment_id: JSON.parse(sessionStorage.getItem('selectedPatient'))
+        ? JSON.parse(sessionStorage.getItem('selectedPatient')).id
+        : '',
       profile_id,
       patient_name,
       parent_name,
@@ -96,15 +140,14 @@ const AppointmentForm = ({ profile_id }) => {
         ? `${Math.random().toString(36).substr(2, 5)}/${APPOINTMENT_TYPE[appointment_type].value}`
         : '',
       health_desc,
-      appointment_time,
-      appointment_date,
       appointment_type,
-      clinic_info,
-      isEditFlag: isEditFlag ? isEditFlag : false,
+      appointment_time: currentSlot ? currentSlot.slot : appointment_time,
+      appointment_date: currentSlot ? currentSlot.date : appointment_date,
+      clinic_info: currentSlot ? currentSlot.id : clinic_info,
+      isEditFlag: isEditFlag || JSON.parse(sessionStorage.getItem('selectedPatient')) ? true : false,
     };
     createUpdateAppointmentAction(payloadObj)
       .then((res) => {
-        console.log(res);
         res && history.push(redirectPath);
       })
       .catch((err) => console.log(err));
@@ -175,7 +218,7 @@ const AppointmentForm = ({ profile_id }) => {
             onChange={(e) => setHealthDesc(e.target.value)}
           />
           <Button type="submit" variant="contained" color="primary">
-            {isEditFlag
+            {isEditFlag || JSON.parse(sessionStorage.getItem('selectedPatient'))
               ? submitLoader
                 ? 'Updating...'
                 : 'Update Appointment'
@@ -187,7 +230,7 @@ const AppointmentForm = ({ profile_id }) => {
       </Box>
     </>
   );
-};
+});
 
 // eslint-disable-next-line import/no-default-export
 export default AppointmentForm;

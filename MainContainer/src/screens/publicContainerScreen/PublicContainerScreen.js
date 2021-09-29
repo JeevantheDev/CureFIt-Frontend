@@ -23,7 +23,6 @@ const PublicContainerScreen = () => {
 
   const history = useHistory();
   useEffect(() => {
-    console.log(publicFilterQuery);
     setActiveRoute(history.location.pathname);
     if (JSON.stringify(publicFilterQuery) !== '{}') {
       history.push({

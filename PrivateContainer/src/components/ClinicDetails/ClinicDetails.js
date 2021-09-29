@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) => {
+export const ClinicDetails = React.memo(({ clinics, isEdit, isLoading, inGroup = true }) => {
   const classes = useStyles();
 
   const {
@@ -79,8 +79,15 @@ export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) =>
 
   useEffect(() => {
     if (isLoading || !clinics || clinics.length === 0) return;
-    setCurrentClinic(currentSlot ? currentSlot.id : clinics[0]._id);
+    const slotInfo = currentSlot || JSON.parse(sessionStorage.getItem('currentSlot'));
+    setCurrentClinic(slotInfo ? slotInfo.id : clinics[0]._id);
   }, [isLoading, clinics]);
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem('currentSlot');
+    };
+  }, []);
 
   const handleAddClinic = () => {
     setFormError('');
@@ -242,7 +249,7 @@ export const ClinicDetails = ({ clinics, isEdit, isLoading, inGroup = true }) =>
       </Box>
     </>
   );
-};
+});
 
 ClinicDetails.propTypes = {
   isEdit: PropTypes.bool.isRequired,
