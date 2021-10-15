@@ -8,11 +8,12 @@ exports.MICRO_FRONTEND_PATH = {
       publicContainer: `publicContainer@${
         process.env.PUBLIC_CONTAINER_DOMAIN || `http://localhost:8081`
       }/remoteEntry.js`,
-      authContainer: `authContainer@${
-        process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`
-      }/remoteEntry.js`,
+      authContainer: `authContainer@${process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`}/remoteEntry.js`,
       privateContainer: `privateContainer@${
         process.env.PRIVATE_CONTAINER_DOMAIN || `http://localhost:8083`
+      }/remoteEntry.js`,
+      productContainer: `productContainer@${
+        process.env.PRODUCT_CONTAINER_DOMAIN || `http://localhost:8084`
       }/remoteEntry.js`,
     },
   },
@@ -25,9 +26,7 @@ exports.MICRO_FRONTEND_PATH = {
     EXPOSES: {
       './PublicContainerApp': './src/bootstrap',
     },
-    WORKING_DOMAIN: `publicContainer@${
-      process.env.PUBLIC_CONTAINER_DOMAIN || `http://localhost:8081`
-    }/remoteEntry.js`,
+    WORKING_DOMAIN: `publicContainer@${process.env.PUBLIC_CONTAINER_DOMAIN || `http://localhost:8081`}/remoteEntry.js`,
     REMOTES: {
       privateContainer: `privateContainer@${
         process.env.PRIVATE_CONTAINER_DOMAIN || `http://localhost:8083`
@@ -43,9 +42,7 @@ exports.MICRO_FRONTEND_PATH = {
     EXPOSES: {
       './AuthContainerApp': './src/bootstrap',
     },
-    WORKING_DOMAIN: `authContainer@${
-      process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`
-    }/remoteEntry.js`,
+    WORKING_DOMAIN: `authContainer@${process.env.AUTH_CONTAINER_DOMAIN || `http://localhost:8082`}/remoteEntry.js`,
   },
   PRIVATE_CONTAINER: {
     NAME: 'privateContainer',
@@ -58,6 +55,19 @@ exports.MICRO_FRONTEND_PATH = {
     },
     WORKING_DOMAIN: `privateContainer@${
       process.env.PRIVATE_CONTAINER_DOMAIN || `http://localhost:8083`
+    }/remoteEntry.js`,
+  },
+  PRODUCT_CONTAINER: {
+    NAME: 'productContainer',
+    FILE_NAME: 'remoteEntry.js',
+    PORT: 8084,
+    PATH: `http://localhost:8084/`,
+    TEMPLATE: './public/index.html',
+    EXPOSES: {
+      './ProductContainerApp': './src/bootstrap',
+    },
+    WORKING_DOMAIN: `productContainer@${
+      process.env.PRODUCT_CONTAINER_DOMAIN || `http://localhost:8084`
     }/remoteEntry.js`,
   },
 };

@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import StarIcon from '@material-ui/icons/Star';
 import { GlobalStyles } from '../components/GlobalStyles/GlobalStyles';
-import { ProfileLoading } from '../components/Loading/ProfileLoading';
+import { Loading as ProfileLoading } from '../components/Loading/Loading';
 
 const useStyles = makeStyles((theme) => ({
   profileParent: {
@@ -26,7 +26,7 @@ const Profile = (props) => {
 
   return (
     <>
-      {isLoading && <ProfileLoading />}
+      {isLoading && <ProfileLoading horizontal={horizontal} />}
       {!isLoading && profile && profile.slug && (
         <Box
           style={{
@@ -110,4 +110,4 @@ Profile.propTypes = {
   horizontal: PropTypes.bool,
 };
 
-export default Profile;
+export default React.memo(Profile);

@@ -16,6 +16,9 @@
         ],
         "PrivateContainer": [
           "container-private"
+        ],
+        "ProductContainer": [
+          "container-product"
         ]
       }
     }

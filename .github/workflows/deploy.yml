@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run:  npm run deploy
+      - run: npm run deploy
         env:
           PUBLIC_CONTAINER_DOMAIN: ${{ secrets.PUBLIC_CONTAINER_DOMAIN }}
           AUTH_CONTAINER_DOMAIN: ${{ secrets.AUTH_CONTAINER_DOMAIN }}
           PRIVATE_CONTAINER_DOMAIN: ${{ secrets.PRIVATE_CONTAINER_DOMAIN }}
-          
+          PRODUCT_CONTAINER_DOMAIN: ${{ secrets.PRODUCT_CONTAINER_DOMAIN }}
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

@@ -6,6 +6,7 @@ import { CONTAINER_ROUTES } from './ApplicationRoutes';
 
 const PublicContainerLazy = lazy(() => import('../../screens/publicContainerScreen/PublicContainerScreen'));
 const AuthContainerLazy = lazy(() => import('../../screens/authContainerScreen/AuthContainerScreen'));
+const ProductContainerLazy = lazy(() => import('../../screens/productContainerScreen/ProductContainerScreen'));
 
 export const PublicRoutes = ({ isUserValid }) => {
   const {
@@ -17,6 +18,7 @@ export const PublicRoutes = ({ isUserValid }) => {
         {isUserValid && <Redirect to={returnUrl} />}
         <AuthContainerLazy />
       </Route>
+      <Route path={CONTAINER_ROUTES.PRODUCT_CONTAINER} component={ProductContainerLazy} />
       <Route path={CONTAINER_ROUTES.PUBLIC_CONTAINER} component={PublicContainerLazy} />
     </Switch>
   );

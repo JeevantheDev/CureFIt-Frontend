@@ -35,10 +35,17 @@ export const ServiceTitle = ({ title, subTitle, children, margin = true }) => {
   const classes = useStyles();
   return (
     <Box className={margin ? classes.margin : ''}>
-      <Typography className={classes.title} align="left" variant="h4" color="textPrimary">
+      <Typography data-testid="primary-title" className={classes.title} align="left" variant="h4" color="textPrimary">
         {title}
       </Typography>
-      <Typography className={classes.subTitle} align="left" variant="body2" gutterBottom color="textSecondary">
+      <Typography
+        data-testid="primary-subtitle"
+        className={classes.subTitle}
+        align="left"
+        variant="body2"
+        gutterBottom
+        color="textSecondary"
+      >
         {subTitle}
       </Typography>
     </Box>

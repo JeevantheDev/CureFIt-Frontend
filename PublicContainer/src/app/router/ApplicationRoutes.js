@@ -9,6 +9,11 @@ const PUBLIC_APPLICATION_URL = {
   AUTH_CONTAINER: '/auth',
   AUTH_SIGNIN_CONTAINER: '/auth/signin',
   AUTH_SIGNUP_CONTAINER: '/auth/signup',
+
+  // Product routes - FE
+  PRODUCT_CONTAINER: '/product',
+  PRODUCT_CONTAINER_FILTER: '/product/:filter',
+  PRODUCT_CONTAINER_SLUG: '/product/:slug',
 };
 
 export { PUBLIC_APPLICATION_URL };

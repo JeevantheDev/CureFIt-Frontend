@@ -32,7 +32,7 @@ const DoctorProfiles = () => {
     <>
       {!pageLoading && (
         <ServiceTitle
-          title={`Book from ${profiles.length} doctors
+          title={`Book from ${profiles.length || 0} doctors
             ${filterQuery.location ? `in ${filterQuery.location}.` : '.'}`}
           subTitle="With predicted wait-time & verified details."
         />

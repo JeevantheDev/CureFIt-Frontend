@@ -14,6 +14,7 @@ const ProfileProvider = ({
   const [profiles, setProfiles] = useState([]);
   const [limit, setLimit] = useState(DEFAULT.LIMIT);
   const [page, setPage] = useState(DEFAULT.PAGE);
+
   const fetchProfiles = async () => {
     setPageLoading(true);
     const res = await getDoctorProfiles(filterQuery, limit, page);

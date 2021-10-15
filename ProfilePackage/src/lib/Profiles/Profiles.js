@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import TodayIcon from '@material-ui/icons/Today';
 import StarIcon from '@material-ui/icons/Star';
 import { GlobalStyles } from '../components/GlobalStyles/GlobalStyles';
-import { ProfileLoading } from '../components/Loading/ProfileLoading';
+import { Loading as ProfileLoading } from '../components/Loading/Loading';
 import { Divider } from '@material-ui/core';
 
 const Profiles = (props) => {
@@ -177,4 +177,4 @@ Profiles.propTypes = {
   handleButtonClick: PropTypes.func.isRequired,
 };
 
-export default Profiles;
+export default React.memo(Profiles);
