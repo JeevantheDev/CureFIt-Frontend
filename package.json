@@ -10,6 +10,7 @@
     "build:public": "cd PublicContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:auth": "cd AuthContainer && rm -rf dist && yarn && yarn build && cd ..",
     "build:private": "cd PrivateContainer && rm -rf dist && yarn && yarn build && cd ..",
-    "deploy": "yarn build:main && yarn build:public && yarn build:auth && yarn build:private"
+    "build:product": "cd ProductContainer && rm -rf dist && yarn && yarn build && cd ..",
+    "deploy": "yarn build:main && yarn build:public && yarn build:auth && yarn build:private && yarn build:product"
   }
 }

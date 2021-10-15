@@ -20,6 +20,7 @@ const devConfig = {
     port: PORT,
     historyApiFallback: true,
   },
+  experiments: { topLevelAwait: true },
   plugins: [
     new ModuleFederationPlugin({
       name: NAME,

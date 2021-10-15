@@ -152,7 +152,6 @@ stories.add('App', () => {
     return res.data;
   };
 
-  // console.log(currProfile);
   return (
     <Container>
       <Grid container spacing={3}>

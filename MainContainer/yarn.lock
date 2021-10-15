@@ -2096,10 +2096,10 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
   integrity sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==
 
-curefit@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/curefit/-/curefit-1.1.6.tgz#c73ea118ed9b240399992f538a0775af2c320f48"
-  integrity sha512-JmNjAN3KDAyBdjHndUcBdVaigzzU3NR8pTa8q8mdqH6K2/De7p355KIgjO2neM3+u9avVfb0RrSkDzb3AGXfZw==
+curefit@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/curefit/-/curefit-1.1.7.tgz#afb9941efbf9a5f58adaf47e10134af58bfd994d"
+  integrity sha512-iM174jmnlFy8nW106/8X6PDnHwPchmQ2V0H4P7JzcV7/3VDm7RhCC6llR7E6wT4y4hVBxcEhL5E5Bpd1UvsRqg==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
