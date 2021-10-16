@@ -8,7 +8,8 @@ import StarIcon from '@material-ui/icons/Star';
 const useStyles = makeStyles((theme) => ({
   parent: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(3),
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
