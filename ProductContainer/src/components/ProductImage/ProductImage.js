@@ -6,7 +6,7 @@ import { Skeleton } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   parent: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
   },
   productImage: {
     width: 'auto',
@@ -27,7 +27,7 @@ export const ProductImage = React.memo(({ productImages, loading }) => {
     <Box display="flex" flexDirection="column">
       <Box className={classes.parent}>
         {productImages && !loading ? (
-          <Box display="flex" p={4} justifyContent="center" alignItems="center" border={1} borderColor="#ccc">
+          <Box display="flex" p={4} justifyContent="center" alignItems="center">
             <Avatar
               variant="square"
               className={classes.productImage}

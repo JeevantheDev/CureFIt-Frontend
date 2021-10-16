@@ -21,8 +21,8 @@ const Products = () => {
   return (
     <>
       <ServiceTitle title="Browse medicines & health products" />
+      {!pageLoading && products && products.length === 0 && <Typography>No Products Found...</Typography>}
       <Grid container spacing={3}>
-        {!pageLoading && products && products.length === 0 && <Typography>No Products Found...</Typography>}
         {(pageLoading || !products ? Array.from(new Array(5)) : products).map((product, idx) => (
           <Grid key={product ? product.id : idx} item xs={12} md={3}>
             <Product
