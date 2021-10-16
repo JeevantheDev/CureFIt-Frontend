@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { DEFAULT } from '../../../app/entity/constant';
-import { getProducts } from '../../../app/api/product.api';
+import { getProductById, getProducts } from '../../../app/api/product.api';
 
 export const ProductContext = React.createContext();
 
 const ProductProvider = ({ value: { authUser }, children }) => {
   const [products, setProducts] = useState();
+  const [product, setProduct] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
   const [filterQuery, setFilterQuery] = useState({ search: '', category: '' });
   const [limit, setLimit] = useState(DEFAULT.LIMIT);
@@ -15,7 +16,14 @@ const ProductProvider = ({ value: { authUser }, children }) => {
   const fetchProducts = async () => {
     setPageLoading(true);
     const res = await getProducts(filterQuery, limit, page);
-    setProducts(res.data);
+    setProducts(res.data ? res.data : []);
+    setPageLoading(false);
+  };
+
+  const fetchProductById = async (productId) => {
+    setPageLoading(true);
+    const res = await getProductById(productId);
+    setProduct(res.data ? res.data.product : null);
     setPageLoading(false);
   };
 
@@ -24,11 +32,13 @@ const ProductProvider = ({ value: { authUser }, children }) => {
       value={{
         authUser,
         loaderState: [pageLoading],
-        productState: [products],
+        productsState: [products],
+        productState: [product],
         filterState: [filterQuery, setFilterQuery],
         limitState: [limit, setLimit],
         pageState: [page, setPage],
         fetchProducts,
+        fetchProductById,
       }}
     >
       {children}
