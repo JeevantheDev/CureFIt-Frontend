@@ -50,7 +50,7 @@ const Product = (props) => {
               />
             ) : (
               <div className={globalClasses.alignCenter}>
-                <Skeleton variant="circle" width={200} height={200} />
+                <Skeleton variant="square" width={200} height={200} />
               </div>
             )}
           </Grid>

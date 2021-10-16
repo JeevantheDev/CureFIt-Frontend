@@ -23,3 +23,12 @@ export const getProducts = async (obj, limit, page) => {
 
   return await getRequest(API_PATH);
 };
+
+/**
+ * @async
+ * @param {string} productId
+ * @returns {Promise<any>}
+ */
+export const getProductById = async (productId) => {
+  return await getRequest(API_ROUTES.PRODUCT_ID.replace('id', productId));
+};

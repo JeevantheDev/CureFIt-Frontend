@@ -1,8 +1,9 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { PRODUCT_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 
+import { PRODUCT_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import Product from './modules/Product';
 import Products from './modules/Products';
 
 const ProductScreen = () => {
@@ -13,7 +14,7 @@ const ProductScreen = () => {
       <Switch>
         <Redirect exact from={path} to={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} />
         <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} component={Products} />
-        {/* <Route path={PRODUCT_APPLICATION_URL.PUBLIC_PROFILES_SLUG} component={DoctorProfile} /> */}
+        <Route path={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_SLUG} component={Product} />
         <Redirect to={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} />
       </Switch>
     </Container>
