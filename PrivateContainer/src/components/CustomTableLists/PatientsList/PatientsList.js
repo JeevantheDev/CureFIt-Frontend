@@ -28,13 +28,9 @@ export const PatientsList = () => {
 
   return (
     <>
-      {!pageLoading && appointments && appointments.length === 0 && (
-        <CustomTableRow>
-          <p>No Patients Found</p>
-        </CustomTableRow>
-      )}
+      {!pageLoading && appointments && appointments.length === 0 && <p>No Patients Found</p>}
       {(pageLoading || !appointments ? Array.from(new Array(10)) : appointments).map((patient, idx) => (
-        <CustomTableRow key={idx}>
+        <CustomTableRow key={patient ? patient.id : idx}>
           <CustomTableCell>
             {patient ? patient.user.user_name : <Skeleton variant="text" width={100} height={20} />}
           </CustomTableCell>

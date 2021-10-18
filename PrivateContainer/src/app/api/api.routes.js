@@ -17,6 +17,11 @@ export const API_ROUTES = {
   CREATE_APPOINTMENT: '/profile/id/appointment',
   UPDATE_DELETE_APPOINTMENT: '/appointment/id',
 
+  // Product Routes
+  GET_PRODUCTS_BY_SELLER: '/product/my',
+  ADD_PRODUCT: '/product',
+  UPDATE_DELETE_PRODUCT: '/product/id',
+
   // Review routes
   CREATE_REVIEW: '/review/reviewFor/id',
   UPDATE_DELETE_REVIEW: '/review/id',

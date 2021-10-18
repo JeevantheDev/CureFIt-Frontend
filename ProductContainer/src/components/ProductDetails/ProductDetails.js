@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Box, Divider, Chip, Button } from '@material-ui/core';
+import { Typography, Box, Divider, Chip } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import StarIcon from '@material-ui/icons/Star';
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ProductDetails = React.memo(({ productDetails, loading }) => {
+export const ProductDetails = React.memo(({ productDetails, loading, children }) => {
   const classes = useStyles();
   return (
     <Box className={classes.parent}>
@@ -49,9 +49,7 @@ export const ProductDetails = React.memo(({ productDetails, loading }) => {
       <Typography variant="h5" style={{ color: '#333', letterSpacing: '0.02em', fontWeight: 600 }} gutterBottom>
         {productDetails && !loading ? productDetails.product_price : <Skeleton height="20%" variant="text" />}
       </Typography>
-      <Button style={{ marginTop: '1rem', width: '50%' }} color="secondary" variant="contained" size="medium">
-        Add to Cart
-      </Button>
+      {children}
       <Divider style={{ marginTop: '1rem' }} />
       <Typography variant="h5" style={{ color: '#333', letterSpacing: '0.02em', fontWeight: 600 }} gutterBottom>
         {productDetails && !loading ? 'Description' : <Skeleton height="20%" variant="text" />}
@@ -64,6 +62,7 @@ export const ProductDetails = React.memo(({ productDetails, loading }) => {
 });
 
 ProductDetails.propTypes = {
+  children: PropTypes.node.isRequired,
   loading: PropTypes.bool.isRequired,
   productDetails: PropTypes.any,
 };

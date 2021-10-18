@@ -5,7 +5,7 @@ import { getProductById, getProducts } from '../../../app/api/product.api';
 
 export const ProductContext = React.createContext();
 
-const ProductProvider = ({ value: { authUser }, children }) => {
+const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState();
   const [product, setProduct] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
@@ -30,7 +30,6 @@ const ProductProvider = ({ value: { authUser }, children }) => {
   return (
     <ProductContext.Provider
       value={{
-        authUser,
         loaderState: [pageLoading],
         productsState: [products],
         productState: [product],
@@ -47,7 +46,6 @@ const ProductProvider = ({ value: { authUser }, children }) => {
 };
 
 ProductProvider.propTypes = {
-  value: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
 

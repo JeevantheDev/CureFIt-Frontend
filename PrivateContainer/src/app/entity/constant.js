@@ -13,7 +13,6 @@ import { TrainingCertificates } from '../../components/ProfileDetails/Info/Train
 export const REVIEW_MODEL = {
   PROFILE: 'DocProfile',
   CLINIC: 'Clinic',
-  PRODUCT: 'Product',
 };
 
 export const INFO_TABS = {
@@ -138,18 +137,18 @@ export const APPOINTMENT_FORMAT = {
   ),
 };
 
-export const PATIENT_MODAL = [
-  { key: 1, label: 'patientName', value: 'PATIENT NAME' },
-  { key: 2, label: 'patientAge', value: 'PATIENT AGE' },
-  { key: 3, label: 'parentName', value: "PARENT'S NAME" },
-  { key: 4, label: 'clinic', value: 'CLINIC' },
-  { key: 5, label: 'appointmentType', value: 'APPOINTMENT TYPE' },
-  { key: 6, label: 'appointmentDate', value: 'APPOINTMENT DATE' },
-  { key: 7, label: 'appointmentSlot', value: 'APPOINTMENT SLOT' },
-  { key: 8, label: 'patientId', value: 'PATIENT ID' },
+export const PRODUCT_CATEGORIES = [
+  'Medcines',
+  'Skin Care',
+  'Nutrition',
+  'Personal Care',
+  'Home Care',
+  'Ortho Care',
+  'Pet Care',
 ];
 
 export const TABLE_ROWS = {
+  PRODUCT_LIST: ['Product Name', 'Product Category', 'Product Price', 'Stocks', 'Average Rating', '', ''],
   PATIENT_LIST: [
     'User Name',
     'Patient Name',
