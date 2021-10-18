@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React, { useContext, useRef, useState } from 'react';
 import { CheckoutContext } from '../../screens/checkoutScreen/context/checkout.context';
+import { useHistory } from 'react-router-dom';
+import { PRODUCT_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -34,8 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ProductHeader = ({ history }) => {
+export const ProductHeader = () => {
   const classes = useStyles();
+  const history = useHistory();
+
   const {
     cartState: [cart],
   } = useContext(CheckoutContext);
@@ -85,7 +89,15 @@ export const ProductHeader = ({ history }) => {
             ),
           }}
         />
-        <IconButton color="primary" size="large" aria-label="cart">
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            history.push(PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_CART);
+          }}
+          color="primary"
+          size="large"
+          aria-label="cart"
+        >
           <Badge className={classes.badge} badgeContent={cart.length} color="secondary">
             <ShoppingCartIcon />
           </Badge>

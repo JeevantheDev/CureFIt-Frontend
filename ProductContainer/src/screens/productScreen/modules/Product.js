@@ -50,7 +50,7 @@ const Product = (props) => {
       </Grid>
       <Grid item xs={12} md={7}>
         <ProductDetails productDetails={product || null} loading={pageLoading}>
-          {product && !pageLoading && (
+          {product && !pageLoading ? (
             <AddToCart
               onClick={(count, type) => {
                 addToCart(count, product, type);
@@ -59,6 +59,8 @@ const Product = (props) => {
               product={product}
               quantity={currentProductQty(product)}
             />
+          ) : (
+            <div>Loading...</div>
           )}
         </ProductDetails>
       </Grid>

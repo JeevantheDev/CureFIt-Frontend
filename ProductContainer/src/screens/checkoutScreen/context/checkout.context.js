@@ -13,11 +13,21 @@ const CheckoutProvider = ({ children }) => {
     return foundProduct ? foundProduct.qty : 0;
   };
 
+  const calculateAmount = () => {
+    let amount = cart.reduce((res, product) => {
+      let price = product.product_price.replace(/^\D+/g, '');
+      res += eval(`${product.qty.toString()}*${price}`);
+      return res;
+    }, 0);
+    return parseFloat(amount);
+  };
+
   return (
     <CheckoutContext.Provider
       value={{
         cartState: [cart, setCart],
         currentProductQty,
+        calculateAmount,
       }}
     >
       {children}

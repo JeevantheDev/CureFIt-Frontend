@@ -94,7 +94,7 @@ export const AppbarMenu = ({ column = false }) => {
         <Box>
           <Typography
             component={RouterLink}
-            to={CONTAINER_ROUTES.PRODUCT_CONTAINER_ALL}
+            to={CONTAINER_ROUTES.PRODUCT_LIST_ALL}
             variant="h6"
             className={classes.subTitle}
           >

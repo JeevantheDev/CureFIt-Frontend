@@ -7,6 +7,7 @@ import { ProductRoutes } from './router/ProductRoutes';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'pro',
+  disableGlobal: true,
 });
 
 const App = ({ history }) => {

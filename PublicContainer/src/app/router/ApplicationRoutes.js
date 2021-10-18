@@ -12,8 +12,12 @@ const PUBLIC_APPLICATION_URL = {
 
   // Product routes - FE
   PRODUCT_CONTAINER: '/product',
-  PRODUCT_CONTAINER_FILTER: '/product/:filter',
+  PRODUCT_CONTAINER_ALL: '/product/all',
   PRODUCT_CONTAINER_SLUG: '/product/:slug',
+
+  PRODUCT_CHECKOUT: '/checkout',
+  PRODUCT_CHECKOUT_CART: '/checkout/cart',
+  PRODUCT_CHECKOUT_ALL: '/checkout/all',
 };
 
 export { PUBLIC_APPLICATION_URL };
