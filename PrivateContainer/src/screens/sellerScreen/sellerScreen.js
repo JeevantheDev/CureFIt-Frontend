@@ -6,6 +6,7 @@ import { withUserType } from '../../app/hoc/withUserType';
 import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
 import Dashboard from './modules/Dashboard';
+import Products from './modules/Products';
 
 const SellerScreen = () => {
   const { path } = useRouteMatch();
@@ -13,6 +14,7 @@ const SellerScreen = () => {
     <Switch>
       <Redirect exact from={path} to={PRIVATE_APPLICATION_URL.PRIVATE_SELLER_DASHBOARD} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_SELLER_DASHBOARD} component={Dashboard} />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_SELLER_PRODUCTS} component={Products} />
       <Route
         exact
         path={PRIVATE_APPLICATION_URL.PRIVATE_UPDATE_ACCOUNT.replace('/private', path)}

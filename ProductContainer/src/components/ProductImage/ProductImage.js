@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Box } from '@material-ui/core';
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  pointer: { cursor: 'pointer' },
   subProductImage: {
     marginRight: '1rem',
   },
@@ -23,33 +24,42 @@ const useStyles = makeStyles((theme) => ({
 
 export const ProductImage = React.memo(({ productImages, loading }) => {
   const classes = useStyles();
+  const [activeImage, setActiveImage] = useState('');
+
+  useEffect(() => {
+    setActiveImage(productImages && productImages.length > 0 ? productImages[0] : '');
+  }, [productImages]);
   return (
     <Box display="flex" flexDirection="column">
       <Box className={classes.parent}>
         {productImages && !loading ? (
           <Box display="flex" p={4} justifyContent="center" alignItems="center">
-            <Avatar
-              variant="square"
-              className={classes.productImage}
-              alt="product-image"
-              src={productImages[0] || ''}
-            />
+            <Avatar variant="square" className={classes.productImage} alt="product-image" src={activeImage} />
           </Box>
         ) : (
           <Skeleton variant="square" width={200} height={200} />
         )}
       </Box>
-      <Box mt={2} display="flex" alignItems="center">
+      <Box mt={2} display="flex" alignItems="center" flexWrap={'wrap'}>
         {!productImages || loading
           ? Array.from(new Array(3))
           : productImages.map((image) => (
-              <>
+              <React.Fragment key={image}>
                 {image ? (
-                  <Avatar className={classes.subProductImage} variant="square" src={image} alt="product" />
+                  <Box
+                    mb={1}
+                    className={classes.pointer}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveImage(image);
+                    }}
+                  >
+                    <Avatar className={classes.subProductImage} variant="square" src={image} alt="product" />
+                  </Box>
                 ) : (
                   <Skeleton className={classes.subProductImage} variant="square" width={60} height={60} />
                 )}
-              </>
+              </React.Fragment>
             ))}
       </Box>
     </Box>

@@ -14,6 +14,7 @@ const FormProvider = ({ children }) => {
   const [selectedClinic, setSelectedClinic] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedReview, setSelectedReview] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <FormContext.Provider
@@ -28,6 +29,7 @@ const FormProvider = ({ children }) => {
         clinicState: [selectedClinic, setSelectedClinic],
         patientState: [selectedPatient, setSelectedPatient],
         reviewState: [selectedReview, setSelectedReview],
+        productState: [selectedProduct, setSelectedProduct],
       }}
     >
       {children}

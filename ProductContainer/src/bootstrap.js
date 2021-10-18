@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createBrowserHistory, createMemoryHistory } from 'history';
-import ProductProvider from './screens/productScreen/context/product.context';
 import App from './app/App';
+import FormProvider from './app/context/form.context';
+import AppProvider from './app/context/app.context';
+import ProductProvider from './screens/productScreen/context/product.context';
+import CheckoutProvider from './screens/checkoutScreen/context/checkout.context';
 
-const mount = (el, { onNavigate, defaultHistory, initialPath, authUser }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -14,13 +17,15 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, authUser }) => {
   onNavigate && history.listen(onNavigate);
 
   ReactDOM.render(
-    <ProductProvider
-      value={{
-        authUser,
-      }}
-    >
-      <App history={history} />
-    </ProductProvider>,
+    <AppProvider>
+      <CheckoutProvider>
+        <ProductProvider>
+          <FormProvider>
+            <App history={history} />
+          </FormProvider>
+        </ProductProvider>
+      </CheckoutProvider>
+    </AppProvider>,
     el,
   );
 

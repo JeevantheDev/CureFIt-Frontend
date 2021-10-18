@@ -1,22 +1,46 @@
 import React, { useContext, useEffect } from 'react';
 import { ProductContext } from '../context/product.context';
 import Product from 'curefit/Product/Product';
-import { Grid, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { ServiceTitle } from '../../../components/ServiceTitle/ServiceTitle';
 import { useHistory } from 'react-router-dom';
 import { PRODUCT_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
+import { AddToCart } from '../../../components/AddToCart/AddToCart';
+import { CheckoutContext } from '../../checkoutScreen/context/checkout.context';
 
 const Products = () => {
   const history = useHistory();
+
   const {
     loaderState: [pageLoading],
     productsState: [products],
     fetchProducts,
   } = useContext(ProductContext);
+  const {
+    cartState: [cart, setCart],
+    currentProductQty,
+  } = useContext(CheckoutContext);
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    const cartData = cart.filter((data) => data.qty > 0);
+    localStorage.setItem('cart', JSON.stringify(cartData));
+  }, [cart]);
+
+  const addToCart = (count, product, type = 'inc') => {
+    const index = cart.findIndex((data) => data.id === product.id);
+    if (index !== -1) {
+      const prevCarts = [...cart];
+      prevCarts[index].qty = type === 'inc' ? count + 1 : count - 1;
+      const cartData = prevCarts.filter((data) => data.qty > 0);
+      setCart(cartData);
+    } else {
+      setCart((prevCart) => [...prevCart, { ...product, qty: count + 1 }]);
+    }
+  };
 
   return (
     <>
@@ -31,9 +55,15 @@ const Products = () => {
               }
               product={product}
             >
-              <Button style={{ marginTop: '1rem' }} fullWidth color="secondary" variant="contained" size="medium">
-                Add
-              </Button>
+              {product && !pageLoading && (
+                <AddToCart
+                  onClick={(count, type) => {
+                    addToCart(count, product, type);
+                  }}
+                  product={product}
+                  quantity={currentProductQty(product)}
+                />
+              )}
             </Product>
           </Grid>
         ))}

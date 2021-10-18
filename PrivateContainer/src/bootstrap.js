@@ -6,6 +6,7 @@ import App from './app/App';
 import AppProvider from './app/context/app.context';
 import FormProvider from './app/context/form.context';
 import ProfileProvider from './screens/profileScreen/context/profile.context';
+import SellerProvider from './screens/sellerScreen/context/seller.context';
 
 const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth, returnUrl, setReturnUrl }) => {
   const history =
@@ -19,7 +20,9 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, isUserAuth, return
     <FormProvider>
       <AppProvider value={{ returnUrl, setReturnUrl }}>
         <ProfileProvider>
-          <App isUserAuth={isUserAuth} history={history} />
+          <SellerProvider>
+            <App isUserAuth={isUserAuth} history={history} />
+          </SellerProvider>
         </ProfileProvider>
       </AppProvider>
     </FormProvider>,

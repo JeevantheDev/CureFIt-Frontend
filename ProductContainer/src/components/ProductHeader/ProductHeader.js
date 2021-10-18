@@ -3,8 +3,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Search from '@material-ui/icons/Search';
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import { CheckoutContext } from '../../screens/checkoutScreen/context/checkout.context';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -23,10 +26,19 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     marginLeft: 'auto',
   },
+  badge: {
+    right: 0,
+    top: 0,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
 }));
 
 export const ProductHeader = ({ history }) => {
   const classes = useStyles();
+  const {
+    cartState: [cart],
+  } = useContext(CheckoutContext);
 
   const [search, setSearch] = useState('');
 
@@ -73,9 +85,11 @@ export const ProductHeader = ({ history }) => {
             ),
           }}
         />
-        <Button startIcon={<ShoppingCartIcon />} size="large" color="primary" variant="contained">
-          View Cart
-        </Button>
+        <IconButton color="primary" size="large" aria-label="cart">
+          <Badge className={classes.badge} badgeContent={cart.length} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
       </Box>
     </Container>
   );
