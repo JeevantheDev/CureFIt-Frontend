@@ -12,10 +12,10 @@ const ProductScreen = () => {
   return (
     <Container>
       <Switch>
-        <Redirect exact from={path} to={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} />
-        <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} component={Products} />
-        <Route path={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_SLUG} component={Product} />
-        <Redirect to={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_ALL} />
+        <Redirect exact from={path} to={PRODUCT_APPLICATION_URL.PRODUCT_LIST_ALL} />
+        <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_LIST_ALL} component={Products} />
+        <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_LIST_SLUG} component={Product} />
+        {/* <Redirect to={PRODUCT_APPLICATION_URL.PRODUCT_LIST_ALL} /> */}
       </Switch>
     </Container>
   );

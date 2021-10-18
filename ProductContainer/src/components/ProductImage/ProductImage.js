@@ -37,7 +37,9 @@ export const ProductImage = React.memo(({ productImages, loading }) => {
             <Avatar variant="square" className={classes.productImage} alt="product-image" src={activeImage} />
           </Box>
         ) : (
-          <Skeleton variant="square" width={200} height={200} />
+          <Box display="flex" p={4} justifyContent="center" alignItems="center">
+            <Skeleton variant="square" width={200} height={200} />
+          </Box>
         )}
       </Box>
       <Box mt={2} display="flex" alignItems="center" flexWrap={'wrap'}>

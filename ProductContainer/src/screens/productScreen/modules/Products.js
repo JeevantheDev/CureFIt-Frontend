@@ -51,7 +51,7 @@ const Products = () => {
           <Grid key={product ? product.id : idx} item xs={12} md={3}>
             <Product
               onClickCard={() =>
-                product && history.push(PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_SLUG.replace(':slug', product.id))
+                product && history.push(PRODUCT_APPLICATION_URL.PRODUCT_LIST_SLUG.replace(':slug', product.id))
               }
               product={product}
             >

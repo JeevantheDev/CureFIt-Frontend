@@ -7,8 +7,10 @@ const CONTAINER_ROUTES = {
 
   // Product routes - FE
   PRODUCT_CONTAINER: '/product',
-  PRODUCT_CONTAINER_ALL: '/product/all',
-  PRODUCT_CONTAINER_SLUG: '/product/:slug',
+
+  PRODUCT_LIST: '/product/list',
+  PRODUCT_LIST_ALL: '/product/list/all',
+  PRODUCT_LIST_SLUG: '/product/list/:slug',
 
   PRODUCT_CHECKOUT: '/product/checkout',
   PRODUCT_CHECKOUT_CART: '/product/checkout/cart',

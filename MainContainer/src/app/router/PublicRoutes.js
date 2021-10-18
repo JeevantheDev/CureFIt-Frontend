@@ -14,11 +14,11 @@ export const PublicRoutes = ({ isUserValid }) => {
   } = useContext(AuthContext);
   return (
     <Switch>
+      <Route path={CONTAINER_ROUTES.PRODUCT_CONTAINER} component={ProductContainerLazy} />
       <Route path={CONTAINER_ROUTES.AUTH_CONTAINER}>
         {isUserValid && <Redirect to={returnUrl} />}
         <AuthContainerLazy />
       </Route>
-      <Route path={CONTAINER_ROUTES.PRODUCT_CONTAINER} component={ProductContainerLazy} />
       <Route path={CONTAINER_ROUTES.PUBLIC_CONTAINER} component={PublicContainerLazy} />
     </Switch>
   );
