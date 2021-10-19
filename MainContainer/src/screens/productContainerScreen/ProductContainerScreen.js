@@ -8,6 +8,7 @@ const ProductContainerScreen = () => {
   const {
     userState: [loggedinUser],
     tokenState: [token],
+    urlState: [returnUrl, setReturnUrl],
   } = useContext(AuthContext);
 
   const history = useHistory();
@@ -20,6 +21,8 @@ const ProductContainerScreen = () => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,
       authUser: { ...loggedinUser, token },
+      returnUrl,
+      setReturnUrl,
       onNavigate: ({ pathname: nextPathname }) => {
         const { pathname } = history.location;
         if (pathname !== nextPathname) {

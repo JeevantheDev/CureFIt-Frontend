@@ -4,11 +4,15 @@ import { StylesProvider, createGenerateClassName, ThemeProvider } from '@materia
 import themeProduct from './utils/themeProduct';
 import { CssBaseline } from '@material-ui/core';
 import { ProductRoutes } from './router/ProductRoutes';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'pro',
   disableGlobal: true,
 });
+
+const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
 const App = ({ history }) => {
   return (
@@ -16,7 +20,9 @@ const App = ({ history }) => {
       <ThemeProvider theme={themeProduct}>
         <CssBaseline />
         <Router history={history}>
-          <ProductRoutes />
+          <Elements stripe={stripePromise}>
+            <ProductRoutes />
+          </Elements>
         </Router>
       </ThemeProvider>
     </StylesProvider>

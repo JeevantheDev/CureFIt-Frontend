@@ -7,7 +7,7 @@ import AppProvider from './app/context/app.context';
 import ProductProvider from './screens/productScreen/context/product.context';
 import CheckoutProvider from './screens/checkoutScreen/context/checkout.context';
 
-const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, returnUrl, setReturnUrl }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -17,7 +17,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
   onNavigate && history.listen(onNavigate);
 
   ReactDOM.render(
-    <AppProvider>
+    <AppProvider value={{ returnUrl, setReturnUrl }}>
       <CheckoutProvider>
         <ProductProvider>
           <FormProvider>

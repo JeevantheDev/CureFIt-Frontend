@@ -6,3 +6,8 @@ export const DEFAULT = {
 export const REVIEW_MODEL = {
   PRODUCT: 'Product',
 };
+
+export const PAYMENT_METHOD = {
+  CASH: 'cash',
+  CARD: 'card',
+};

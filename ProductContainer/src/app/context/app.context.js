@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export const AppContext = React.createContext();
 
-const AppProvider = ({ children }) => {
+const AppProvider = ({ value: { returnUrl, setReturnUrl }, children }) => {
   const [currentAuthUser] = useState(
     localStorage.getItem('loggedInUser') ? JSON.parse(localStorage.getItem('loggedInUser') || '{}') : {},
   );
@@ -11,6 +11,8 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        returnUrl,
+        setReturnUrl,
         userState: [currentAuthUser],
         tokenState: [currentToken],
       }}
@@ -21,6 +23,7 @@ const AppProvider = ({ children }) => {
 };
 
 AppProvider.propTypes = {
+  value: PropTypes.any,
   children: PropTypes.node.isRequired,
 };
 

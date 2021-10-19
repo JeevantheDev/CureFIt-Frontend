@@ -34,7 +34,11 @@ export const ProductDetails = React.memo(({ productDetails, loading, children })
         {productDetails && !loading ? `(${productDetails.product_category})` : <Skeleton height="20%" variant="text" />}
       </Typography>
       <Typography style={{ fontWeight: 'bold' }} variant="overline" color="secondary" gutterBottom>
-        Sold By {productDetails && !loading ? productDetails.user.user_name : <Skeleton height="20%" variant="text" />}
+        {productDetails && !loading ? (
+          `Sold By ${productDetails.user.user_name}`
+        ) : (
+          <Skeleton height="20%" variant="text" />
+        )}
       </Typography>
       {productDetails && productDetails.reviews.length > 0 && (
         <Box display="flex" mb={2} alignItems="center">
