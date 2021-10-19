@@ -4,12 +4,17 @@ import { useHistory } from 'react-router-dom';
 
 import { AddToCart } from '../../../components/AddToCart/AddToCart';
 import { CartItem } from '../../../components/CartItem/CartItem';
-import { ServiceTitle } from '../../../components/ServiceTitle/ServiceTitle';
 import { CheckoutContext } from '../context/checkout.context';
+import { AppContext } from '../../../app/context/app.context';
+import { PRODUCT_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
 
 const Cart = () => {
   const history = useHistory();
 
+  const {
+    tokenState: [currentToken],
+    setReturnUrl,
+  } = useContext(AppContext);
   const {
     cartState: [cart, setCart],
     currentProductQty,
@@ -30,6 +35,16 @@ const Cart = () => {
       setCart(cartData);
     } else {
       setCart((prevCart) => [...prevCart, { ...product, qty: count + 1 }]);
+    }
+  };
+
+  const onNavigate = (e) => {
+    e.stopPropagation();
+    if (currentToken) {
+      history.push(PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_ALL);
+    } else {
+      setReturnUrl(history.location.pathname);
+      history.push(PRODUCT_APPLICATION_URL.AUTH_SIGNIN_CONTAINER);
     }
   };
 
@@ -67,7 +82,7 @@ const Cart = () => {
             <Typography variant="h5" style={{ color: '#333', letterSpacing: '0.02em', fontWeight: 600 }} gutterBottom>
               Payable Amount: ₹{calculateAmount()}
             </Typography>
-            <Button fullWidth size="large" variant="contained" color="primary">
+            <Button onClick={onNavigate} fullWidth size="large" variant="contained" color="primary">
               Checkout
             </Button>
           </Box>
