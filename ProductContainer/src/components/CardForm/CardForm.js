@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useStripe, useElements, CardNumberElement, CardCvcElement, CardExpiryElement } from '@stripe/react-stripe-js';
 import useResponsiveFontSize from './useResponsiveFontSize';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { ServiceHeader } from '../ServiceHeader/ServiceHeader';
+import { FormContext } from '../../app/context/form.context';
 
 const useOptions = () => {
   const fontSize = useResponsiveFontSize();
@@ -34,6 +35,10 @@ export const CardForm = ({ submitCard }) => {
   const stripe = useStripe();
   const elements = useElements();
   const options = useOptions();
+
+  const {
+    loaderState: [submitLoader],
+  } = useContext(FormContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -82,8 +87,15 @@ export const CardForm = ({ submitCard }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth variant="contained" color="secondary" type="submit" disabled={!stripe}>
-            Pay
+          <Button
+            disabled={submitLoader}
+            fullWidth
+            variant="contained"
+            color="secondary"
+            type="submit"
+            disabled={!stripe}
+          >
+            {submitLoader ? 'Loading...' : 'Pay'}
           </Button>
         </Grid>
       </Grid>

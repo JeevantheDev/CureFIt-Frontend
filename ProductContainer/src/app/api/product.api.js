@@ -1,4 +1,4 @@
-import { getRequest } from './http.helper';
+import { getConfig, getRequest, postRequest } from './http.helper';
 import { API_ROUTES } from './api.routes';
 
 /**
@@ -31,4 +31,22 @@ export const getProducts = async (obj, limit, page) => {
  */
 export const getProductById = async (productId) => {
   return await getRequest(API_ROUTES.PRODUCT_ID.replace('id', productId));
+};
+
+/**
+ * @async
+ * @param {Object} productObj
+ * @returns {Promise<any>}
+ */
+export const placeOrder = async (productObj) => {
+  return await postRequest(API_ROUTES.USERBILL, { params: productObj }, getConfig());
+};
+
+/**
+ * @async
+ * @param {string} orderId
+ * @returns {Promise<any>}
+ */
+export const getOrderById = async (orderId) => {
+  return await getRequest(API_ROUTES.USERBILL_ID.replace('id', orderId), getConfig());
 };

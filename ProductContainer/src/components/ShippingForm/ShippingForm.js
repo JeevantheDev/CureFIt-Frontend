@@ -9,7 +9,6 @@ import { ServiceHeader } from '../ServiceHeader/ServiceHeader';
 
 export const ShippingForm = ({ onSubmit }) => {
   const {
-    loaderState: [submitLoader],
     formState: [formError],
     editState: [isEditFlag],
   } = useContext(FormContext);
@@ -93,14 +92,11 @@ export const ShippingForm = ({ onSubmit }) => {
               <MenuItem style={{ backgroundColor: '#fff' }} value={PAYMENT_METHOD.CARD}>
                 {PAYMENT_METHOD.CARD}
               </MenuItem>
-              <MenuItem style={{ backgroundColor: '#fff' }} value={PAYMENT_METHOD.CASH}>
-                {PAYMENT_METHOD.CASH}
-              </MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12}>
             <Button fullWidth variant="contained" color="secondary" type="submit">
-              {isEditFlag ? (submitLoader ? 'Updating...' : 'Update') : submitLoader ? 'Submiting...' : 'Submit'}
+              {'Continue'}
             </Button>
           </Grid>
         </Grid>

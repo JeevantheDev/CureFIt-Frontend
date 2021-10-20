@@ -28,7 +28,7 @@ const DoctorScreen = () => {
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS} component={Appointments} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PATIENTS} component={Patients} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS_ME} component={MyAppointments} />
-      <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} />
+      {/* <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} /> */}
     </Switch>
   );
 };

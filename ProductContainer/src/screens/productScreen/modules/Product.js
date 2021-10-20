@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react';
 import { AddToCart } from '../../../components/AddToCart/AddToCart';
 
@@ -7,6 +7,7 @@ import { ProductImage } from '../../../components/ProductImage/ProductImage';
 import { Reviews } from '../../../components/Reviews/Reviews';
 import { ProductContext } from '../context/product.context';
 import { CheckoutContext } from '../../checkoutScreen/context/checkout.context';
+import { DEFAULT } from '../../../app/entity/constant';
 
 const Product = (props) => {
   const { slug: productId } = props.match.params;
@@ -44,28 +45,41 @@ const Product = (props) => {
   };
 
   return (
-    <Grid style={{ margin: '2rem 0' }} container spacing={3}>
-      <Grid item xs={12} md={5}>
-        <ProductImage productImages={product ? product.product_image : null} loading={pageLoading} />
-      </Grid>
-      <Grid item xs={12} md={7}>
-        <ProductDetails productDetails={product || null} loading={pageLoading}>
-          {product && !pageLoading && (
-            <AddToCart
-              onClick={(count, type) => {
-                addToCart(count, product, type);
-              }}
-              width={'50%'}
-              product={product}
-              quantity={currentProductQty(product)}
-            />
+    <>
+      {!pageLoading && product === DEFAULT.NOT_FOUND && (
+        <Box p={2}>
+          <Typography variant="body1" color="textSecondary" style={{ letterSpacing: '0.02em' }} gutterBottom>
+            Product {DEFAULT.NOT_FOUND}
+          </Typography>
+        </Box>
+      )}
+      <Grid style={{ margin: '2rem 0' }} container spacing={3}>
+        <Grid item xs={12} md={5}>
+          {product !== DEFAULT.NOT_FOUND && (
+            <ProductImage productImages={product ? product.product_image : null} loading={pageLoading} />
           )}
-        </ProductDetails>
+        </Grid>
+        <Grid item xs={12} md={7}>
+          {product !== DEFAULT.NOT_FOUND && (
+            <ProductDetails productDetails={product} loading={pageLoading}>
+              {product && !pageLoading && (
+                <AddToCart
+                  onClick={(count, type) => {
+                    addToCart(count, product, type);
+                  }}
+                  width={'50%'}
+                  product={product}
+                  quantity={currentProductQty(product)}
+                />
+              )}
+            </ProductDetails>
+          )}
+        </Grid>
+        <Grid item xs={12} md={12}>
+          {product !== DEFAULT.NOT_FOUND && <Reviews product={product || null} loading={pageLoading} />}
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={12}>
-        <Reviews product={product || null} loading={pageLoading} />
-      </Grid>
-    </Grid>
+    </>
   );
 };
 

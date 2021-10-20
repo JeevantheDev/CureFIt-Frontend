@@ -24,7 +24,7 @@ const UserScreen = () => {
         path={PRIVATE_APPLICATION_URL.PRIVATE_UPDATE_ACCOUNT.replace('/private', path)}
         component={UpdateInfo}
       />
-      <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_USER_DASHBOARD} />
+      {/* <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_USER_DASHBOARD} /> */}
     </Switch>
   );
 };
