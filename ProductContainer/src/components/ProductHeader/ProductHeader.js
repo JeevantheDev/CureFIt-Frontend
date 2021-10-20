@@ -1,15 +1,18 @@
-import { Box, Button, Container } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import Search from '@material-ui/icons/Search';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { CheckoutContext } from '../../screens/checkoutScreen/context/checkout.context';
 import { useHistory } from 'react-router-dom';
 import { PRODUCT_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
+import { ProductContext } from '../../screens/productScreen/context/product.context';
+import { PRODUCT_CATEGORIES } from '../../app/entity/constant';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -39,12 +42,19 @@ const useStyles = makeStyles((theme) => ({
 export const ProductHeader = () => {
   const classes = useStyles();
   const history = useHistory();
-
+  const {
+    filterState: [filterQuery, setFilterQuery],
+  } = useContext(ProductContext);
   const {
     cartState: [cart],
   } = useContext(CheckoutContext);
 
   const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('all');
+
+  useEffect(() => {
+    setCategory(filterQuery.category || 'all');
+  }, [filterQuery]);
 
   const inputSearch = useRef(null);
 
@@ -52,20 +62,25 @@ export const ProductHeader = () => {
     setSearch(event.target.value);
   };
 
+  const handleChangeCategory = (event) => {
+    setCategory(event.target.value);
+    setFilterQuery({
+      ...filterQuery,
+      category: event.target.value !== 'all' ? event.target.value : '',
+    });
+    history.push(PRODUCT_APPLICATION_URL.PRODUCT_LIST_ALL);
+  };
+
   const handleKeyEnter = (event) => {
     event.preventDefault();
     if (event.key !== 'Enter') return;
-    // if (document.activeElement === inputSearch.current) {
-    //   setPublicFilterQuery({
-    //     ...publicFilterQuery,
-    //     search: search,
-    //   });
-    // } else if (document.activeElement === inputLocation.current) {
-    //   setPublicFilterQuery({
-    //     ...publicFilterQuery,
-    //     location: location.trim(),
-    //   });
-    // }
+    if (document.activeElement === inputSearch.current) {
+      setFilterQuery({
+        ...filterQuery,
+        search: search,
+      });
+      history.push(PRODUCT_APPLICATION_URL.PRODUCT_LIST_ALL);
+    }
   };
 
   return (
@@ -89,6 +104,26 @@ export const ProductHeader = () => {
             ),
           }}
         />
+        <Box className={classes.rightSideFilter}>
+          <TextField
+            className={`${classes.menu} ${classes.margin}`}
+            size="small"
+            variant="outlined"
+            color="secondary"
+            select
+            value={category}
+            onChange={handleChangeCategory}
+          >
+            <MenuItem style={{ backgroundColor: '#fff' }} value={'all'}>
+              By Category
+            </MenuItem>
+            {PRODUCT_CATEGORIES.map((category) => (
+              <MenuItem style={{ backgroundColor: '#fff' }} key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
         <IconButton
           onClick={(e) => {
             e.stopPropagation();

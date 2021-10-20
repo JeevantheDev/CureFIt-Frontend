@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ProductContext } from '../context/product.context';
 import Product from 'curefit/Product/Product';
-import { Grid, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import { ServiceTitle } from '../../../components/ServiceTitle/ServiceTitle';
 import { useHistory } from 'react-router-dom';
 import { PRODUCT_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
@@ -14,6 +14,7 @@ const Products = () => {
   const {
     loaderState: [pageLoading],
     productsState: [products],
+    filterState: [filterQuery],
     fetchProducts,
   } = useContext(ProductContext);
   const {
@@ -23,7 +24,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [filterQuery]);
 
   useEffect(() => {
     const cartData = cart.filter((data) => data.qty > 0);
@@ -45,8 +46,14 @@ const Products = () => {
   return (
     <>
       <ServiceTitle title="Browse medicines & health products" />
-      {!pageLoading && products && products.length === 0 && <Typography>No Products Found...</Typography>}
       <Grid container spacing={3}>
+        {!pageLoading && products && products.length === 0 && (
+          <Box px={2}>
+            <Typography variant="body1" color="textSecondary" style={{ letterSpacing: '0.02em' }} gutterBottom>
+              No Products Found...
+            </Typography>
+          </Box>
+        )}
         {(pageLoading || !products ? Array.from(new Array(5)) : products).map((product, idx) => (
           <Grid key={product ? product.id : idx} item xs={12} md={3}>
             <Product

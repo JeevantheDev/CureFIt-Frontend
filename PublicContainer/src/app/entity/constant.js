@@ -33,6 +33,35 @@ export const SERVICES = {
         value: 'General Physician',
       },
     ],
+    PHARMACY: [
+      {
+        image: require('../../assets/media/service/medcine.png'),
+        label: 'Medcines',
+        value: 'Medcines',
+      },
+      { image: require('../../assets/media/service/skin.png'), label: 'Skin Care', value: 'Skin Care' },
+      {
+        image: require('../../assets/media/service/nutrition.png'),
+        label: 'Nutrition',
+        value: 'Nutrition',
+      },
+      { image: require('../../assets/media/service/personal.png'), label: 'Personal Care', value: 'Personal Care' },
+      {
+        image: require('../../assets/media/service/home.png'),
+        label: 'Home Care',
+        value: 'Home Care',
+      },
+      {
+        image: require('../../assets/media/service/ortho.png'),
+        label: 'Ortho Care',
+        value: 'Ortho Care',
+      },
+      {
+        image: require('../../assets/media/service/pet.png'),
+        label: 'Pet Care',
+        value: 'Pet Care',
+      },
+    ],
   },
 };
 

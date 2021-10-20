@@ -81,10 +81,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export const MiddleService = ({ services, type = 'specalists' }) => {
+export const MiddleService = ({ services, type = 'specalists', title, subTitle }) => {
   const classes = useStyles();
   const { setPublicFilterQuery } = useContext(ProfileContext);
   const scrollRef = useRef(null);
+
   const scroll = (scrollOffset) => {
     scrollRef.current.scrollLeft += scrollOffset;
   };
@@ -92,12 +93,10 @@ export const MiddleService = ({ services, type = 'specalists' }) => {
   const proceedService = ({ type, value }) => {
     setPublicFilterQuery({ [type]: value });
   };
+
   return (
     <Box className={classes.serviceContainer}>
-      <ServiceTitle
-        title="Consult top doctors in any specialists"
-        subTitle="Book your appointment with doctors in all specialists"
-      />
+      <ServiceTitle title={title} subTitle={subTitle} />
       <Box
         onClick={(e) => {
           e.stopPropagation();
@@ -139,6 +138,8 @@ export const MiddleService = ({ services, type = 'specalists' }) => {
 };
 
 MiddleService.propTypes = {
+  title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
   type: PropTypes.string,
   services: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };

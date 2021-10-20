@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 
 export const AppContext = React.createContext();
 
-const AppProvider = ({ value: { returnUrl, setReturnUrl }, children }) => {
+const AppProvider = ({ value: { publicFilterQuery, returnUrl, setReturnUrl }, children }) => {
   const [currentAuthUser] = useState(
     localStorage.getItem('loggedInUser') ? JSON.parse(localStorage.getItem('loggedInUser') || '{}') : {},
   );
   const [currentToken] = useState(localStorage.getItem('sessionToken') ? localStorage.getItem('sessionToken') : null);
   return (
     <AppContext.Provider
-      value={{
-        returnUrl,
-        setReturnUrl,
-        userState: [currentAuthUser],
-        tokenState: [currentToken],
-      }}
+      value={{ publicFilterQuery, returnUrl, setReturnUrl, userState: [currentAuthUser], tokenState: [currentToken] }}
     >
       {children}
     </AppContext.Provider>

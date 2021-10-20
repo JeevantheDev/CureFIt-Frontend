@@ -12,7 +12,17 @@ const LandingScreen = () => {
     <div>
       <TopBanner />
       <Container>
-        <MiddleService services={SERVICES.LANDING.CONSULT} />
+        <MiddleService
+          title="Consult top doctors in any specialists"
+          subTitle="Book your appointment with doctors in all specialists"
+          services={SERVICES.LANDING.CONSULT}
+        />
+        <MiddleService
+          title="Browse medcines & health products"
+          subTitle="Browse your essentials health products as for your need"
+          services={SERVICES.LANDING.PHARMACY}
+          type="category"
+        />
       </Container>
       <Testimonials />
       <Container>

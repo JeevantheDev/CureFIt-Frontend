@@ -23,6 +23,10 @@ const PublicContainerScreen = () => {
 
   const history = useHistory();
   useEffect(() => {
+    if (publicFilterQuery.category) {
+      history.push(CONTAINER_ROUTES.PRODUCT_LIST_ALL);
+      return;
+    }
     setActiveRoute(history.location.pathname);
     if (JSON.stringify(publicFilterQuery) !== '{}') {
       history.push({
