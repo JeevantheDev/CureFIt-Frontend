@@ -149,6 +149,32 @@ export const PRODUCT_CATEGORIES = [
 
 export const TABLE_ROWS = {
   PRODUCT_LIST: ['Product Name', 'Product Category', 'Product Price', 'Stocks', 'Average Rating', '', ''],
+  ORDER_LIST: [
+    'Name',
+    'City',
+    'Country',
+    'Phone No',
+    'Product Qty',
+    'Price',
+    'Ordered On',
+    'Delivery Estimate',
+    'Is Delivered ?',
+    '',
+  ],
+  SELLER_ORDER_LIST: [
+    'Name',
+    'City',
+    'Country',
+    'Phone No',
+    'Product Qty',
+    'Is Paid ?',
+    'Price',
+    'Ordered On',
+    'Delivery Estimate',
+    'Is Delivered ?',
+    '',
+    '',
+  ],
   PATIENT_LIST: [
     'User Name',
     'Patient Name',

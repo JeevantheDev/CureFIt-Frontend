@@ -5,6 +5,7 @@ import { USER_TYPE } from '../../app/entity/constant';
 import { withUserType } from '../../app/hoc/withUserType';
 import { PRIVATE_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import UpdateInfo from '../../components/UpdateInfo/UpdateInfo';
+import Orders from '../userScreen/modules/Orders';
 import Appointments from './modules/Appointments';
 import Clinics from './modules/Clinics';
 import Dashboard from './modules/Dashboard';
@@ -28,6 +29,7 @@ const DoctorScreen = () => {
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS} component={Appointments} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_PATIENTS} component={Patients} />
       <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_APPOINTMENTS_ME} component={MyAppointments} />
+      <Route exact path={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_ORDERS} component={Orders} />
       {/* <Redirect to={PRIVATE_APPLICATION_URL.PRIVATE_DOCTOR_DASHBOARD} /> */}
     </Switch>
   );

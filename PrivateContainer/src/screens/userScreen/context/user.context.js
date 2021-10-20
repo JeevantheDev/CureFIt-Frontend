@@ -8,6 +8,7 @@ import {
   updateAppointment,
 } from '../../../app/api/appointment.api';
 import { createReview, deleteReview, updateReview } from '../../../app/api/review.api';
+import { getMyUserBills, getUserBillsBySeller } from '../../../app/api/product.api';
 import { FormContext } from '../../../app/context/form.context';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
 
@@ -27,6 +28,7 @@ const UserProvider = ({ children }) => {
   } = useContext(ProfileContext);
 
   const [appointments, setAppointments] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   const resetAppointmentState = () => {
     setAppointments(null);
@@ -129,16 +131,26 @@ const UserProvider = ({ children }) => {
     setSubmitLoader(false);
   };
 
+  // Orders by User
+  const getOrdersByUserAction = async (queryObj) => {
+    setPageLoading(true);
+    const res = await getMyUserBills(queryObj);
+    setOrders(res.data ? res.data : []);
+    setPageLoading(false);
+  };
+
   return (
     <UserContext.Provider
       value={{
         appointmentState: [appointments, setAppointments],
+        orderState: [orders, setOrders],
         resetAppointmentState,
         getAppointmentsAction,
         createUpdateAppointmentAction,
         deleteAppointmentAction,
         createUpdateReviewsAction,
         deleteReviewAction,
+        getOrdersByUserAction,
       }}
     >
       {children}

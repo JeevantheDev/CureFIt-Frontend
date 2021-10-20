@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 
-import { createProduct, deleteProduct, getProductBySeller, updateProduct } from '../../../app/api/product.api';
+import {
+  createProduct,
+  deleteProduct,
+  getProductBySeller,
+  updateProduct,
+  getUserBillsBySeller,
+} from '../../../app/api/product.api';
 import { FormContext } from '../../../app/context/form.context';
 import { ProfileContext } from '../../profileScreen/context/profile.context';
 
@@ -19,12 +25,18 @@ const SellerProvider = ({ children }) => {
   } = useContext(ProfileContext);
 
   const [products, setProducts] = useState([]);
+  const [sellerOrders, setSellerOrders] = useState([]);
 
-  const resetAppointmentState = () => {
-    setProducts(null);
+  const calculateAmount = (products) => {
+    let amount = products.reduce((res, product) => {
+      let price = product.product_price.replace(/^\D+/g, '');
+      res += eval(`${product.qty.toString()}*${price}`);
+      return res;
+    }, 0);
+    return parseFloat(amount);
   };
 
-  // Appointment CRUD Actions
+  // Products CRUD Actions
   const getProductsAction = async (queryObj) => {
     setPageLoading(true);
     const res = await getProductBySeller(queryObj);
@@ -75,13 +87,33 @@ const SellerProvider = ({ children }) => {
     setSubmitLoader(false);
   };
 
+  // Orders CRUD Actions
+  const getOrdersAction = async (queryObj) => {
+    setPageLoading(true);
+    const res = await getUserBillsBySeller(queryObj);
+    if (res.data) {
+      const filteredData = res.data.map((obj) => {
+        obj.product_info = obj.product_info.filter((product) => product.user_id === queryObj.by_seller);
+        obj.total_qty = obj.product_info.length;
+        obj.payment.total_price = calculateAmount(obj.product_info);
+        return obj;
+      });
+      setSellerOrders(filteredData);
+    } else {
+      setSellerOrders([]);
+    }
+    setPageLoading(false);
+  };
+
   return (
     <SellerContext.Provider
       value={{
         productsState: [products, setProducts],
+        sellerOrderState: [sellerOrders, setSellerOrders],
         getProductsAction,
         createUpdateProductAction,
         deleteProductAction,
+        getOrdersAction,
       }}
     >
       {children}
