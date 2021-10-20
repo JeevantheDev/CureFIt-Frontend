@@ -12,3 +12,13 @@ export const PAYMENT_METHOD = {
   CASH: 'cash',
   CARD: 'card',
 };
+
+export const PRODUCT_CATEGORIES = [
+  'Medcines',
+  'Skin Care',
+  'Nutrition',
+  'Personal Care',
+  'Home Care',
+  'Ortho Care',
+  'Pet Care',
+];

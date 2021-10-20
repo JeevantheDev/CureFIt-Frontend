@@ -1,17 +1,25 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DEFAULT } from '../../../app/entity/constant';
 import { getProductById, getProducts } from '../../../app/api/product.api';
+import { AppContext } from '../../../app/context/app.context';
 
 export const ProductContext = React.createContext();
 
 const ProductProvider = ({ children }) => {
+  const { publicFilterQuery } = useContext(AppContext);
   const [products, setProducts] = useState();
   const [product, setProduct] = useState(null);
   const [pageLoading, setPageLoading] = useState(false);
   const [filterQuery, setFilterQuery] = useState({ search: '', category: '' });
   const [limit, setLimit] = useState(DEFAULT.LIMIT);
   const [page, setPage] = useState(DEFAULT.PAGE);
+
+  useEffect(() => {
+    setFilterQuery({
+      ...publicFilterQuery,
+    });
+  }, [publicFilterQuery]);
 
   const fetchProducts = async () => {
     setPageLoading(true);
