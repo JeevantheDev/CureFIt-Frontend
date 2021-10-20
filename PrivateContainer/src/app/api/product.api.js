@@ -46,3 +46,39 @@ export const updateProduct = async (obj) => {
 export const deleteProduct = async (product_id) => {
   return await deleteRequest(API_ROUTES.UPDATE_DELETE_PRODUCT.replace('id', product_id), getConfig());
 };
+
+/**
+ * @async
+ * @param {Object} obj
+ * @returns {Promise<any>}
+ */
+export const getUserBillsBySeller = async (obj, limit, page) => {
+  /* prettier-ignore */
+  const BY_SELLER = obj.by_seller ? `&sellers[in]=${obj.by_seller}` : '';
+  /* prettier-ignore */
+  const BY_NAME = obj.name ? `&name=${obj.name}` : '';
+  /* prettier-ignore */
+  const PAGINATION = `?limit=${limit || 6}&page=${page || 1}`;
+  /* prettier-ignore */
+  const API_PATH =
+    API_ROUTES.GET_USERBILLS_BY_SELLER + PAGINATION + BY_SELLER + BY_NAME;
+  return await getRequest(API_PATH, getConfig());
+};
+
+/**
+ * @async
+ * @param {Object} obj
+ * @returns {Promise<any>}
+ */
+export const getMyUserBills = async (obj, limit, page) => {
+  /* prettier-ignore */
+  const BY_USER = obj.by_user ? `&user_id=${obj.by_user}` : '';
+  /* prettier-ignore */
+  const BY_NAME = obj.name ? `&name=${obj.name}` : '';
+  /* prettier-ignore */
+  const PAGINATION = `?limit=${limit || 6}&page=${page || 1}`;
+  /* prettier-ignore */
+  const API_PATH =
+    API_ROUTES.GET_MY_BILLS + PAGINATION + BY_USER + BY_NAME;
+  return await getRequest(API_PATH, getConfig());
+};

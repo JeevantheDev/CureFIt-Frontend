@@ -10,7 +10,7 @@ export const CustomTableCell = withStyles((theme) => ({
   body: {
     fontSize: 15,
     color: '#333',
-    lineHeight: '14px',
+    lineHeight: '20px',
     fontWeight: 'bold',
   },
 }))(TableCell);

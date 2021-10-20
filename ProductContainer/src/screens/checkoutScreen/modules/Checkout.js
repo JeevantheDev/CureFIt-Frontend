@@ -32,6 +32,10 @@ const Checkout = () => {
       const { ...obj } = formObj;
       obj.total_qty = cart.length;
       obj.product_info = cart;
+      obj.sellers = cart.reduce((res, item) => {
+        res.push(item.user.id);
+        return res;
+      }, []);
       obj.payment = {
         method: obj.payment_method,
         result: { email_address: currentAuthUser.user_email },

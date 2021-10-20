@@ -22,6 +22,10 @@ export const API_ROUTES = {
   ADD_PRODUCT: '/product',
   UPDATE_DELETE_PRODUCT: '/product/id',
 
+  // Userbills Routes
+  GET_MY_BILLS: '/userbill/me',
+  GET_USERBILLS_BY_SELLER: '/userbill',
+
   // Review routes
   CREATE_REVIEW: '/review/reviewFor/id',
   UPDATE_DELETE_REVIEW: '/review/id',

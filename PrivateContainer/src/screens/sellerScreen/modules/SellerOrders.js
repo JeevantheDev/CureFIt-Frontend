@@ -6,18 +6,18 @@ import { CustomTableLists } from '../../../components/CustomTableLists/CustomTab
 import { ServiceHeader } from '../../../components/shared/ServiceHeader/ServiceHeader';
 import { AppContext } from '../../../app/context/app.context';
 import { TABLE_ROWS } from '../../../app/entity/constant';
-import { UserContext } from '../context/user.context';
-import { OrdersList } from '../../../components/CustomTableLists/OrdersList/OrdersList';
+import { SellerOrdersList } from '../../../components/CustomTableLists/SellerOrdersList/SellerOrdersList';
+import { SellerContext } from '../context/seller.context';
 
-const Orders = () => {
+const SellerOrders = () => {
   const {
     userState: [currentAuthUser],
   } = useContext(AppContext);
-  const { getOrdersByUserAction } = useContext(UserContext);
+  const { getOrdersAction } = useContext(SellerContext);
 
   const [name, setName] = useState('');
   useEffect(() => {
-    getOrdersByUserAction({ by_user: `${currentAuthUser._id}`, name });
+    getOrdersAction({ by_seller: `${currentAuthUser._id}`, name });
   }, [name]);
 
   const handleKeyEnter = (event) => {
@@ -28,7 +28,7 @@ const Orders = () => {
 
   return (
     <div>
-      <ServiceHeader title="Your Orders">
+      <ServiceHeader title="Seller Orders">
         <TextField
           size="small"
           variant="outlined"
@@ -44,12 +44,12 @@ const Orders = () => {
           }}
         />
       </ServiceHeader>
-      <CustomTableLists tableRows={TABLE_ROWS.ORDER_LIST}>
-        <OrdersList />
+      <CustomTableLists tableRows={TABLE_ROWS.SELLER_ORDER_LIST}>
+        <SellerOrdersList />
       </CustomTableLists>
     </div>
   );
 };
 
 // eslint-disable-next-line import/no-default-export
-export default Orders;
+export default SellerOrders;
