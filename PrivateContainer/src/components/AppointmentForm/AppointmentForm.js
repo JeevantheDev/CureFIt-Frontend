@@ -41,7 +41,7 @@ const AppointmentForm = React.memo(({ profile_id }) => {
   const {
     editState: [isEditFlag],
     loaderState: [submitLoader],
-    formState: [formError],
+    formState: [formError, setFormError],
   } = useContext(FormContext);
   const {
     timeSlotState: [currentSlot],
@@ -150,7 +150,7 @@ const AppointmentForm = React.memo(({ profile_id }) => {
       .then((res) => {
         res && history.push(redirectPath);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setFormError(err));
   };
 
   return (

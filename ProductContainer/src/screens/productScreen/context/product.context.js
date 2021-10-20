@@ -23,14 +23,14 @@ const ProductProvider = ({ children }) => {
   const fetchProductById = async (productId) => {
     setPageLoading(true);
     const res = await getProductById(productId);
-    setProduct(res.data ? res.data.product : null);
+    setProduct(res.data ? res.data.product : DEFAULT.NOT_FOUND);
     setPageLoading(false);
   };
 
   return (
     <ProductContext.Provider
       value={{
-        loaderState: [pageLoading],
+        loaderState: [pageLoading, setPageLoading],
         productsState: [products],
         productState: [product],
         filterState: [filterQuery, setFilterQuery],

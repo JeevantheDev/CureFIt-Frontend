@@ -54,7 +54,7 @@ export async function postRequest(url, param, config) {
   let responseBody = {};
   try {
     await axios
-      .get(BASE_API_URL + url, param.params, config)
+      .post(BASE_API_URL + url, param.params, config)
       .then((response) => {
         responseBody = response.data;
       })

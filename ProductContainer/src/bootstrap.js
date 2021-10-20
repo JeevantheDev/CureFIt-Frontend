@@ -18,13 +18,13 @@ const mount = (el, { onNavigate, defaultHistory, initialPath, returnUrl, setRetu
 
   ReactDOM.render(
     <AppProvider value={{ returnUrl, setReturnUrl }}>
-      <CheckoutProvider>
+      <FormProvider>
         <ProductProvider>
-          <FormProvider>
+          <CheckoutProvider>
             <App history={history} />
-          </FormProvider>
+          </CheckoutProvider>
         </ProductProvider>
-      </CheckoutProvider>
+      </FormProvider>
     </AppProvider>,
     el,
   );

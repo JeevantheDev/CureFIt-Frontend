@@ -1,15 +1,17 @@
 import { Grid } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../../app/context/app.context';
 import { FormContext } from '../../../app/context/form.context';
 import { PAYMENT_METHOD } from '../../../app/entity/constant';
 import { CardForm } from '../../../components/CardForm/CardForm';
-
+import { PRODUCT_APPLICATION_URL } from '../../../app/router/ApplicationRoutes';
 import { OrderSummary } from '../../../components/OrderSummary/OrderSummary';
 import { ShippingForm } from '../../../components/ShippingForm/ShippingForm';
 import { CheckoutContext } from '../context/checkout.context';
 
-const Checkout = (props) => {
+const Checkout = () => {
+  const history = useHistory();
   const {
     userState: [currentAuthUser],
   } = useContext(AppContext);
@@ -19,6 +21,7 @@ const Checkout = (props) => {
   const {
     cartState: [cart],
     calculateAmount,
+    placeOrderAction,
   } = useContext(CheckoutContext);
 
   const [shippingObj, setShippingObj] = useState(null);
@@ -28,10 +31,7 @@ const Checkout = (props) => {
     if (formObj) {
       const { ...obj } = formObj;
       obj.total_qty = cart.length;
-      obj.product_info = cart.reduce((res, item) => {
-        res.push(item.id);
-        return res;
-      }, []);
+      obj.product_info = cart;
       obj.payment = {
         method: obj.payment_method,
         result: { email_address: currentAuthUser.user_email },
@@ -52,6 +52,13 @@ const Checkout = (props) => {
       isPaid: true,
       paidAt: new Date(payload.created).toDateString(),
     };
+    placeOrderAction(obj)
+      .then((res) => {
+        res && history.push(PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_SUCCESS_ID.replace(':id', res.id));
+      })
+      .catch((err) => {
+        setFormError(err);
+      });
   };
 
   return (
@@ -61,7 +68,7 @@ const Checkout = (props) => {
         {shippingObj && shippingObj.payment.method === PAYMENT_METHOD.CARD && <CardForm submitCard={submitCard} />}
       </Grid>
       <Grid item xs={12} md={6}>
-        <OrderSummary />
+        <OrderSummary cart={cart} />
       </Grid>
     </Grid>
   );

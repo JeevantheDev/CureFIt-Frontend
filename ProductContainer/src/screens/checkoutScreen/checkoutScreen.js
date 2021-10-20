@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { PRODUCT_APPLICATION_URL } from '../../app/router/ApplicationRoutes';
 import Cart from './modules/Cart';
 import Checkout from './modules/Checkout';
+import CheckoutSuccess from './modules/CheckoutSuccess';
 
 const CheckoutScreen = () => {
   const { path } = useRouteMatch();
@@ -14,6 +15,7 @@ const CheckoutScreen = () => {
         <Redirect exact from={path} to={PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_CART} />
         <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_CART} component={Cart} />
         <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_ALL} component={Checkout} />
+        <Route exact path={PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_SUCCESS_ID} component={CheckoutSuccess} />
         {/* <Route path={PRODUCT_APPLICATION_URL.PRODUCT_CONTAINER_SLUG} component={Product} /> */}
         {/* <Redirect to={PRODUCT_APPLICATION_URL.PRODUCT_CHECKOUT_CART} /> */}
       </Switch>

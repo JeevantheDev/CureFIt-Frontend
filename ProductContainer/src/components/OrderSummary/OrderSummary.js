@@ -3,12 +3,8 @@ import PropTypes from 'prop-types';
 import { Box, Divider, Paper, Typography } from '@material-ui/core';
 import { CheckoutContext } from '../../screens/checkoutScreen/context/checkout.context';
 
-export const OrderSummary = (props) => {
-  const {
-    cartState: [cart],
-    currentProductQty,
-    calculateAmount,
-  } = useContext(CheckoutContext);
+export const OrderSummary = ({ cart }) => {
+  const { calculateAmount } = useContext(CheckoutContext);
   return (
     <Paper variant="outlined" elevation={0} style={{ padding: '1rem' }}>
       <Typography variant="h5" style={{ color: '#333', letterSpacing: '0.02em', fontWeight: 600 }} gutterBottom>
@@ -36,11 +32,13 @@ export const OrderSummary = (props) => {
           Total
         </Typography>
         <Typography variant="h6" style={{ color: '#333', letterSpacing: '0.02em', fontWeight: 600 }} gutterBottom>
-          ₹{calculateAmount() || 0}
+          ₹{calculateAmount(cart) || 0}
         </Typography>
       </Box>
     </Paper>
   );
 };
 
-OrderSummary.propTypes = {};
+OrderSummary.propTypes = {
+  cart: PropTypes.any,
+};
