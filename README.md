@@ -6,7 +6,7 @@
 
 ### Tech Stack
 
-- React.js, Webpack, Babel, Materialize UI, Stripe, Firebase(Frontend Hosting)
+- React.js, Webpack, Babel, Materialize UI, Stripe, Firebase(Frontend Hosting), Github CI/CD
 - Coding Format:- Eslint, Prettier
 
 ### Idea
